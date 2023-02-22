@@ -34,11 +34,61 @@ export function setAndGetDataFromLS(key, data) {
 
 
 export function sortDataByFullName(data) {
+    // Tri croissant
     const newData = data.sort((a, b) => {
         if (a.full_product_name < b.full_product_name) {
           return -1;
         }
         if (a.full_product_name > b.full_product_name) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+      })
+ 
+     return newData;
+ }
+
+ export function sortDataTicketID(data) {
+    // Tri décroissant
+    const newData = data.sort((a, b) => {
+        if (a.ticket_id < b.ticket_id) {
+          return 1;
+        }
+        if (a.ticket_id > b.ticket_id) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+      })
+ 
+     return newData;
+ }
+
+
+ export function sortDataInvoiceID_desc(data) {
+    // Tri décroissant
+    const newData = data.sort((a, b) => {
+        if (a.invoice_id < b.invoice_id) {
+          return 1;
+        }
+        if (a.invoice_id > b.invoice_id) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+      })
+ 
+     return newData;
+ }
+
+ export function sortDataInvoiceID_asc(data) {
+    // Tri décroissant
+    const newData = data.sort((a, b) => {
+        if (a.invoice_id < b.invoice_id) {
+          return -1;
+        }
+        if (a.invoice_id > b.invoice_id) {
             return 1;
           }
           // a must be equal to b

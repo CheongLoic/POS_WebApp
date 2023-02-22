@@ -55,9 +55,10 @@ img {
 }
 
 .product_catalogue {    
-    background-color: rgba(255, 0, 238, 0.406);
+    background-color: rgba(84, 79, 116, 0.965);
     width: 100%;
-    position: relative;
+    border-radius: 20px;
+    /* position: relative; */
 }
 
 .product_catalogue_icon {
@@ -74,6 +75,14 @@ img {
     display: inline-block;
 }
 
+.ticket_list {    
+    background-color: rgba(84, 79, 116, 0.965);;
+    width: 100%;
+    border-radius: 20px;
+    /* display: inline-block;
+    position: relative; */
+}
+
 .ticket_icon {
     background-color: rgba(145, 141, 141, 0.406);
     margin: 10px;
@@ -81,9 +90,29 @@ img {
     padding: 10px;
     width: 320px;
     /* text-align: center;  */
+    position: relative;
     display: inline-block;
     font-size: 15px;
+}
 
+.invoice_list {    
+    background-color: rgba(84, 79, 116, 0.965);;
+    width: 100%;
+    border-radius: 20px;
+    /* display: inline-block;
+    position: relative; */
+}
+
+.invoice_icon {
+    background-color: rgba(145, 141, 141, 0.406);
+    margin: 10px;
+    border-radius: 20px;
+    padding: 10px;
+    width: 320px;
+    /* text-align: center;  */
+    position: relative;
+    display: inline-block;
+    font-size: 15px;
 }
 
 button.print_icon {

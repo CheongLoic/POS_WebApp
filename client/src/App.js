@@ -7,7 +7,7 @@ import {Route, Routes} from "react-router-dom"; //react-router-dom v6
 import Menu from "./components/Menu"
 import Customers from "./components/Customer/Customers"
 import Tickets from "./components/Ticket/Tickets"
-import Invoices from "./components/Invoices"
+import Invoices from "./components/Invoice/Invoices"
 import Products from "./components/Product/Products"
 import AddNewProduct from "./components/Product/AddNewProduct"
 import SendNewProductData from "./components/Product/sendNewProductData"

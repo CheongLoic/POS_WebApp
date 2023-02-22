@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
 })
 
 app.post('/products/addNewProduct', async (req,res) => {
-  
+  // Add product photo in the folder
   // console.log("display form " + req.form)
   try { 
     console.log("display body " + JSON.stringify( req.body))
@@ -64,10 +64,10 @@ app.post('/products/addNewCustomer-send-data', async (req,res) => {
   const newData = req.body
   const filename = "client/src/database/products.json"
   // console.log("display form " + req.form)
-    console.log("display body from addNewCustomer-send-data " +  newData)
+    // console.log("display body from addNewCustomer-send-data " +  newData)
 
-    fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
-    res.status(200).send({status : "OK"})
+  fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
+  res.status(200).send({status : "OK"})
    
 
 })
@@ -81,19 +81,86 @@ app.post('/products/addNewCustomer-send-data', async (req,res) => {
 // var router = express.Router();
 app.post('/tickets',  (req, res) => {
 
-    const value = req.body;
-    // console.log("Before printing!");
-    
-    // console.log("After calling library");
+   if (req.body.action === "print") {
     console.log("Connecting to printer ...");
     let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
     interface: 'tcp://192.168.0.29'
     });
-    console.log("Printer connected !");
+    // console.log("Printer connected !");
     
     printer.alignCenter();
-    printer.println("Hello world ! 2nd TEST ! " + value.title);
+    printer.setTextQuadArea();
+    printer.println("X.H" );
+    printer.setTextNormal();
+    printer.println("19 RUE CIVIALE" );
+    printer.println("75010 PARIS" );
+    printer.println("TEL : 07.50.78.12.72" );
+    printer.println("SIRET : 887752137 PARIS" );
+    printer.drawLine();
+
+    printer.upsideDown(true);
+    printer.println('Hello World upside down!');
+    printer.upsideDown(false);
+    printer.drawLine();
+
+    printer.invert(true);
+    printer.println('Hello World inverted!');
+    printer.invert(false);
+    printer.drawLine();
+
+    printer.setTypeFontB();
+    printer.println('Type font B');
+    printer.setTypeFontA();
+    printer.println('Type font A');
+    printer.drawLine();
+
+    printer.alignLeft();
+    printer.println('This text is on the left');
+    printer.alignCenter();
+    printer.println('This text is in the middle');
+    printer.alignRight();
+    printer.println('This text is on the right');
+    printer.alignLeft();
+    printer.drawLine();
+
+    printer.setTextDoubleHeight();
+    printer.println('This is double height');
+    printer.setTextDoubleWidth();
+    printer.println('This is double width');
+    printer.setTextQuadArea();
+    printer.println('This is quad');
+    printer.setTextSize(7, 7);
+    printer.println('Wow');
+    printer.setTextSize(0, 0);
+    printer.setTextNormal();
+    printer.println('This is normal');
+    printer.drawLine();
+
+    printer.leftRight('Left', 'Right');
+    printer.table(['One', 'Two', 'Three', 'Four']);
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"Left TEXT", align:"LEFT", width:0.5 },
+      { text:"Center TEXT", align:"CENTER", width:0.25, bold:true },
+      { text:"Right TEXT", align:"RIGHT", cols:8 }
+    ]);
+
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"Dxxxxxxxxxxxxxxxxxxxxxx", align:"LEFT", width:0.5, bold : true },
+      { text:"P.UxQTE", align:"CENTER", width:0.25, bold:true },
+      { text:"MONTANT €", align:"RIGHT", cols:8 , bold : true}
+    ]);
+    printer.println("TEST" );
+    printer.newLine(); 
+    printer.println("TEST2" );
+
+    printer.leftRight( "Mode de paiement",  req.body.data.PAYMENT_METHOD);
+
+    printer.drawLine();
+    printer.alignCenter();
+    printer.println("Merci de votre achat" );
+    printer.println("A BIENTOT !" );
+
     printer.cut();
     
     try {
@@ -102,10 +169,30 @@ app.post('/tickets',  (req, res) => {
     } catch (error) {
       console.log("Print failed:", error);
       console.warn(" Impossible de se connecter à l'imprimante !")
-      
     }
-    
     res.status(200).send("Try to print !");
+
+   } else  {
+    //DELETE DATA
+    const data = req.body.full_data
+    // console.log("full data",data) 
+    let newData = data.filter((ticket) => ticket.ticket_id !== req.body.data.ticket_id)
+    newData = newData.sort((a, b) => { //tri ascendent
+      if (a.ticket_id < b.ticket_id) {
+        return -1;
+      }
+      if (a.ticket_id > b.ticket_id) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+    })
+    // console.log("newData ",newData) 
+    const filename = "client/src/database/tickets.json"
+    fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
+    res.status(200).send({status : "OK"})
+   }
+    
 });
 
 
@@ -120,6 +207,13 @@ app.post('/tickets',  (req, res) => {
 //     .then(response => response.json())
 // }
 
+app.post('/invoices', async (req, res) => {
+  const newData = req.body
+  // console.log(newData)
+  const filename = "client/src/database/invoices.json"
+  fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
+  res.status(200).send({status : "OK"})
+});
 
 
 app.post('/customers/addNewCustomer', async (req, res) => {

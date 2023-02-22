@@ -1,7 +1,20 @@
 [
-    {
-        "id" : 0,
-        "id_ticket" : 0,
-        "id_customer" : 0
-    }
+  {
+    "invoice_id": 0,
+    "ticket_id": 0,
+    "customer_id": 0,
+    "date": "2023-02-21T22:30:02.413Z"
+  },
+  {
+    "invoice_id": 1,
+    "ticket_id": 1,
+    "customer_id": 1,
+    "date": "2023-02-21T22:30:02.413Z"
+  },
+  {
+    "invoice_id": 2,
+    "ticket_id": 1,
+    "customer_id": 0,
+    "date": "2023-02-22T15:33:53.802Z"
+  }
 ]
