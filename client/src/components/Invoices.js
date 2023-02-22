@@ -8,7 +8,7 @@ class Invoices extends Component {
         console.log("Hello from Invoices")
         return (
             <div> 
-                <h1>Factures 单据</h1>
+                <h1>Factures 发票</h1>
                 <Link to="/"><Button outline color="primary">Retour 返回</Button></Link>
             </div>
         );

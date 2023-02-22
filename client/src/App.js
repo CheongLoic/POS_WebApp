@@ -5,11 +5,13 @@ import React, {Component} from 'react';
 import {Route, Routes} from "react-router-dom"; //react-router-dom v6
 // import {Route, Switch} from "react-router-dom"; //react-router-dom v5
 import Menu from "./components/Menu"
-import Customers from "./components/Customers"
-import Tickets from "./components/Tickets"
+import Customers from "./components/Customer/Customers"
+import Tickets from "./components/Ticket/Tickets"
 import Invoices from "./components/Invoices"
 import Products from "./components/Product/Products"
 import AddNewProduct from "./components/Product/AddNewProduct"
+import SendNewProductData from "./components/Product/sendNewProductData"
+import AddNewCustomer from "./components/Customer/AddNewCustomer"
 import Performances from "./components/Performances"
 // import server from "./server";
 
@@ -215,9 +217,11 @@ class App extends Component {
         <Route exact path="/" element={<Menu/>}/>
         <Route exact path="/products" element={<Products/>}></Route>
         <Route exact path="/products/addNewProduct" element={<AddNewProduct/>}></Route>
+        <Route exact path="/products/addNewCustomer-send-data" element={<SendNewProductData/>}></Route>
         <Route exact path="/tickets" element={<Tickets/>}></Route>
         <Route exact path="/invoices" element={<Invoices/>}></Route>
         <Route exact path="/customers" element={<Customers/>}></Route>
+        <Route exact path="/customers/addNewCustomer" element={<AddNewCustomer/>}></Route>
         <Route exact path="/performances" element={<Performances/>}>P</Route>
         <Route path="*" element={() => "ERROR 404 PAGE NOT FOUND"}/>
       </Routes>
