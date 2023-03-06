@@ -19,8 +19,8 @@ class ProductList  extends Component {
             <div className='product_catalogue_icon'>
                 {/* <p>{".."+ this.state.productDB.image}</p> */}
                 <Link to="/" style={{ textDecoration: 'none' , color:"white"}}>
-                <div><img src={`${this.state.productDB.image}` === "" ? no_img : `${this.state.productDB.image}` } height="200px" width="200px" border-radius ="20%" align="left" alt={this.state.productDB.full_product_name} /></div>
-                <span>{this.state.productDB.full_product_name}</span>
+                <div><img src={`${this.state.productDB.image}` === "" ? no_img : `${this.state.productDB.image}` } height="200px" width="200px" border-radius ="20%" align="left" alt={this.state.productDB.product_full_name} /></div>
+                <span>{this.state.productDB.product_full_name}</span>
                 <br/>
                 {/* <p>{this.state.productDB.product_name_on_ticket}</p> */}
                 <span>{this.state.productDB.current_price} €</span>

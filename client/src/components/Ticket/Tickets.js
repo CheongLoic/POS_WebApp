@@ -18,6 +18,7 @@ class Tickets extends Component {
         return (
             <div> 
                 <h1>Tickets de caisse 收据</h1>
+                <Link to="/tickets/addNewTicket"><Button  color="danger" style={{marginBottom : 10, marginRight : 10}}>+ Créer un nouveau ticket 开新收据</Button></Link>
                 <Link to="/"><Button  color="primary" style={{marginBottom : 10}}>Retour 返回</Button></Link>
                 <div className='ticket_list'>
                 {

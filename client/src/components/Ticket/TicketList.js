@@ -16,7 +16,7 @@ class TicketList  extends Component {
         });
     }
 
-    submit =() =>{
+    toPrint =() =>{
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -55,7 +55,7 @@ class TicketList  extends Component {
         return (
                 <div className='ticket_icon'>
                     <div>Ticket N°{this.state.ticketDB.ticket_id} du  {new Date(this.state.ticketDB.date_of_purchase).toLocaleString()} {this.state.ticketDB.TTC}€</div>
-                    <Button className='print_icon' style={{marginRight : 10}} onClick={() => this.submit()} ><img src={print_icon} height="30px" width="30px" border-radius ="11%" alt="print_icon"></img></Button>
+                    <Button className='print_icon' style={{marginRight : 10}} onClick={() => this.toPrint()} ><img src={print_icon} height="30px" width="30px" border-radius ="11%" alt="print_icon"></img></Button>
                     <Button className='print_icon'  onClick={() => this.delete()} ><img src={trash_can_icon} height="30px" width="30px" border-radius ="11%" alt="trash_can_icon"></img></Button>
                 </div>
             );

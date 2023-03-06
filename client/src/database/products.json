@@ -1,7 +1,7 @@
 [
   {
     "product_id": 0,
-    "full_product_name": "Poisson Trident M",
+    "product_full_name": "Poisson Trident M",
     "product_name_on_ticket": "Poisson Trident M2",
     "barCode_available": true,
     "barCode_list": [
@@ -27,7 +27,7 @@
   },
   {
     "product_id": 1,
-    "full_product_name": "White Rabbit",
+    "product_full_name": "White Rabbit",
     "product_name_on_ticket": "White Rabbit2",
     "barCode_available": true,
     "barCode_list": [
@@ -59,58 +59,6 @@
     "current_price": "2.99",
     "typeOfSale": "unit",
     "image": "./img/white_rabbit.jpg",
-    "display_on_screen": true
-  },
-  {
-    "product_id": 2,
-    "full_product_name": "Test",
-    "product_name_on_ticket": "Poisson Trident M2",
-    "barCode_available": false,
-    "barCode_list": [
-      {
-        "barCode": 1,
-        "quantity": "10",
-        "buying_price": "8",
-        "date_of_purchase": "2020-01-01",
-        "expiration_date": "2023-12-01"
-      }
-    ],
-    "price_history": [
-      {
-        "date": "2020-01-01",
-        "product_price": "1"
-      }
-    ],
-    "current_price": "1",
-    "typeOfSale": "weight",
-    "default_sold_weight_kg": "",
-    "image": "",
-    "display_on_screen": true
-  },
-  {
-    "product_id": 3,
-    "full_product_name": "Bonbon",
-    "product_name_on_ticket": "miam",
-    "barCode_available": false,
-    "barCode_list": [
-      {
-        "barCode": 2,
-        "quantity": "",
-        "buying_price": "",
-        "date_of_purchase": "",
-        "expiration_date": ""
-      }
-    ],
-    "price_history": [
-      {
-        "date": "2023-02-20",
-        "product_price": "5"
-      }
-    ],
-    "current_price": "5",
-    "typeOfSale": "unit",
-    "default_sold_weight_kg": "",
-    "image": "./img/carte_vitale_CHEONG_Loic.png",
     "display_on_screen": true
   }
 ]

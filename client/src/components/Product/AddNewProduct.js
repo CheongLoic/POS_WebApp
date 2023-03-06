@@ -30,7 +30,7 @@ const AddNewProduct = () => {
     const [error, setError] = useState(false) // Error for the form
     let ERROR = false // error in backend 
     const [form_data, setFormData] = useState({
-        full_product_name:"", 
+        product_full_name:"", 
         product_price :"",
         product_name_on_ticket : "" ,
         type_of_sale : "Par unité 每件",
@@ -73,7 +73,7 @@ const AddNewProduct = () => {
       //this function checks if there is what it is expected in the fields
       //Otherwise, it will display a msg error
       
-      if (form_data.full_product_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
+      if (form_data.product_full_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
       ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
       // || form_data.date_of_purchase === "" || form_data.expiration_date === "" 
       ||   ( form_data.barCode === ""  && form_data.barCode_available === "Oui 有") ) {
@@ -128,7 +128,7 @@ const AddNewProduct = () => {
 
           const dataToSend = {
             product_id : productID+1,
-            full_product_name: form_data.full_product_name, 
+            product_full_name: form_data.product_full_name, 
             product_name_on_ticket : form_data.product_name_on_ticket ,
             barCode_available : form_data.barCode_available === "Oui 有" ? true : false,
             barCode_list : form_data.barCode_available === "Oui 有" ? 
@@ -197,10 +197,10 @@ const AddNewProduct = () => {
                 <FormGroup row>
                   <Label sm={5} style={{fontSize: "70%", width : "25%" }}>Nom du nouveau produit <br/> 新食品名称*</Label>
                   <Col sm={8}>
-                  <Input type="text" name="full_product_name" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.full_product_name} placeholder="Nom du produit 食品名称" />
+                  <Input type="text" name="product_full_name" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.product_full_name} placeholder="Nom du produit 食品名称" />
                   </Col>
                 </FormGroup>
-                <p style={{fontSize: 15, color: "orange"}}>{error && form_data.full_product_name.length===0 ? "Veuillez entrer le nom du produit. 请输入食品名称" : ""}</p>
+                <p style={{fontSize: 15, color: "orange"}}>{error && form_data.product_full_name.length===0 ? "Veuillez entrer le nom du produit. 请输入食品名称" : ""}</p>
 
                 <FormGroup row>
                   <Label sm={5} style={{fontSize: "70%", width : "25%" }}>Nom du produit sur le ticket de caisse <br/> 收据上的产品名称*</Label>

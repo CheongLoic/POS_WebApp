@@ -8,17 +8,22 @@
         "product_name": "Poisson Trident M",
         "quantity": "2",
         "product_price": "8.5",
-        "product_total_price": "17"
+        "product_total_price_before_discount": "17",
+        "total_discount" : "",
+        "type_of_sale" : "weight"
       },
       {
         "product_id": 1,
         "product_name": "White Rabbit",
-        "quantity": "3",
+        "quantity": "4",
         "product_price": "3.99",
-        "product_total_price": "11.97"
+        "product_total_price_before_discount_before_discount": "11.97",
+        "total_discount" : "9",
+        "type_of_sale" : "unit"
       }
     ],
-    "PAYMENT_METHOD": "ESPECE",
+    "PAYMENT_METHOD": "ESPECES",
+    "TOTAL_DISCOUNT" : "9",
     "RECU": "30",
     "RENDU": "1.03",
     "TVA": "1.59",
@@ -34,10 +39,13 @@
         "product_name": "Poisson Trident M",
         "quantity": "2",
         "product_price": "8.5",
-        "product_total_price": "17"
+        "product_total_price_before_discount": "17",
+        "total_discount" : "",
+        "type_of_sale" : "weight"
       }
     ],
-    "PAYMENT_METHOD": "CD",
+    "PAYMENT_METHOD": "CB",
+    "TOTAL_DISCOUNT" : "9",
     "RECU": "",
     "RENDU": "",
     "TVA": "0.93",

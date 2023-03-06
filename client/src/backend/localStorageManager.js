@@ -36,10 +36,10 @@ export function setAndGetDataFromLS(key, data) {
 export function sortDataByFullName(data) {
     // Tri croissant
     const newData = data.sort((a, b) => {
-        if (a.full_product_name < b.full_product_name) {
+        if (a.product_full_name < b.product_full_name) {
           return -1;
         }
-        if (a.full_product_name > b.full_product_name) {
+        if (a.product_full_name > b.product_full_name) {
             return 1;
           }
           // a must be equal to b

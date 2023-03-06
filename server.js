@@ -97,64 +97,48 @@ app.post('/tickets',  (req, res) => {
     printer.println("75010 PARIS" );
     printer.println("TEL : 07.50.78.12.72" );
     printer.println("SIRET : 887752137 PARIS" );
-    printer.drawLine();
-
-    printer.upsideDown(true);
-    printer.println('Hello World upside down!');
-    printer.upsideDown(false);
-    printer.drawLine();
-
-    printer.invert(true);
-    printer.println('Hello World inverted!');
-    printer.invert(false);
-    printer.drawLine();
-
-    printer.setTypeFontB();
-    printer.println('Type font B');
-    printer.setTypeFontA();
-    printer.println('Type font A');
-    printer.drawLine();
-
-    printer.alignLeft();
-    printer.println('This text is on the left');
-    printer.alignCenter();
-    printer.println('This text is in the middle');
-    printer.alignRight();
-    printer.println('This text is on the right');
-    printer.alignLeft();
-    printer.drawLine();
-
-    printer.setTextDoubleHeight();
-    printer.println('This is double height');
-    printer.setTextDoubleWidth();
-    printer.println('This is double width');
-    printer.setTextQuadArea();
-    printer.println('This is quad');
-    printer.setTextSize(7, 7);
-    printer.println('Wow');
-    printer.setTextSize(0, 0);
-    printer.setTextNormal();
-    printer.println('This is normal');
-    printer.drawLine();
-
-    printer.leftRight('Left', 'Right');
-    printer.table(['One', 'Two', 'Three', 'Four']);
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"Left TEXT", align:"LEFT", width:0.5 },
-      { text:"Center TEXT", align:"CENTER", width:0.25, bold:true },
-      { text:"Right TEXT", align:"RIGHT", cols:8 }
-    ]);
-
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"Dxxxxxxxxxxxxxxxxxxxxxx", align:"LEFT", width:0.5, bold : true },
-      { text:"P.UxQTE", align:"CENTER", width:0.25, bold:true },
-      { text:"MONTANT €", align:"RIGHT", cols:8 , bold : true}
-    ]);
-    printer.println("TEST" );
     printer.newLine(); 
-    printer.println("TEST2" );
+    printer.leftRight('Date : ' + new Date(req.data.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.data.ticket_id);
+    printer.drawLine();
 
-    printer.leftRight( "Mode de paiement",  req.body.data.PAYMENT_METHOD);
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"DESIGNATION", align:"LEFT", width:0.58, bold : true },
+      { text:"QTExP.U", align:"CENTER", width:0.20, bold:true },
+      { text:"MONTANT", align:"RIGHT", width:0.20, bold : true}
+    ]);
+
+    let total_article = 0;
+    for (product in req.data.product_list) {
+      printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+        { text: product.product_name_on_ticket, align:"LEFT", width:0.58 },
+        { text: product.quantity +"x"+ req.data.product_price, align:"CENTER", width:0.20},
+        { text: product.product_total_price_before_discount, align:"RIGHT" , width:0.20 }
+      ]);
+      if (product.type_of_sale === "unit") total_article += product.quantity;
+      else  total_article += 1;
+    }
+
+    printer.drawLine();
+    printer.leftRight( "TOTAL ARTICLE",  total_article);
+    if (req.body.data.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  req.body.data.TOTAL_DISCOUNT +"$");
+    printer.leftRight( "TOTAL A PAYER TTC",  req.body.data.TTC +"$");
+    printer.leftRight( "MODE DE PAIEMENT",  req.body.data.PAYMENT_METHOD);
+    if ( req.body.data.PAYMENT_METHOD === "ESPECES") {
+      printer.leftRight( "RECU",  req.body.data.RECU +"$");
+      printer.leftRight( "RENDUES",  req.body.data.RENDU +"$");
+    }
+    
+    printer.newLine(); 
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"Taux TVA", align:"LEFT", width:0.33, bold:true },
+      { text:"TVA", align:"CENTER", width:0.33, bold:true },
+      { text:"HT", align:"RIGHT", width:0.33, bold:true },
+    ]);
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"5.5%", align:"LEFT", width:0.33 },
+      { text: req.data.TVA +"$", align:"CENTER", width:0.33},
+      { text: req.data.HT+"$", align:"RIGHT", width:0.33},
+    ]);
 
     printer.drawLine();
     printer.alignCenter();
@@ -162,6 +146,51 @@ app.post('/tickets',  (req, res) => {
     printer.println("A BIENTOT !" );
 
     printer.cut();
+
+    // printer.upsideDown(true);
+    // printer.println('Hello World upside down!');
+    // printer.upsideDown(false);
+    // printer.drawLine();
+
+    // printer.invert(true);
+    // printer.println('Hello World inverted!');
+    // printer.invert(false);
+    // printer.drawLine();
+
+    // printer.setTypeFontB();
+    // printer.println('Type font B');
+    // printer.setTypeFontA();
+    // printer.println('Type font A');
+    // printer.drawLine();
+
+    // printer.alignLeft();
+    // printer.println('This text is on the left');
+    // printer.alignCenter();
+    // printer.println('This text is in the middle');
+    // printer.alignRight();
+    // printer.println('This text is on the right');
+    // printer.alignLeft();
+    // printer.drawLine();
+
+    // printer.setTextDoubleHeight();
+    // printer.println('This is double height');
+    // printer.setTextDoubleWidth();
+    // printer.println('This is double width');
+    // printer.setTextQuadArea();
+    // printer.println('This is quad');
+    // printer.setTextSize(7, 7);
+    // printer.println('Wow');
+    // printer.setTextSize(0, 0);
+    // printer.setTextNormal();
+    // printer.println('This is normal');
+    // printer.drawLine();
+    
+    // printer.table(['One', 'Two', 'Three', 'Four']);
+    // printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+    //   { text:"Left TEXT", align:"LEFT", width:0.5 },
+    //   { text:"Center TEXT", align:"CENTER", width:0.25, bold:true },
+    //   { text:"Right TEXT", align:"RIGHT", cols:8 }
+    // ]);    
     
     try {
     let execute = printer.execute()
@@ -173,7 +202,7 @@ app.post('/tickets',  (req, res) => {
     res.status(200).send("Try to print !");
 
    } else  {
-    //DELETE DATA
+    //DELETE TICKET DATA
     const data = req.body.full_data
     // console.log("full data",data) 
     let newData = data.filter((ticket) => ticket.ticket_id !== req.body.data.ticket_id)
@@ -196,16 +225,6 @@ app.post('/tickets',  (req, res) => {
 });
 
 
-// TO ADD IN CLIENT 
-// export const printThermal = async (text) => {
-//   const requestOptions = {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ title: 'React POST Request Example' })
-//   };
-//   fetch('http://localhost:5000/printThermal', requestOptions)
-//     .then(response => response.json())
-// }
 
 app.post('/invoices', async (req, res) => {
   const newData = req.body
@@ -215,7 +234,7 @@ app.post('/invoices', async (req, res) => {
   res.status(200).send({status : "OK"})
 });
 
-
+//Add New Customer data in json file
 app.post('/customers/addNewCustomer', async (req, res) => {
     const newCustomer = req.body;
     // console.log(newCustomer)

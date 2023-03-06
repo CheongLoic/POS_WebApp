@@ -71,6 +71,7 @@ class Menu extends Component {
                         <Link to="/tickets"><Button type="button" color="primary"  className="menuBtn" block>Tickets de caisse 收据</Button></Link>
                         <Link to="/invoices"><Button type="button" color="primary"  className="menuBtn" block>Factures 发票</Button></Link>
                         <Link to="/customers"><Button type="button" color="primary"  className="menuBtn" block>Clients 客户</Button></Link>
+                        <Link to="/discounts"><Button type="button" color="primary"  className="menuBtn" block>Remises</Button></Link>
                         <Link to="/performances"><Button type="button" color="primary"  className="menuBtn" block>Performances 数据</Button></Link>
                     
                     </div>
