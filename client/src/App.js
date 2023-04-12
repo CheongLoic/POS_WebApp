@@ -198,7 +198,7 @@ class App extends Component {
   render() {
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" />
         <img src={image_test} className="App-image_test" alt="image_test" />
         <p>
@@ -219,7 +219,7 @@ class App extends Component {
         <Route exact path="/" element={<Menu/>}/>
         <Route exact path="/products" element={<Products/>}></Route>
         <Route exact path="/products/addNewProduct" element={<AddNewProduct/>}></Route>
-        <Route exact path="/products/addNewCustomer-send-data" element={<SendNewProductData/>}></Route>
+        <Route exact path="/products/addNewProduct-send-data" element={<SendNewProductData/>}></Route>
         <Route exact path="/tickets" element={<Tickets/>}></Route>
         <Route exact path="/tickets/addNewTicket" element={<AddNewTicket/>}></Route>
         <Route exact path="/invoices" element={<Invoices/>}></Route>
@@ -230,7 +230,7 @@ class App extends Component {
         <Route path="*" element={() => "ERROR 404 PAGE NOT FOUND"}/>
       </Routes>
       {/* </Switch> */}
-      </header>
+      </div>
       {/* <form method="/post" action="/print"> */}
       {/* <button onClick={this.TEST} >Print</button> */}
       {/* </form> */}

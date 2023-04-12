@@ -5,21 +5,25 @@
     "product_list": [
       {
         "product_id": 0,
-        "product_name": "Poisson Trident M",
+        "product_full_name": "Poisson Trident M",
+        "product_name_on_ticket": "Poisson Trident M",
         "quantity": "2",
         "product_price": "8.5",
         "product_total_price_before_discount": "17",
         "total_discount" : "",
-        "type_of_sale" : "weight"
+        "type_of_sale" : "weight",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Scardinius_erythrophthalmus.jpg/330px-Scardinius_erythrophthalmus.jpg"
       },
       {
         "product_id": 1,
-        "product_name": "White Rabbit",
+        "product_full_name": "White Rabbit",
+        "product_name_on_ticket": "White Rabbit",
         "quantity": "4",
         "product_price": "3.99",
         "product_total_price_before_discount_before_discount": "11.97",
         "total_discount" : "9",
-        "type_of_sale" : "unit"
+        "type_of_sale" : "unit",
+        "image": "./img/white_rabbit.jpg"
       }
     ],
     "PAYMENT_METHOD": "ESPECES",
@@ -36,12 +40,13 @@
     "product_list": [
       {
         "product_id": 0,
-        "product_name": "Poisson Trident M",
+        "product_name_on_ticket": "Poisson Trident M",
         "quantity": "2",
         "product_price": "8.5",
         "product_total_price_before_discount": "17",
         "total_discount" : "",
-        "type_of_sale" : "weight"
+        "type_of_sale" : "weight",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Scardinius_erythrophthalmus.jpg/330px-Scardinius_erythrophthalmus.jpg"
       }
     ],
     "PAYMENT_METHOD": "CB",

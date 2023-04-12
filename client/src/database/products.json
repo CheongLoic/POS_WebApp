@@ -1,12 +1,12 @@
 [
   {
     "product_id": 0,
-    "product_full_name": "Poisson Trident M",
-    "product_name_on_ticket": "Poisson Trident M2",
-    "barCode_available": true,
+    "product_full_name": "Poisson Trident Moyen 中黄鱼",
+    "product_name_on_ticket": "Poisson Trident M",
+    "barCode_available": false,
     "barCode_list": [
       {
-        "barCode": "0123456789101",
+        "barCode": "",
         "quantity": "10",
         "buying_price": "8",
         "date_of_purchase": "2020-01-01",
@@ -23,20 +23,20 @@
     "typeOfSale": "weight",
     "default_sold_weight_kg": "",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Scardinius_erythrophthalmus.jpg/330px-Scardinius_erythrophthalmus.jpg",
-    "display_on_screen": true
+    "display_on_ticket": true
   },
   {
     "product_id": 1,
     "product_full_name": "White Rabbit",
-    "product_name_on_ticket": "White Rabbit2",
+    "product_name_on_ticket": "White Rabbit",
     "barCode_available": true,
     "barCode_list": [
       {
-        "barCode": "0123456789102",
-        "quantity": "20",
+        "barCode": "6926719110011",
+        "quantity": "10",
         "buying_price": "2",
         "date_of_purchase": "2020-01-01",
-        "expiration_date": "2023-12-02"
+        "expiration_date": "2023-12-03"
       },
       {
         "barCode": "0123456789103",
@@ -59,6 +59,58 @@
     "current_price": "2.99",
     "typeOfSale": "unit",
     "image": "./img/white_rabbit.jpg",
-    "display_on_screen": true
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 2,
+    "product_full_name": "Sauce soja pour sushi",
+    "product_name_on_ticket": "Sauce soja pour sushi",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "4903001014761",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-04-11",
+        "product_price": "2.50"
+      }
+    ],
+    "current_price": "2.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Sauce_soja_pour_sushi.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 3,
+    "product_full_name": "Sauce de soja sucrée",
+    "product_name_on_ticket": "Sauce de soja sucrée",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8715035250307",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-04-11",
+        "product_price": "5.55"
+      }
+    ],
+    "current_price": "5.55",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Sauce_de_soja_sucree.jpg",
+    "display_on_ticket": true
   }
 ]

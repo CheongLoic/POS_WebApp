@@ -49,6 +49,22 @@ export function sortDataByFullName(data) {
      return newData;
  }
 
+ export function sortProductByIDAsc(data) {
+    // Tri croissant
+    const newData = data.sort((a, b) => {
+        if (a.product_id < b.product_id) {
+          return -1;
+        }
+        if (a.product_id > b.product_id) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+      })
+ 
+     return newData;
+ }
+
  export function sortDataTicketID(data) {
     // Tri décroissant
     const newData = data.sort((a, b) => {

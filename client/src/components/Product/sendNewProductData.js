@@ -15,9 +15,9 @@ import { Navigate } from "react-router-dom";
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(productDB)
           };
-        fetch('http://localhost:5000/products/addNewCustomer-send-data', requestOptions)
+        fetch('http://localhost:5000/products/addNewProduct-send-data', requestOptions)
         // const navigate = useNavigate()
-        // console.log("Data to send from /customers/addNewCustomer-send-data :", JSON.stringify(productDB))
+        // console.log("Data to send from /customers/addNewProduct-send-data :", JSON.stringify(productDB))
         // this.setState({changePage : true})
         // goToPage("/products/addNewProduct");
         return( <Navigate  to="/products"  replace={true} />) 

@@ -13,7 +13,7 @@ class Products extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            All_products : sortDataByFullName(products)
+            All_products : sortDataByFullName(products) //tri Ascendant des noms
         };
     }
   //   addProduct =()=> {

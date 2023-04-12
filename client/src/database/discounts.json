@@ -3,7 +3,12 @@
         "product_id" : 1,
         "product_full_name" : "White Rabbit",
         "quantity_for_discount" : 3,
-        "total_products_price_after_discount_when_condition_met_once" : 6,
-        "total_discount_when_condition_met_once" : 2.97
+        "total_discount_when_condition_met_once" : 2.99
+    },
+    {
+        "product_id" : 2,
+        "product_full_name" : "Sauce soja pour sushi",
+        "quantity_for_discount" : 3,
+        "total_discount_when_condition_met_once" : 2.5
     }
 ]

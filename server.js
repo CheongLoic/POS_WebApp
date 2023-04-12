@@ -43,8 +43,9 @@ app.post('/products/addNewProduct', async (req,res) => {
   // Add product photo in the folder
   // console.log("display form " + req.form)
   try { 
-    console.log("display body " + JSON.stringify( req.body))
+    // console.log("display body " + JSON.stringify( req.body)) //nothing
     let upload = multer({ storage : storage}).single('avatar');
+    // console.log("upload : " + upload) 
     upload(req, res, function(err) {
       //req.file contains info of uploaded file 
       //req.body contains info of text fields
@@ -60,12 +61,13 @@ app.post('/products/addNewProduct', async (req,res) => {
   } catch (err) { console.log(err)}
 })
 
-app.post('/products/addNewCustomer-send-data', async (req,res) => {
+app.post('/products/addNewProduct-send-data', async (req,res) => {
   const newData = req.body
   const filename = "client/src/database/products.json"
-  // console.log("display form " + req.form)
-    // console.log("display body from addNewCustomer-send-data " +  newData)
 
+  // console.log("display form " + req.form)
+      // console.log("display body from addNewProduct-send-data " +  newData) //Return :  display body from addNewProduct-send-data [object Object],[object Object],[object Object],[object Object],[object Object]
+      
   fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
   res.status(200).send({status : "OK"})
    
@@ -95,7 +97,7 @@ app.post('/tickets',  (req, res) => {
     printer.setTextNormal();
     printer.println("19 RUE CIVIALE" );
     printer.println("75010 PARIS" );
-    printer.println("TEL : 07.50.78.12.72" );
+    printer.println("TEL : 07.86.31.63.88" );
     printer.println("SIRET : 887752137 PARIS" );
     printer.newLine(); 
     printer.leftRight('Date : ' + new Date(req.data.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.data.ticket_id);
@@ -114,8 +116,12 @@ app.post('/tickets',  (req, res) => {
         { text: product.quantity +"x"+ req.data.product_price, align:"CENTER", width:0.20},
         { text: product.product_total_price_before_discount, align:"RIGHT" , width:0.20 }
       ]);
-      if (product.type_of_sale === "unit") total_article += product.quantity;
-      else  total_article += 1;
+      if (product.total_discount !== "") {
+        printer.leftRight('   REMISE'  , '-'+ product.total_discount+"  " );
+      }
+      // if (product.type_of_sale === "unit") total_article += product.quantity;
+      // else  total_article += 1;
+      total_article += 1;
     }
 
     printer.drawLine();
@@ -142,7 +148,7 @@ app.post('/tickets',  (req, res) => {
 
     printer.drawLine();
     printer.alignCenter();
-    printer.println("Merci de votre achat" );
+    printer.println("MERCI DE VOTRE VISITE" );
     printer.println("A BIENTOT !" );
 
     printer.cut();
