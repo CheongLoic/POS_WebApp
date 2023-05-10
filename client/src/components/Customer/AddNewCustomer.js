@@ -15,9 +15,9 @@ const AddNewCustomer = () => {
     const [zipCode, setZipCode] = useState("")  
 
     const [form_data, setFormData] = useState({
-        first_name:"", 
-        last_name :"",
-        gender : "M.",
+        // first_name:"", 
+        // last_name :"",
+        // gender : "M.",
         company : "",
         email : "",
         // phone : "",
@@ -45,8 +45,9 @@ const AddNewCustomer = () => {
         //this function checks if there is what it is expected in the fields
         //Otherwise, it will display a msg error
         
-        if (form_data.address === "" || form_data.email === "" || form_data.first_name === "" || form_data.last_name === "" 
-        ||  phone.length < 10 ||  zipCode < 5 || form_data.city === "" ) {
+        if (form_data.address === "" || form_data.email === "" 
+        // ||  form_data.first_name === "" || form_data.last_name === "" 
+        ||  phone.length < 10 ||  zipCode < 5 || form_data.city === "" || form_data.company === "" ) {
             // console.log("before set error true from checkfield",error)
             setError(true) ;
             ERROR = true
@@ -73,13 +74,14 @@ const AddNewCustomer = () => {
         // console.log("error from submit",ERROR)
 
         if (ERROR === false) {
-            const last_customer = customerDB[ Object.keys(customerDB).sort().pop() ]
+            // const last_customer = customerDB[ Object.keys(customerDB).sort().pop() ]
+            const last_customer = customerDB[ customerDB.length -1 ]
             // console.log(last_customer.id)
             const newCustomer = JSON.stringify( {
                 "id": last_customer.id +1,
-                "first_name":  form_data.first_name,
-                "last_name": form_data.last_name,
-                "gender" : form_data.gender,
+                // "first_name":  form_data.first_name,
+                // "last_name": form_data.last_name,
+                // "gender" : form_data.gender,
                 "company": form_data.company,
                 "email": form_data.email,
                 "phone": phone,
@@ -111,8 +113,8 @@ const AddNewCustomer = () => {
         
         <div className="form_customer"> 
                 <Form>
-                <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Nom 名*</Label>
+                {/* <FormGroup row>
+                    <Label sm={3} style={{fontSize: "60%"}}>Nom 名*</Label>
                     <Col sm={8}>
                     <Input type="text" name="last_name"  placeholder="Nom 名" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.last_name}  />
                     </Col>
@@ -120,7 +122,7 @@ const AddNewCustomer = () => {
                 <p style={{fontSize: 15, color: "orange"}}>{error && form_data.last_name.length===0 ? "Veuillez rentrer votre nom. 请输入您的姓氏" : ""}</p>
 
                 <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Prénom 姓*</Label>
+                    <Label sm={3} style={{fontSize: "60%"}}>Prénom 姓*</Label>
                     <Col sm={8}>
                     <Input type="text" name="first_name"  placeholder="Prénom 姓"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.first_name}  />
                     </Col>
@@ -128,17 +130,57 @@ const AddNewCustomer = () => {
                 <p style={{fontSize: 12, color: "orange"}}>{error && form_data.first_name.length===0 ? "Veuillez rentrer votre prénom. 请输入您的名字" : ""}</p>
 
                 <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Civilité 性别*</Label>
+                    <Label sm={3} style={{fontSize: "60%"}}>Civilité 性别*</Label>
                     <Col sm={8}>
                     <Input type="select" name="genre"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.gender}  >
                         <option>M.</option>
                         <option>Mme</option>
                     </Input>
                     </Col>
+                </FormGroup> */}
+
+                
+
+                
+                <FormGroup row>
+                    <Label sm={3} style={{fontSize: "60%"}}>Nom d'entreprise 公司名称*</Label>
+                    <Col sm={8}>
+                    <Input type="text" name="company"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Nom d'entreprise 公司名称" onChange={changeHandler} value={form_data.company}  />
+                    </Col>
                 </FormGroup>
+                <p style={{fontSize: 12, color: "orange"}}>{error && form_data.company.length===0 ? "Veuillez rentrer votre nom d'entreprise. 请输入您的公司名称" : ""}</p>
+
 
                 <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Téléphone 电话号码*</Label>
+                    <Label sm={3} style={{fontSize: "60%"}}>Adresse 住址/地址*</Label>
+                    <Col sm={8}>
+                    <Input type="text" name="address"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Adresse 住址/地址" onChange={changeHandler} value={form_data.address}  />
+                    </Col>
+                </FormGroup>
+                <p style={{fontSize: 12, color: "orange"}}>{error && form_data.address.length===0 ? "Veuillez rentrer votre adresse. 请输入您的地址" : ""}</p>
+
+                <FormGroup row>
+                    <Label sm={3} style={{fontSize: "60%"}}>Code postal 邮政编码*</Label>
+                    <Col sm={8}>
+                    <Input type="number" name="zipCode" min="0" max="99999" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Code postal 邮政编码" onChange={ (e) => {if (e.target.value.length > 5) {
+                        setZipCode(e.target.value.slice(0, 5));
+                    } else setZipCode(e.target.value) }} value={zipCode}  />
+                    </Col>
+                </FormGroup>
+                <p style={{fontSize: 12, color: "orange"}}>{error && zipCode.length===0 ? "Veuillez rentrer votre code postal. 请输入您的邮政编码" : 
+                ( error && ( zipCode.length !== 5 ) ? "Mauvais code postal. 邮政编码错误" : "")}</p>
+
+                <FormGroup row>
+                    <Label sm={3} style={{fontSize: "60%"}}>Commune 城市*</Label>
+                    <Col sm={8}>     
+                        <Input type="text" name="city"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Commune 城市" onChange={changeHandler} value={form_data.city}  />
+                    </Col>
+                </FormGroup>
+                <p style={{fontSize: 12, color: "orange"}}>{error && form_data.city.length===0 ? "Veuillez rentrer votre commune. 请输入您的城市" : ""}</p>
+
+
+                <FormGroup row>
+                    <Label sm={3} style={{fontSize: "60%"}}>Téléphone 电话号码*</Label>
                     <Col sm={8}>
                     <Input type="number" name="phone" min="1" max="9999999999"   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Téléphone 电话号码" onChange={ (e) => {if (e.target.value.length > 10) {
                         setPhone(e.target.value.slice(0, 10));
@@ -153,46 +195,13 @@ const AddNewCustomer = () => {
                 && phone.length !== 10     ? "Mauvais numéro de téléphone. 电话号码错误" : "")}</p>
 
                 <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Email 电子邮件*</Label>
+                    <Label sm={3} style={{fontSize: "60%"}}>Email 电子邮件*</Label>
                     <Col sm={8}>
                     <Input type="email" name="email" placeholder="Email 电子邮件"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.email}  />
                     </Col>
                 </FormGroup>
                 <p style={{fontSize: 12, color: "orange"}}>{error && (form_data.email.length===0 || !form_data.email.includes("@") || !form_data.email.includes(".") )? "Veuillez rentrer votre email. 请输入您的电子邮件" : ""}</p>
 
-                <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Nom d'entreprise 公司名称</Label>
-                    <Col sm={8}>
-                    <Input type="text" name="company"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Nom d'entreprise 公司名称" onChange={changeHandler} value={form_data.company}  />
-                    </Col>
-                </FormGroup>
-
-                <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Adresse 住址/地址*</Label>
-                    <Col sm={8}>
-                    <Input type="text" name="address"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Adresse 住址/地址" onChange={changeHandler} value={form_data.address}  />
-                    </Col>
-                </FormGroup>
-                <p style={{fontSize: 12, color: "orange"}}>{error && form_data.address.length===0 ? "Veuillez rentrer votre adresse. 请输入您的地址" : ""}</p>
-
-                <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Code postal 邮政编码*</Label>
-                    <Col sm={8}>
-                    <Input type="number" name="zipCode" min="0" max="99999" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Code postal 邮政编码" onChange={ (e) => {if (e.target.value.length > 5) {
-                        setZipCode(e.target.value.slice(0, 5));
-                    } else setZipCode(e.target.value) }} value={zipCode}  />
-                    </Col>
-                </FormGroup>
-                <p style={{fontSize: 12, color: "orange"}}>{error && zipCode.length===0 ? "Veuillez rentrer votre code postal. 请输入您的邮政编码" : 
-                ( error && ( zipCode.length !== 5 ) ? "Mauvais code postal. 邮政编码错误" : "")}</p>
-
-                <FormGroup row>
-                    <Label sm={3} style={{fontSize: "70%"}}>Commune 城市*</Label>
-                    <Col sm={8}>     
-                        <Input type="text" name="city"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  placeholder="Commune 城市" onChange={changeHandler} value={form_data.city}  />
-                    </Col>
-                </FormGroup>
-                <p style={{fontSize: 12, color: "orange"}}>{error && form_data.city.length===0 ? "Veuillez rentrer votre commune. 请输入您的城市" : ""}</p>
 
                 <Button  color="success" style={{ alignItems: 'center', margin : "10px"}} onClick={() => submit()}>+ Ajouter un client 加客户</Button>
                 <Link to="/customers"><Button  color="primary">Retour 返回</Button></Link>

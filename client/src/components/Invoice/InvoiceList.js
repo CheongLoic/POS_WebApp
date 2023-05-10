@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 // import {Link} from "react-router-dom";
-import print_icon from "../../img/print_icon4.png"
+// import print_icon from "../../img/print_icon4.png"
 import trash_can_icon from "../../img/red_trash_can_icon.png"
+import download_logo from "../../img/download-logo.png"
+import loading_gif from "../../img/loading-gif.gif"
 // import fullInvoiceDB from "../../database/invoices.json"
 // import { setDataInLS } from '../../backend/localStorageManager';
 import customersDB from "../../database/customers.json"
+import ticketDB from "../../database/tickets.json"
 // import invoicesDB from "../../database/invoices.json"
-
+import InvoicePDF from './invoicePDF';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 
 class InvoiceList  extends Component {
@@ -15,7 +19,9 @@ class InvoiceList  extends Component {
         super(props);
         this.state = ({
             invoiceDB : this.props.invoice_data,
-            customer : customersDB.filter((client) => client.id === this.props.invoice_data.customer_id )
+            customer : customersDB.filter((client) => client.id === this.props.invoice_data.customer_id ),
+            ticket : ticketDB.filter((ticket) => ticket.ticket_id === this.props.invoice_data.ticket_id)
+
         });
     }
 
@@ -59,9 +65,20 @@ class InvoiceList  extends Component {
                 <div className='invoice_icon'> 
                 {/* {console.log(this.state.customer[0].gender )} */}
                     <div>Facture N°{this.state.invoiceDB.invoice_id} du  {new Date(this.state.invoiceDB.date).toLocaleString()}</div>
-                    <div>de {this.state.customer[0].gender } {this.state.customer[0].last_name } {this.state.customer[0].first_name }</div>
-                    <Button className='print_icon' style={{marginRight : 10}} onClick={() => this.submit()} ><img src={print_icon} height="30px" width="30px" border-radius ="11%" alt="print_icon"></img></Button>
-                    <Button className='print_icon'  onClick={() => this.delete()} ><img src={trash_can_icon} height="30px" width="30px" border-radius ="11%" alt="trash_can_icon"></img></Button>
+                    <div>de {this.state.customer[0].company }</div>
+                    {/* <Button className='print_icon' style={{marginRight : 10}} onClick={() => this.submit()} ><img src={print_icon} height="30px" width="30px" border-radius ="11%" alt="print_icon"></img></Button> */}
+                    
+                    <PDFDownloadLink document={<InvoicePDF invoiceDB={this.state.invoiceDB} customer={this.state.customer[0]} ticket={this.state.ticket[0]} />} fileName={"XH_Facture_n°".concat(this.state.invoiceDB.invoice_id,".pdf")}>
+                    {({loading}) => (loading ? 
+                        <img src={loading_gif} height="30px" width="30px" border-radius ="11%" alt="loading_gif"></img>
+                        : 
+                        <Button className='print_icon'  color="light" ><img src={download_logo} height="30px" width="30px" border-radius ="11%" alt="download_logo"></img></Button>)}
+                    </PDFDownloadLink>
+                    {/* <InvoicePDF invoiceDB={this.state.invoiceDB} /> */}
+                    <Button className='print_icon' style={{marginLeft : 10}} onClick={() => this.delete()} ><img src={trash_can_icon} height="30px" width="30px" border-radius ="11%" alt="trash_can_icon"></img></Button>
+                
+                
+                
                 </div>
             );
     }

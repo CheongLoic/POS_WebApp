@@ -16,10 +16,10 @@ class customerList  extends Component {
         return (
             <div className="box">
             <ul style={{fontSize : "70%"}}>
-                <li><span className="labelInfoBox">Prénom Nom : </span>{this.state.customerDB.gender +" "+ this.state.customerDB.first_name +" "+ this.state.customerDB.last_name}</li>
+                <li><span className="labelInfoBox">Entreprise : </span>{this.state.customerDB.company}</li>
                 <li><span className="labelInfoBox"> Adresse: </span>{this.state.customerDB.address  +" "+ this.state.customerDB.zip_code   +" "+ this.state.customerDB.city  }</li>
                 <li><span className="labelInfoBox">Email: </span>{this.state.customerDB.email} </li>
-                <li><span className="labelInfoBox">Phone: </span>{this.state.customerDB.phone} </li>
+                <li><span className="labelInfoBox">TEL: </span>{this.state.customerDB.phone.replace(/(.{2})/g,"$1 ")} </li>
             </ul>
         </div>
             );

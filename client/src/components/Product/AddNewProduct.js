@@ -29,6 +29,7 @@ const AddNewProduct = () => {
 
 
     const [error, setError] = useState(false) // Error for the form
+    const [chinese_caracter_recognized, setChineseRecognized] = useState(false) // Error for the form
     let ERROR = false // error in backend 
     const [form_data, setFormData] = useState({
         product_full_name:"", 
@@ -48,7 +49,20 @@ const AddNewProduct = () => {
         // console.log(e.target.value)  
         
         const { name, value } = e.target;
-        setFormData((form_data) => ({ ...form_data, [name]: value }));
+        if (name === "barCode") {
+          if (value.length > 13) {
+            setFormData((form_data) => ({ ...form_data, [name]: value.slice(0, 13) }));
+          } else {
+            setFormData((form_data) => ({ ...form_data, [name]: value }));
+          }
+        } else if (name === "product_price" && value.includes(".")) {
+          const newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,2)
+          setFormData((form_data) => ({ ...form_data, [name]: newValue  }));
+        }
+        else {
+          setFormData((form_data) => ({ ...form_data, [name]: value }));
+        }
+        
         // if (image_data.file.length === 0) {
         //     console.log("No file inserted !")
         //     console.log(image_data.file)
@@ -57,6 +71,7 @@ const AddNewProduct = () => {
         //     console.log(image_data.file.length)
         //     console.log(image_data.file)
         // }
+        
     };
 
     const [image_data, getImage] = useState({file : []})
@@ -72,11 +87,13 @@ const AddNewProduct = () => {
         file_name = file_name.replaceAll("è", "e")
         file_name = file_name.replaceAll("ê", "e")
         file_name = file_name.replaceAll("à", "a")
+        file_name = file_name.replaceAll("â", "a")
         file_name = file_name.replaceAll("ù", "u")
         file_name = file_name.replaceAll("'", "_")
         file_name = file_name.replaceAll("ç", "c")
         file_name = file_name.replaceAll("ï", "i")
         file_name = file_name.replaceAll("î", "i")
+        file_name = file_name.replaceAll("ô", "o")
 
 
         // const newImgFile  = new File([img_file], file_name , {type: img_file.type})
@@ -97,26 +114,31 @@ const AddNewProduct = () => {
     const checkField = ()=>{
       //this function checks if there is what it is expected in the fields
       //Otherwise, it will display a msg error
+      const chinese_caracter_array = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
       
       if (form_data.product_full_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
-      ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
+      // ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
       // || form_data.date_of_purchase === "" || form_data.expiration_date === "" 
       ||   ( form_data.barCode === ""  && form_data.barCode_available === "Oui 有")  
+      || chinese_caracter_array.length > 0
       // || image_data.file.name.includes(" ")  || image_data.file.name.includes("_") 
       ) {
           // console.log("before set error true from checkfield",error)
           setError(true) ;
           ERROR = true
-
+          setChineseRecognized(true)
+          // console.log("chinese_caracter_recognized :", chinese_caracter_array)
+          // console.log("chinese_caracter_recognized :", chinese_caracter_recognized)
           // console.log("image_data.file.name before : '", image_data.file.name, "'");
           // console.log("image_data.file  before : '", image_data.file, "'");
           // console.log("image_data  before : '", image_data, "'");
           // console.log("Set error true")
-          // console.log("set error true from checkfield",error)
+          console.log("set error to true from checkfield : ",error)
           // console.log("set ERROR true from checkfield",ERROR)
       } else {
           setError(false)
           ERROR = false
+          setChineseRecognized(false)
           // console.log("Set error false", error)
           // console.log("Set ERROR false", ERROR)
       }
@@ -147,7 +169,17 @@ const AddNewProduct = () => {
         if (ERROR === false) {
           const current_date = new Date();
           let productDB = getDataFromLS("productDB")
-          let last_product = productDB[ Object.keys(productDB).sort().pop() ]
+          let productDB_sorted = productDB.sort((a, b) => {//tricroissant par product_id
+          if (a.product_id < b.product_id) {
+              return -1;
+            }
+            if (a.product_id > b.product_id) {
+                return 1;
+              }
+              // a must be equal to b
+              return 0;
+          })
+          let last_product = productDB_sorted[productDB_sorted.length - 1 ]
           const productID = last_product.product_id
 
           // let product_with_no_barcode = getDataFromLS("product_with_no_barcode")
@@ -157,8 +189,8 @@ const AddNewProduct = () => {
           // console.log("last_barCodeID: ", last_barCodeID)
           // last_barCodeID = last_barCodeID.barCode
           // console.log("last_barCodeID: ", last_barCodeID)
-
-          
+          let newBarcode = form_data.barCode
+          if (form_data.barCode.length <13) newBarcode= "0".repeat(13-form_data.barCode.length) + newBarcode
 
           const dataToSend = {
             product_id : productID+1,
@@ -167,7 +199,7 @@ const AddNewProduct = () => {
             barCode_available : form_data.barCode_available === "Oui 有" ? true : false,
             barCode_list : form_data.barCode_available === "Oui 有" ? 
               [{
-                barCode : form_data.barCode,
+                barCode : newBarcode,
                 quantity: form_data.quantity,
                 buying_price: form_data.buying_price, 
                 date_of_purchase: form_data.date_of_purchase,
@@ -189,7 +221,7 @@ const AddNewProduct = () => {
             typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": "weight",
             default_sold_weight_kg : form_data.default_sold_weight_kg,
             image : image_data.file.name === undefined ? "" : "./img/"+image_data.file.name,
-            display_on_ticket: formdata.display_product_name === "Oui 要" ? true : false
+            display_on_ticket: form_data.display_product_name === "Oui 要" ? true : false
           }
 
 
@@ -200,7 +232,7 @@ const AddNewProduct = () => {
 
             let barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID")
             const db = {
-              barCode: form_data.barCode,
+              barCode: newBarcode,
               productID : dataToSend.product_id
             }
             barCodeAvailable_productID.push(db)
@@ -250,7 +282,7 @@ const AddNewProduct = () => {
             <div className="form_product"> 
               <Form action='/products/AddNewProduct' method="POST" >
                 <FormGroup row>
-                  <Label sm={5} style={{fontSize: "60%", width : "25%" }}>Nom du nouveau produit <br/> 新食品名称*</Label>
+                  <Label sm={3} style={{fontSize: "60%" }}>Nom du nouveau produit<br/>新食品名称*</Label>
                   <Col sm={8}>
                   <Input type="text" name="product_full_name" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.product_full_name} placeholder="Nom du produit 食品名称" />
                   </Col>
@@ -258,12 +290,14 @@ const AddNewProduct = () => {
                 <p style={{fontSize: 15, color: "orange"}}>{error && form_data.product_full_name.length===0 ? "Veuillez entrer le nom du produit. 请输入食品名称" : ""}</p>
 
                 <FormGroup row>
-                  <Label sm={5} style={{fontSize: "60%", width : "25%" }}>Nom du produit sur le ticket de caisse <br/> 收据上的产品名称*</Label>
+                  <Label sm={3} style={{fontSize: "60%"}}>Nom du produit sur le ticket de caisse <br/> 收据上的产品名称*</Label>
                   <Col sm={8}>
                   <Input type="text" name="product_name_on_ticket"  maxLength="26" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.product_name_on_ticket} placeholder="Nom du produit 食品名称" />
                   </Col>
                 </FormGroup>
+                <p style={{fontSize: 15, color: "orange"}}>{error && form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)).length >0 ? "Caractères chinois non acceptés. 不能写汉字" : ""}</p>
                 <p style={{fontSize: 15, color: "orange"}}>{error && form_data.product_name_on_ticket.length===0 ? "Veuillez entrer le nom du produit. 请输入收据上的产品名称" : ""}</p>
+                
 
                   <FormGroup row>
                   <Label sm={3} style={{fontSize: "60%"}}>Prix 价格*</Label>
@@ -286,13 +320,13 @@ const AddNewProduct = () => {
                 {form_data.type_of_sale ===  "Au poids 体重" ? 
                   <div>
                     <FormGroup row>
-                      <Label sm={3} style={{fontSize: "60%"}}>Poids vendu par défaut<br/>默认出售重量*</Label>
+                      <Label sm={3} style={{fontSize: "60%"}}>Poids vendu par défaut<br/>默认出售重量</Label>
                       <Col sm={8}>
                       <Input type="number" name="default_sold_weight_kg" min="0" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} 
                         onChange={changeHandler} value={form_data.default_sold_weight_kg}  placeholder="Poids vendu par défaut 默认出售重量" />
                       </Col>
                     </FormGroup>
-                    <p style={{fontSize: 15, color: "orange"}}>{error && form_data.default_sold_weight_kg.length===0 ? "Veuillez entrer le poids vendu par défaut. 请输入默认出售重量" : ""}</p>
+                    {/* <p style={{fontSize: 15, color: "orange"}}>{error && form_data.default_sold_weight_kg.length===0 ? "Veuillez entrer le poids vendu par défaut. 请输入默认出售重量" : ""}</p> */}
                   </div>
                 : "" }
 

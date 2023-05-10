@@ -17,6 +17,7 @@ class TicketList  extends Component {
     }
 
     toPrint =() =>{
+        // console.log("ticket to print : ", this.state.ticketDB)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -74,6 +74,15 @@ app.post('/products/addNewProduct-send-data', async (req,res) => {
 
 })
 
+app.post('/discounts', async (req,res) => {
+  const newData = req.body
+  const filename = "client/src/database/discounts.json"
+  fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
+  res.status(200).send({status : "OK"})
+   
+
+})
+
 
 
 // #####################################################################
@@ -82,6 +91,8 @@ app.post('/products/addNewProduct-send-data', async (req,res) => {
 
 // var router = express.Router();
 app.post('/tickets',  (req, res) => {
+  // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
+console.log(req.body.data)
 
    if (req.body.action === "print") {
     console.log("Connecting to printer ...");
@@ -100,7 +111,8 @@ app.post('/tickets',  (req, res) => {
     printer.println("TEL : 07.86.31.63.88" );
     printer.println("SIRET : 887752137 PARIS" );
     printer.newLine(); 
-    printer.leftRight('Date : ' + new Date(req.data.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.data.ticket_id);
+    // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
+    printer.leftRight('Date : ' + new Date(req.body.data.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.body.data.ticket_id.toString()+" ");
     printer.drawLine();
 
     printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
@@ -110,41 +122,63 @@ app.post('/tickets',  (req, res) => {
     ]);
 
     let total_article = 0;
-    for (product in req.data.product_list) {
+    for (let i in req.body.data.product_list) {
       printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-        { text: product.product_name_on_ticket, align:"LEFT", width:0.58 },
-        { text: product.quantity +"x"+ req.data.product_price, align:"CENTER", width:0.20},
-        { text: product.product_total_price_before_discount, align:"RIGHT" , width:0.20 }
+        { text: req.body.data.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
+        { text: req.body.data.product_list[i].quantity +"x"+ Number(req.body.data.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},
+        { text: Number(req.body.data.product_list[i].product_total_price_before_discount).toFixed(2) +"$" , align:"RIGHT" , width:0.20 }
       ]);
-      if (product.total_discount !== "") {
-        printer.leftRight('   REMISE'  , '-'+ product.total_discount+"  " );
+      if (req.body.data.product_list[i].total_discount !== "") {
+        printer.leftRight('   REMISE'  , '-'+ Number(req.body.data.product_list[i].total_discount).toFixed(2)+"$" );
       }
-      // if (product.type_of_sale === "unit") total_article += product.quantity;
+      // if (req.body.data.product_list[i].type_of_sale === "unit") total_article += req.body.data.product_list[i].quantity;
       // else  total_article += 1;
       total_article += 1;
     }
+//     printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+//   { text:"01234567890123456790123456", align:"LEFT", width:0.58, bold : true },
+//   { text:"0.000kgx 00.00$", align:"CENTER", width:0.22, bold:true },
+//   { text:"00.00$", align:"RIGHT",  width:0.20, bold : true}
+// ]);
 
     printer.drawLine();
-    printer.leftRight( "TOTAL ARTICLE",  total_article);
-    if (req.body.data.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  req.body.data.TOTAL_DISCOUNT +"$");
-    printer.leftRight( "TOTAL A PAYER TTC",  req.body.data.TTC +"$");
+    // printer.leftRight( "TOTAL ARTICLE",  total_article);
+    if (req.body.data.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  Number(req.body.data.TOTAL_DISCOUNT).toFixed(2) +"$ ");
+    printer.setTextQuadArea();
+    // // printer.bold(true); 
+    // // printer.setTextSize(1, 1);
+    // printer.alignLeft();
+    printer.println("TOTAL TTC \t\t"+Number(req.body.data.TTC).toFixed(2) +"$");
+    //  printer.alignRight();
+    // printer.print( Number(req.body.data.TTC).toFixed(2) +"$");
+   
+    // printer.setTextNormal();
+    // printer.setTextDoubleHeight();
+    // printer.leftRight( "TOTAL TTC",  Number(req.body.data.TTC).toFixed(2) +"$");
+    printer.setTextNormal();
     printer.leftRight( "MODE DE PAIEMENT",  req.body.data.PAYMENT_METHOD);
     if ( req.body.data.PAYMENT_METHOD === "ESPECES") {
-      printer.leftRight( "RECU",  req.body.data.RECU +"$");
-      printer.leftRight( "RENDUES",  req.body.data.RENDU +"$");
+      printer.leftRight( "RECU",  Number(req.body.data.RECU).toFixed(2) +"$ ");
+      printer.leftRight( "RENDUE",  Number(req.body.data.RENDU).toFixed(2) +"$ ");
     }
     
     printer.newLine(); 
     printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
       { text:"Taux TVA", align:"LEFT", width:0.33, bold:true },
       { text:"TVA", align:"CENTER", width:0.33, bold:true },
-      { text:"HT", align:"RIGHT", width:0.33, bold:true },
+      { text:"HT ", align:"RIGHT", width:0.33, bold:true },
     ]);
     printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
       { text:"5.5%", align:"LEFT", width:0.33 },
-      { text: req.data.TVA +"$", align:"CENTER", width:0.33},
-      { text: req.data.HT+"$", align:"RIGHT", width:0.33},
+      { text: req.body.data.TVA +"$", align:"CENTER", width:0.33},
+      { text: req.body.data.HT+"$ ", align:"RIGHT", width:0.33},
     ]);
+
+    // printer.bold(true); 
+    // // printer.setTextSize(7, 7);
+    // printer.table(["Taux TVA", "TVA","HT", "TTC"]);
+    // printer.setTextNormal();
+    // printer.table(["5.5%",req.body.data.TVA +"$" ,req.body.data.HT+"$",Number(req.body.data.TTC).toFixed(2) +"$" ]);
 
     printer.drawLine();
     printer.alignCenter();

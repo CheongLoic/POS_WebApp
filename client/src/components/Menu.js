@@ -8,6 +8,7 @@ import productDB from '../database/products.json'
 import ticketDB from "../database/tickets.json"
 import customerDB from "../database/customers.json"
 import invoiceDB from "../database/invoices.json"
+import { sortDataByFullName } from '../backend/localStorageManager';
 
 
 class Menu extends Component {
@@ -43,6 +44,8 @@ class Menu extends Component {
                 })  
             })
 
+            product_with_no_barcode = sortDataByFullName(product_with_no_barcode )
+
             // console.log(product_with_barcode)
             // console.log(barCodeAvailable_productID)
             setDataInLS("barCodeAvailable_productID", barCodeAvailable_productID)
@@ -67,8 +70,8 @@ class Menu extends Component {
                     <div id="menu">
                         <h1>Menu</h1>
                         {/* <img src={images["no_image.jpg"].default} width="200" height="200" />  */}
-                        <Link to="/products"><Button  type="button" color="primary"  className="menuBtn" block>Produits alimentaires 食品</Button></Link>
                         <Link to="/tickets"><Button type="button" color="primary"  className="menuBtn" block>Tickets de caisse 收据</Button></Link>
+                        <Link to="/products"><Button  type="button" color="primary"  className="menuBtn" block>Produits alimentaires 食品</Button></Link>
                         <Link to="/invoices"><Button type="button" color="primary"  className="menuBtn" block>Factures 发票</Button></Link>
                         <Link to="/customers"><Button type="button" color="primary"  className="menuBtn" block>Clients 客户</Button></Link>
                         <Link to="/discounts"><Button type="button" color="primary"  className="menuBtn" block>Remises</Button></Link>

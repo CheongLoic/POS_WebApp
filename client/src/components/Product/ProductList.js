@@ -47,7 +47,7 @@ class ProductList  extends Component {
                 
                 
                 {/* <p>{this.state.product_database.product_name_on_ticket}</p> */}
-                <span>{this.state.product_database.current_price} €</span>
+                <span>{ Number(this.state.product_database.current_price).toFixed(2)} €</span>
                 </Link>
             
             </div>
