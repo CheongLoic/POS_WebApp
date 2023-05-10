@@ -113,3 +113,14 @@ export function sortDataByFullName(data) {
  
      return newData;
  }
+
+
+ export function removeDiscountedProducts(data, unwanted_data) {
+  let filtered_data = data.filter((product) => product.typeOfSale === "unit")
+  for (let i in unwanted_data) {
+    filtered_data = filtered_data.filter((product) => product.product_id !== unwanted_data[i].product_id)
+  }
+
+  return filtered_data;
+
+ }

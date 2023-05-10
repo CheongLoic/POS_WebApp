@@ -1,0 +1,80 @@
+.product_in_discount {
+    /* position: inherit; */
+    display: block;
+    width: 80%;
+    margin-left: 10%;
+    height : 80px ;
+    background-color: rgb(240, 240, 240);
+    /* align-items: center; */
+    /* justify-content: space-evenly; */
+    /* padding : 15px 10px; */
+    padding-left: 15px;
+    padding-right: 15px;
+    color: rgb(19, 73, 124);
+    border-radius: 20px ;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resetCSSDiscount {
+    background-color:cyan;
+    position : absolute;
+    top : 0px;left : 0px;
+    
+}
+
+.discountContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    /* display:inline-block; */
+    /* background-color: yellow; */
+    font-size: 70%;
+    max-height: 100%;
+}
+
+.firstColumn {
+    flex-direction: column;
+    display: inline-block;
+    /* background-color: rgb(255, 0, 183); */
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thirdColumn {
+    flex-direction: column;
+    /* display: inline; */
+    /* background-color: rgb(0, 187, 255); */
+    width: 25%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondColumn {
+    flex-direction: column;
+    display: inline-block;
+    /* background-color: chartreuse; */
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.fourthColumn {
+    flex-direction: column;
+    display: inline-block;
+    /* background-color: rgb(0, 229, 255); */
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
