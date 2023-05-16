@@ -1,15 +1,18 @@
 import React, { useState, useEffect} from 'react';
-// import {Link, Navigate } from "react-router-dom";
-import {Link } from "react-router-dom";
+import {Link, Navigate } from "react-router-dom";
+// import {Link } from "react-router-dom";
 // import {Link, useNavigate } from "react-router-dom";
 import {Button, Form, FormGroup, Input, Label} from 'reactstrap';
 import { getDataFromLS, setDataInLS } from '../../backend/localStorageManager';
 import discountDB from "../../database/discounts.json"
 // import Modal from "../Modal/Modal2"
 import Modal_payment from "../Modal/Modal_payment"
-import Modal_product from "../Modal/Modal_product_without_barcode"
+import Modal_product_without_barcode from "../Modal/Modal_product_without_barcode"
 import Modal_invoice from "../Modal/Modal_invoice"
 import Modal_print_ticket from "../Modal/Modal_print_ticket"
+import Modal_customer from '../Modal/Modal_customer'
+import ticketDB from "../../database/tickets.json"
+import { sortDataTicketID_ASC } from '../../backend/localStorageManager';
 
 // Video for uploading an image : https://www.youtube.com/watch?v=1KZ-tJRLU5I&list=LL&index=3&t=603s
 const AddNewTicket = () => {
@@ -21,18 +24,18 @@ const AddNewTicket = () => {
   // let TTC = 0;
   const barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID"); // [{barCode: '4903001014761', productID: 2}, ...]
   const productDB_from_LS = getDataFromLS("productDB");
-  const ticketDB = getDataFromLS("ticketDB");
+  // const ticketDB = getDataFromLS("ticketDB");
   const [TTC, setTTC] = useState(0); // To display on the screen 
   const [modalOpenPayment, setModalPaymentOpen] = useState(false);
   const [modalOpenProduct, setModalProductOpen] = useState(false);
   const [modalOpenInvoice, setModalInvoiceOpen] = useState(false);
+  const [modalOpenCustomer, setModalCustomerOpen] = useState(false);
   const [modalPrintTicket, setModalPrintTicketOpen] = useState(false);
-  const [barcodeScanned, setBarcode] = useState([]); // do not use it to compute data because of the UseEffect function ===> useless
   const [count, setCount] = useState(0)
   const [means_of_payment, setMeansOfPayment] = useState("")
   const [invoice, setInvoice] = useState(false)
-  const [product_without_barcode_choosed, chooseProductWithoutBarcode] = useState("")
-  // const [newTicket, setTicket] = useState([]);
+  const [customer, setCustomer] = useState({})
+  const [newTicket, setTicket] = useState({})
   const [product_list_to_display_on_screen, setProduct_list] = useState([]);
   // [{
   //   product_id: "",
@@ -45,9 +48,11 @@ const AddNewTicket = () => {
   //   type_of_sale : "",
   //   image : ""
   // }, ...] <==========  THIS IS product_list_to_display_on_screen
+
   
 
   useEffect(() => {
+    
       function handleKeyDown(e){
           // if key code is 13 ( Enter ) then check if barcodeScan > 3
           if (e.keyCode === 13 && barcodeScan.length > 3 && barcodeScan.length <= 13 && !isNaN(Number(barcodeScan))) {
@@ -100,12 +105,10 @@ const AddNewTicket = () => {
   */
   const  handleScan = (barcode_string) => {
       // document.querySelector("#last_barcode").innerHTML = scanned_barcode
-      console.log("set setBarcode")
+      // console.log("set setBarcode")
       // console.log("At the beginning barcodeScanned :", barcodeScanned) // vide  a la 1ere iteration
-      if (barcodeScanned.length === 0 ) setBarcode( [ barcode_string]);
-      else  setBarcode((old_barcode_string) => [...old_barcode_string, barcode_string]);
       if (count === 0 ) {
-        localStorage.removeItem("barcodes")
+        localStorage.removeItem("barcodeScan_history")
         localStorage.removeItem("product_basket_LS")
         localStorage.removeItem("TTC_LS")
         localStorage.removeItem("TOTAL_DISCOUNT_IN_THE_BASKET_LS")
@@ -312,48 +315,45 @@ const AddNewTicket = () => {
     }
 
 
-    const toPrint =() => {
-
-//TO DO : check quantity ==="" is not in product_list, otherwise return error message on screen 
+    const saveTicket =(invoiceBool, methodePaiement) => {
 
       let  TTC_LS = getDataFromLS("TTC_LS") // TTC stored in local storage
       let TOTAL_DISCOUNT_IN_THE_BASKET_LS = getDataFromLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS")
       // console.log("TTC from toPrint  : ", TTC_LS)
-      const HT = Math.round(TTC_LS / 1.055 *100) /100 //
-      const TVA =  Math.round((TTC_LS - HT) *100)/100 // TVA 5.5%
+      // const HT = Math.round(TTC_LS / 1.055 *100) /100 //
+      // const TVA =  Math.round((TTC_LS - HT) *100)/100 // TVA 5.5%
 
-      const dataToSend = {
+      let HT,TVA, TTC_invoice = 0
+
+      if (invoiceBool) {
+        HT = TTC_LS
+        TTC_invoice = HT * 1.055
+        TVA = TTC_invoice - HT
+      } else {
+        HT = Math.round(TTC_LS / 1.055 *100) /100 
+        TVA = Math.round((TTC_LS - HT) *100)/100 // TVA 5.5%
+      }
+
+      let sortedTickedDB_ID_ASC = sortDataTicketID_ASC(ticketDB)
+      
+      const newTicketDB = {
         // ticket_id : ticketDB[ Object.keys(ticketDB).sort().pop() ].ticket_id +1 ,
-        ticket_id : ticketDB[ ticketDB.length -1 ].ticket_id +1 ,
-        invoice : invoice, 
+        ticket_id : sortedTickedDB_ID_ASC[ sortedTickedDB_ID_ASC.length -1 ].ticket_id + 1 ,
+        invoice : invoiceBool, //boolean, ticket de caisse avec facture ?
         date_of_purchase : new Date().toISOString(),
-        product_list : product_list,//vide pour le moment
-        PAYMENT_METHOD: "",
+        product_list : product_list_to_display_on_screen,//vide pour le moment
+        PAYMENT_METHOD: methodePaiement,
         TOTAL_DISCOUNT : TOTAL_DISCOUNT_IN_THE_BASKET_LS.toFixed(2).toString(),
         RECU: "",
         RENDU: "",
-        TVA: TVA.toFixed(2).toString(),
-        HT: HT.toFixed(2).toString(),
-        TTC: TTC_LS.toFixed(2).toString()
+        TVA: TVA.toFixed(2), //string
+        HT: HT.toFixed(2), //string
+        TTC: invoiceBool ? TTC_invoice.toFixed(2) : TTC_LS.toFixed(2) //string
       }
 
-      console.log("data to send : ", dataToSend)
-      // ticketDB.push(dataToSend)  
-      // console.log("ticketDB : ", ticketDB)
-      // setDataInLS("ticketDB", ticketDB)
-
-
-      // const requestOptions = {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({
-      //         data : dataToSend,
-      //         action : "add"
-      //     })
-      // };
-
-      // fetch('http://localhost:5000/tickets', requestOptions)
-      // .then(response => response.json())
+      setTicket(newTicketDB)
+      // console.log("newTicketDB : ", newTicketDB)
+      // console.log("newTicket : ", newTicket)
   }
 
 
@@ -372,6 +372,16 @@ const AddNewTicket = () => {
   const getInvoiceBool = () => {
     return invoice
   }
+
+  const getCustomer = () => {
+    return customer
+  }
+
+  const getTicket = () => {
+    return newTicket
+  }
+
+  
 
   const removeProductButton =(index) => {
     // localStorage.removeItem("barcodes")
@@ -423,8 +433,8 @@ const AddNewTicket = () => {
     
     
     // console.log('product_list_chg :', product_list_chg)
-    if (product_list_chg[name].type_of_sale === "unit" && value[value.length] ===".") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
-    if (value === "") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
+    // if (product_list_chg[name].type_of_sale === "unit" && value[value.length] ===".") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
+    // if (value === "") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
 
     if (value.includes('.')) {
       if (product_list_chg[name].type_of_sale === "weight") {
@@ -497,6 +507,26 @@ const AddNewTicket = () => {
     setProduct_list(product_list_chg)//product_list_to_display_on_screen
 };
 
+const submit =() => {
+  if (product_list_to_display_on_screen.length !== 0 && product_list_to_display_on_screen.filter((product) => product.quantity === "").length === 0 ) {
+    setModalInvoiceOpen(true)
+  }
+}
+
+const reinitializeData = () => {
+  //DELETE ALL DATA IN THE BASKET
+  setCount(0)
+  setTTC(0)
+  setProduct_list([])
+  setInvoice(false)
+  setCustomer({})
+  setTicket({})
+  setDataInLS("barcodeScan_history", [])
+  setDataInLS("product_basket_LS", [])
+  setDataInLS("TTC_LS", 0)
+  setDataInLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS", 0)
+}
+
   // console.log('barcodeScanned before return :', barcodeScanned)
   // console.log('barcodeScan_history before return :', barcodeScan_history)
 
@@ -505,10 +535,10 @@ const AddNewTicket = () => {
             <div > 
               
               <div className="basket_container">
-              <Button  color="success" style={{margin : "10px"}} onClick={() => toPrint()}>Valider</Button>
-              <Button  color="warning" style={{margin : "10px"}} onClick={() => {setModalPaymentOpen(true)}}>Test modal paiement</Button>
-              <Button  color="light" style={{margin : "10px"}} onClick={() => {setModalProductOpen(true)}}>Choisir un produit sans code-barres</Button>
-              <Button  color="light" style={{margin : "10px"}} onClick={() => {setModalInvoiceOpen(true)}}>facture test</Button>
+              <Button  color="success" style={{margin : "10px"}} onClick={() =>  submit()}>Valider 确认</Button>
+              {/* <Button  color="warning" style={{margin : "10px"}} onClick={() => {setModalPaymentOpen(true)}}>Test modal paiement</Button> */}
+              <Button  color="light" style={{margin : "10px"}} onClick={() => {setModalProductOpen(true)}}>Choisir un produit sans code-barres 选择没有条形码的食品</Button>
+              {/* <Button  color="light" style={{margin : "10px"}} onClick={() => {setChangePage(true); test()}}> test</Button> */}
               <Link to="/tickets"><Button color="danger" onClick={() => goBackButton()} >Annuler 取消 </Button></Link>
 
 
@@ -595,18 +625,14 @@ const AddNewTicket = () => {
                   ))
                   }
 
-              {means_of_payment !== "" ?  <h1>{means_of_payment}</h1> : ""}
-              {product_without_barcode_choosed !== "" ?  <h1>{product_without_barcode_choosed}</h1> : ""}
-
-              {/* <img src={'./../img/Sauce_de_soja_sucree.jpg'} height="100px" width="100px" border-radius ="20%" align="left" alt={'test'} /> */}
-
               </div>
 
-              {modalOpenProduct && <Modal_product setOpenModal={setModalProductOpen} settingMeansOfPayment={chooseProductWithoutBarcode} setProductList={setProduct_list} setTTC={setTTC} />}
+              {modalOpenProduct && <Modal_product_without_barcode setOpenModal={setModalProductOpen}  setProductList={setProduct_list} setTTC={setTTC} />}
 
-              {modalOpenInvoice && <Modal_invoice setOpenModal={setModalInvoiceOpen} setInvoice={setInvoice}  setModalPaymentOpen={setModalPaymentOpen}  />}
-              {modalOpenPayment && <Modal_payment setOpenModal={setModalPaymentOpen} settingMeansOfPayment={setMeansOfPayment} getTTC={getTTC}  getInvoiceBool={getInvoiceBool} setModalPrintTicketOpen={setModalPrintTicketOpen} />}
-              {modalPrintTicket && <Modal_print_ticket setOpenModal={setModalPrintTicketOpen}  />}
+              {modalOpenInvoice && <Modal_invoice setOpenModal={setModalInvoiceOpen} setInvoice={setInvoice}  setModalPaymentOpen={setModalPaymentOpen} setModalCustomerOpen={setModalCustomerOpen} setCustomer={setCustomer}  />} 
+              {modalOpenCustomer && <Modal_customer setOpenModal={setModalCustomerOpen} setCustomer={setCustomer}  setModalPaymentOpen={setModalPaymentOpen}  />}
+              {modalOpenPayment && <Modal_payment setOpenModal={setModalPaymentOpen} setMeansOfPayment={setMeansOfPayment} getTTC={getTTC}  getInvoiceBool={getInvoiceBool} setModalPrintTicketOpen={setModalPrintTicketOpen} saveTicket={saveTicket} />}
+              {modalPrintTicket && <Modal_print_ticket setOpenModal={setModalPrintTicketOpen} getCustomer={getCustomer} getTicket={getTicket} reinitializeData={reinitializeData} />}
               
             </div>
         );

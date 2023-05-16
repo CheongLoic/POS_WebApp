@@ -3,13 +3,20 @@ import { Page, Text, View, Font, Image, Document, StyleSheet } from '@react-pdf/
 import no_img from "../../img/no_image.jpg"
 import JsBarcode from "jsbarcode";
 import msyh from "./../../msyh.ttf" 
+// import SourceSansHanSC from "./../../SourceHanSansSC-VF.ttf"
 
 //https://react-pdf.org/styling
 
-Font.register({
+Font.register(
+  {
     family: '微软雅黑 Light',
     src: msyh,
-  });
+  },
+  // {
+  //   family: 'Source Sans Han SC VF',
+  //   src: SourceSansHanSC,
+  // }
+  );
   
 const styles = StyleSheet.create({
   table: { 
@@ -36,7 +43,22 @@ const styles = StyleSheet.create({
     margin: "auto", 
     flexDirection: "row" 
   },
-  tableColBorderBottomProductName: { 
+  tableColBorderBottomID: { 
+    width: "5%", 
+    borderLeftWidth: 0, 
+    borderTopWidth: 0 ,
+    borderRight : 1,
+    borderRightStyle : "solid",
+    paddingBottom : 5,
+    borderBottomColor : "#C0C0C0",
+    borderBottomStyle : "solid",
+    borderBottomWidth : 1,
+    display : "flex",
+    justifyContent : "center",
+    alignItems : "center",
+    flexDirection: 'column',
+  }, 
+  tableColBorderBottomImage: { 
     width: "15%", 
     borderLeftWidth: 0, 
     borderTopWidth: 0 ,
@@ -49,10 +71,10 @@ const styles = StyleSheet.create({
     display : "flex",
     justifyContent : "center",
     alignItems : "center",
-    
+    flexDirection: 'column',
   }, 
-  tableColBorderBottomQty: { 
-    width: "55%", 
+  tableColBorderBottomProductName: { 
+    width: "50%", 
     borderLeftWidth: 0, 
     borderRight : 1,
     borderRightStyle : "solid",
@@ -63,7 +85,9 @@ const styles = StyleSheet.create({
     display : "flex",
     justifyContent : "center",
     alignItems : "center",
-    fontFamily : "微软雅黑 Light"
+    fontFamily : "微软雅黑 Light",
+    // fontFamily : 'Source Sans Han SC VF',
+    flexDirection: 'column',
   }, 
   tableColBorderBottomPrice: { 
     width: "10%", 
@@ -77,6 +101,7 @@ const styles = StyleSheet.create({
     display : "flex",
     justifyContent : "center",
     alignItems : "center",
+    flexDirection: 'column',
   }, 
   tableColBorderBottomBarcode: { 
     width: "20%", 
@@ -90,8 +115,21 @@ const styles = StyleSheet.create({
     display : "flex",
     justifyContent : "center",
     alignItems : "center",
+    flexDirection: 'column',
   }, 
-  tableColProductNameHead: { 
+  tableColIDHead: { 
+    height : 30,
+    width: "5%", 
+    borderStyle: "solid", 
+    borderWidth: 1, 
+    borderLeftWidth: 0, 
+    borderTopWidth: 0 ,
+    backgroundColor : "#C0C0C0",
+    display : "flex",
+    justifyContent : "center",
+    alignItems : "center",
+  }, 
+  tableColImageHead: { 
     height : 30,
     width: "15%", 
     borderStyle: "solid", 
@@ -103,9 +141,9 @@ const styles = StyleSheet.create({
     justifyContent : "center",
     alignItems : "center",
   }, 
-  tableColQtyHead: { 
+  tableColProductNameHead: { 
     height : 30,
-    width: "55%", 
+    width: "50%", 
     borderStyle: "solid", 
     borderWidth: 1, 
     borderLeftWidth: 0, 
@@ -186,11 +224,14 @@ const ProductsCataloguePDF = ({productsDB}) => (
   
       
         <View style={styles.table}> 
-            <View style={styles.tableRow}> 
-                <View style={styles.tableColProductNameHead}> 
+            <View style={styles.tableRow} fixed> 
+                <View style={styles.tableColImageHead}> 
                     <Text style={styles.tableCell}>Image</Text> 
                 </View> 
-                <View style={styles.tableColQtyHead}> 
+                <View style={styles.tableColIDHead}> 
+                    <Text style={styles.tableCell}>ID</Text> 
+                </View> 
+                <View style={styles.tableColProductNameHead}> 
                     <Text style={styles.tableCell}>Désignation des produits</Text> 
                 </View> 
                 <View style={styles.tableColProductPriceHead}> 
@@ -205,13 +246,17 @@ const ProductsCataloguePDF = ({productsDB}) => (
             {productsDB.map((product, index) => {
                 return (
                     <View key={index} style={styles.tableRow}> 
-                        <View style={styles.tableColBorderBottomProductName}> 
+                        
+                        <View style={styles.tableColBorderBottomImage}> 
                             <View style={styles.tableCell}> 
                                 <Image src={`${product.image}` === "" ? no_img : "./."+`${product.image}` } style={styles.image}  />
                                 {/* <Image src={`${product.image}` === "" ? no_img : `${product.image}` } style={styles.image}  /> */}
                             </View> 
                         </View> 
-                        <View style={styles.tableColBorderBottomQty}> 
+                        <View style={styles.tableColBorderBottomID}> 
+                            <Text style={styles.tableCell}>{product.product_id}</Text> 
+                        </View> 
+                        <View style={styles.tableColBorderBottomProductName}> 
                             <Text style={styles.tableCell}>{product.product_full_name} </Text> 
                         </View> 
                         <View style={styles.tableColBorderBottomPrice}>

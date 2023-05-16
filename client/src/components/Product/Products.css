@@ -103,7 +103,7 @@ img {
     /* align-items: center;
     justify-content: center; */
     text-align: center;
-    background-color: rgb(50, 202, 212);
+    background-color: #282c34;
 
 }
 
@@ -114,7 +114,7 @@ img {
     color: rgb(19, 73, 124);
     /* text-align: center;  */
     /* position : relative; */
-    box-shadow: rgb(255, 9, 9) 0px 5px 15px;
+    box-shadow: rgba(255, 255, 255, 0.556) 0px 5px 15px;
     border-radius: 20px ;
     font-weight: bold;
     padding-top: 20px;

@@ -151,7 +151,7 @@ class Discounts extends Component  {
         // console.log("this.state.errors.quantity_for_discount2: ", this.state.errors.quantity_for_discount2)
         return (
             <div style={{ width: "80%"}}> 
-                <h1>Remises</h1>
+                <h1>Promotions</h1>
                 {this.state.show_discount_form ? 
 
                 <div> 

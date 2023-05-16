@@ -4,7 +4,7 @@ import no_img from "../../img/no_image.jpg"
 import {Button} from 'reactstrap';
 import { getDataFromLS,setDataInLS } from '../../backend/localStorageManager';
 
-function Modal_payment({ setOpenModal, setProductList, setTTC } ) {
+function Modal_product_without_barcode({ setOpenModal, setProductList, setTTC } ) {
   const product_with_no_barcode = getDataFromLS("product_with_no_barcode")
 
 
@@ -113,4 +113,4 @@ function Modal_payment({ setOpenModal, setProductList, setTTC } ) {
   );
 }
 
-export default Modal_payment;
+export default Modal_product_without_barcode;

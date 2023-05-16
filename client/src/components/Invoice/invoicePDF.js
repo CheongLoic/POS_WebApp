@@ -48,9 +48,26 @@ const styles = StyleSheet.create({
     borderLeftt : 1,
     borderLeftStyle : "solid",
     paddingBottom : 5
+  }, tableColBorderBottomID: { 
+    width: "7%", 
+    borderLeftWidth: 0, 
+    borderTopWidth: 0 ,
+    borderRight : 1,
+    borderRightStyle : "solid",
+    paddingBottom : 5,
+    borderBottomColor : "#C0C0C0",
+    borderBottomStyle : "solid",
+    borderBottomWidth : 1,
+  }, 
+  tableColNoBorderBottomID: { 
+    width: "7%", 
+    borderLeftWidth: 0, 
+    borderRight : 1,
+    borderRightStyle : "solid",
+    paddingBottom : 5,
   }, 
   tableColBorderBottomProductName: { 
-    width: "60%", 
+    width: "53%", 
     borderLeftWidth: 0, 
     borderTopWidth: 0 ,
     borderRight : 1,
@@ -62,7 +79,7 @@ const styles = StyleSheet.create({
     fontFamily : "微软雅黑 Light"
   }, 
   tableColNoBorderBottomProductName: { 
-    width: "60%", 
+    width: "53%", 
     borderLeftWidth: 0, 
     borderRight : 1,
     borderRightStyle : "solid",
@@ -105,9 +122,19 @@ const styles = StyleSheet.create({
     borderRightStyle : "solid",
     paddingBottom : 5
   },
+  tableColIDHead: { 
+    height : 30,
+    width: "7%", 
+    borderStyle: "solid", 
+    borderWidth: 1, 
+    borderLeftWidth: 0, 
+    borderTopWidth: 0 ,
+    backgroundColor : "#C0C0C0",
+    // textAlign : "center"
+  },
   tableColProductNameHead: { 
     height : 30,
-    width: "60%", 
+    width: "53%", 
     borderStyle: "solid", 
     borderWidth: 1, 
     borderLeftWidth: 0, 
@@ -236,6 +263,9 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
       
       <View style={styles.table}> 
         <View style={styles.tableRow}> 
+        <View style={styles.tableColIDHead}> 
+            <Text style={styles.tableCell}>ID</Text> 
+          </View> 
           <View style={styles.tableColProductNameHead}> 
             <Text style={styles.tableCell}>Désignation des produits</Text> 
           </View> 
@@ -255,6 +285,9 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
           product.total_discount !== "" ? (
             <View key={index}> 
               <View  style={styles.tableRow}> 
+                <View style={styles.tableColNoBorderBottomID}> 
+                  <Text style={styles.tableCell}>{product.product_id}</Text> 
+                </View> 
                 <View style={styles.tableColNoBorderBottomProductName}> 
                   <Text style={styles.tableCell}>{product.product_full_name}</Text> 
                 </View> 
@@ -270,6 +303,9 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
               </View> 
 
               <View style={styles.tableRow}> 
+              <View style={styles.tableColBorderBottomID}> 
+                  <Text style={styles.tableCell}></Text> 
+                </View> 
                 <View style={styles.tableColBorderBottomProductName}> 
                   <Text style={styles.tableCell}>REMISE</Text> 
                 </View> 
@@ -288,6 +324,9 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
           :
           (
           <View key={index} style={styles.tableRow}> 
+            <View style={styles.tableColBorderBottomID}> 
+              <Text style={styles.tableCell}>{product.product_id}</Text> 
+            </View> 
             <View style={styles.tableColBorderBottomProductName}> 
               <Text style={styles.tableCell}>{product.product_full_name}</Text> 
             </View> 
@@ -307,7 +346,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
       </View>
 
       
-      <View style={{left : 408, marginRight : 30}}>
+      <View style={{left : 359, marginRight : 30}}>
         <View style={styles.miniTable}> 
           <View style={styles.tableRow}> 
             <View style={styles.tableColTotal}> 

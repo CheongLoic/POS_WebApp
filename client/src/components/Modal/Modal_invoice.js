@@ -4,7 +4,7 @@ import nofacture from "../../img/facture_logo6.png"
 import facture from "../../img/facture_logo5.png"
 import {Button} from 'reactstrap';
 
-function Modal_payment({ setOpenModal, setInvoice , setModalPaymentOpen} ) {
+function Modal_payment({ setOpenModal, setInvoice , setModalPaymentOpen, setModalCustomerOpen, setCustomer} ) {
 
 
   const toggleModal=()=>{
@@ -14,7 +14,22 @@ function Modal_payment({ setOpenModal, setInvoice , setModalPaymentOpen} ) {
   const invoiceSelected = (boolean)=> {
     setInvoice(boolean) // client waant to get an invoice
     setOpenModal(false); //not display the invoice modal
-    setModalPaymentOpen(true)
+    
+    if (boolean) {
+      setModalPaymentOpen(false)
+      setModalCustomerOpen(true) 
+    }
+    else {
+      setCustomer({
+        newCustomer : false,
+        customer : {}
+      })
+      setModalCustomerOpen(false)
+      setModalPaymentOpen(true)
+    }
+
+    // console.log("Choose invoice :", boolean)
+      
   }
 
 

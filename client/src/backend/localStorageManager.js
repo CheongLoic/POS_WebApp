@@ -65,7 +65,7 @@ export function sortDataByFullName(data) {
      return newData;
  }
 
- export function sortDataTicketID(data) {
+ export function sortDataTicketID_DESC(data) {
     // Tri décroissant
     const newData = data.sort((a, b) => {
         if (a.ticket_id < b.ticket_id) {
@@ -80,6 +80,22 @@ export function sortDataByFullName(data) {
  
      return newData;
  }
+
+ export function sortDataTicketID_ASC(data) {
+  // Tri croissant
+  const newData = data.sort((a, b) => {
+      if (a.ticket_id > b.ticket_id) {
+        return 1;
+      }
+      if (a.ticket_id < b.ticket_id) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+    })
+
+   return newData;
+}
 
 
  export function sortDataInvoiceID_desc(data) {
@@ -124,3 +140,21 @@ export function sortDataByFullName(data) {
   return filtered_data;
 
  }
+
+
+
+ export function sortCustomeByCompany(data) {
+  // Tri croissant
+  const newData = data.sort((a, b) => {
+      if (a.company < b.company) {
+        return -1;
+      }
+      if (a.company > b.company) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+    })
+
+   return newData;
+}

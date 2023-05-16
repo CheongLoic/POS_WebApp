@@ -9,7 +9,7 @@
     top: 0px; left: 0px;
   }
   
-  .modalContainer {
+  .modalContainerPayment {
     width: 600px;
     /* height: 300px; */
     border-radius: 12px;
@@ -21,7 +21,7 @@
     padding: 25px;
   }
   
-  .modalContainer .title {
+  .modalContainerPayment .title {
     display: inline-block;
     text-align: center;
     margin-top: 10px;
@@ -40,7 +40,7 @@
     cursor: pointer;
   }
   
-  .modalContainer .body {
+  .modalContainerPayment .body {
     flex: 50%;
     display: flex;
     justify-content: center;
@@ -50,14 +50,14 @@
     color: black;
   }
   
-  .modalContainer .footer {
+  .modalContainerPayment .footer {
     flex: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  .modalContainer .footer button {
+  .modalContainerPayment .footer button {
     width: 150px;
     height: 45px;
     margin: 10px;

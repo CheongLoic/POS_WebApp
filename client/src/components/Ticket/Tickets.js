@@ -3,13 +3,13 @@ import {Button} from 'reactstrap';
 import {Link} from "react-router-dom";
 import ticketDB from "../../database/tickets.json"
 import TicketList from "../Ticket/TicketList"
-import { sortDataTicketID } from '../../backend/localStorageManager';
+import { sortDataTicketID_DESC } from '../../backend/localStorageManager';
 
 class Tickets extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            ticketsDB : sortDataTicketID(ticketDB)
+            ticketsDB : sortDataTicketID_DESC(ticketDB)
         });
     }
 

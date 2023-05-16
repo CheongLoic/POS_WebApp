@@ -3853,7 +3853,7 @@
       }
     ],
     "current_price": "15",
-    "typeOfSale": "weight",
+    "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Cotes_de_porc_surgelees_500g_15.00_unit.jpg",
     "display_on_ticket": true

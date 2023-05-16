@@ -6,7 +6,7 @@ import loading from "../img/loading-gif.gif"
 import { setDataInLS } from '../backend/localStorageManager';
 import productDB from '../database/products.json'
 import ticketDB from "../database/tickets.json"
-import customerDB from "../database/customers.json"
+// import customerDB from "../database/customers.json"
 import invoiceDB from "../database/invoices.json"
 import { sortDataByFullName } from '../backend/localStorageManager';
 
@@ -26,9 +26,9 @@ class Menu extends Component {
             setDataInLS("dataLoaded", true)
             // localStorage.clear()
             setDataInLS("productDB", productDB)
-            setDataInLS("ticketDB", ticketDB)
-            setDataInLS("customerDB", customerDB)
-            setDataInLS("invoiceDB", invoiceDB)
+            // setDataInLS("ticketDB", ticketDB)
+            // setDataInLS("customerDB", customerDB)
+            // setDataInLS("invoiceDB", invoiceDB)
             // console.log(productDB)
             let barCodeAvailable_productID = []
             let product_with_barcode = productDB.filter((item) => item.barCode_available === true)
@@ -74,7 +74,7 @@ class Menu extends Component {
                         <Link to="/products"><Button  type="button" color="primary"  className="menuBtn" block>Produits alimentaires 食品</Button></Link>
                         <Link to="/invoices"><Button type="button" color="primary"  className="menuBtn" block>Factures 发票</Button></Link>
                         <Link to="/customers"><Button type="button" color="primary"  className="menuBtn" block>Clients 客户</Button></Link>
-                        <Link to="/discounts"><Button type="button" color="primary"  className="menuBtn" block>Remises</Button></Link>
+                        <Link to="/discounts"><Button type="button" color="primary"  className="menuBtn" block>Promotions</Button></Link>
                         <Link to="/performances"><Button type="button" color="primary"  className="menuBtn" block>Performances 数据</Button></Link>
                     
                     </div>

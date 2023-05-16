@@ -5,14 +5,16 @@ import Cash from "../../img/espece-logo.png"
 import Cheque from "../../img/bank-cheque-logo.png"
 import {Button} from 'reactstrap';
 
-function Modal_product({ setOpenModal, settingMeansOfPayment , getTTC, getInvoiceBool, setModalPrintTicketOpen} ) {
+function Modal_product({ setOpenModal, setMeansOfPayment , getTTC, getInvoiceBool, setModalPrintTicketOpen, saveTicket} ) {
 
   const meansOfPayment = (means_of_payment) => {
-    if (means_of_payment === "CB" ) settingMeansOfPayment("CB")
-    else if (means_of_payment === "Espèces" ) settingMeansOfPayment("Espèces")
-    else settingMeansOfPayment("Chèque")
+    if (means_of_payment === "CB" ) setMeansOfPayment("CB")
+    else if (means_of_payment === "Espèces" ) setMeansOfPayment("ESPECES")
+    else setMeansOfPayment("Chèque")
+    saveTicket(getInvoiceBool(), means_of_payment )
     setOpenModal(false)
     setModalPrintTicketOpen(true)
+    
   }
 
   const toggleModal=()=>{
@@ -22,7 +24,7 @@ function Modal_product({ setOpenModal, settingMeansOfPayment , getTTC, getInvoic
   return (
     <div className="modalPayment">
     <div className="modalBackground" onClick={toggleModal}> </div>
-      <div className="modalContainer">
+      <div className="modalContainerPayment">
         <div className="titleCloseBtn">
           <button
             onClick={() => {

@@ -1,7 +1,7 @@
 [
   {
     "ticket_id": 0,
-    "invoice" : true,
+    "invoice": true,
     "date_of_purchase": "2023-02-21T22:30:02.413Z",
     "product_list": [
       {
@@ -11,8 +11,8 @@
         "quantity": "2",
         "product_price": "8.50",
         "product_total_price_before_discount": "17.00",
-        "total_discount" : "",
-        "type_of_sale" : "weight",
+        "total_discount": "",
+        "type_of_sale": "weight",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Scardinius_erythrophthalmus.jpg/330px-Scardinius_erythrophthalmus.jpg"
       },
       {
@@ -22,13 +22,13 @@
         "quantity": "4",
         "product_price": "3.99",
         "product_total_price_before_discount": "11.97",
-        "total_discount" : "9.00",
-        "type_of_sale" : "unit",
+        "total_discount": "9.00",
+        "type_of_sale": "unit",
         "image": "./img/white_rabbit.jpg"
       }
     ],
     "PAYMENT_METHOD": "ESPECES",
-    "TOTAL_DISCOUNT" : "9.00",
+    "TOTAL_DISCOUNT": "9.00",
     "RECU": "30.00",
     "RENDU": "1.03",
     "TVA": "1.59",
@@ -37,7 +37,7 @@
   },
   {
     "ticket_id": 1,
-    "invoice" : true,
+    "invoice": true,
     "date_of_purchase": "2023-02-21T22:30:02.413Z",
     "product_list": [
       {
@@ -47,17 +47,100 @@
         "quantity": "2",
         "product_price": "8.50",
         "product_total_price_before_discount": "17.00",
-        "total_discount" : "",
-        "type_of_sale" : "weight",
+        "total_discount": "",
+        "type_of_sale": "weight",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Scardinius_erythrophthalmus.jpg/330px-Scardinius_erythrophthalmus.jpg"
       }
     ],
     "PAYMENT_METHOD": "CB",
-    "TOTAL_DISCOUNT" : "9.00",
+    "TOTAL_DISCOUNT": "9.00",
     "RECU": "",
     "RENDU": "",
     "TVA": "0.93",
     "HT": "16.07",
     "TTC": "17.00"
+  },
+  {
+    "ticket_id": 2,
+    "invoice": false,
+    "date_of_purchase": "2023-05-16T01:34:24.333Z",
+    "product_list": [
+      {
+        "product_id": 148,
+        "product_full_name": "Canard à la sauce soja 麻油鸭",
+        "product_name_on_ticket": "Canard à la sauce soja",
+        "quantity": "1",
+        "product_price": "18.00",
+        "product_total_price_before_discount": "18.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/canard_a_la_sauce_soja_18_unit.jpg"
+      },
+      {
+        "product_id": 151,
+        "product_full_name": "Bouchées au porc congelées",
+        "product_name_on_ticket": "Bouchées au porc congelées",
+        "quantity": "1",
+        "product_price": "16.00",
+        "product_total_price_before_discount": "16.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Bouchees_au_porc_congelees_16.00.jpg"
+      },
+      {
+        "product_id": 150,
+        "product_full_name": "Champignon noir 150g",
+        "product_name_on_ticket": "Champignon noir 150g",
+        "quantity": "1",
+        "product_price": "7.50",
+        "product_total_price_before_discount": "7.50",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Champgnon_noir_150g_7.50_unit.jpg"
+      }
+    ],
+    "PAYMENT_METHOD": "Espèces",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "2.16",
+    "HT": "39.34",
+    "TTC": "41.50"
+  },
+  {
+    "ticket_id": 3,
+    "invoice": false,
+    "date_of_purchase": "2023-05-16T01:37:34.847Z",
+    "product_list": [
+      {
+        "product_id": 150,
+        "product_full_name": "Champignon noir 150g",
+        "product_name_on_ticket": "Champignon noir 150g",
+        "quantity": "1",
+        "product_price": "7.50",
+        "product_total_price_before_discount": "7.50",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Champgnon_noir_150g_7.50_unit.jpg"
+      },
+      {
+        "product_id": 151,
+        "product_full_name": "Bouchées au porc congelées",
+        "product_name_on_ticket": "Bouchées au porc congelées",
+        "quantity": "1",
+        "product_price": "16.00",
+        "product_total_price_before_discount": "16.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Bouchees_au_porc_congelees_16.00.jpg"
+      }
+    ],
+    "PAYMENT_METHOD": "Espèces",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "1.23",
+    "HT": "22.27",
+    "TTC": "23.50"
   }
 ]

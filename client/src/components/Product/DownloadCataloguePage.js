@@ -50,7 +50,7 @@ class DownloadProductCataloguePage extends Component {
                         
                         )
                         : 
-                        <Button style={{width : "50%",marginBottom : 10, marginTop : 10}}    color="primary" >Télécharger catalogue des produits en PDF  下载 PDF 格式的产品目录目录册</Button>)}
+                        <Button style={{width : "50%",marginBottom : 10, marginTop : 10}}    color="primary" >Télécharger catalogue des produits en PDF <br />下载PDF格式的产品目录目录册</Button>)}
                     </PDFDownloadLink>
                     <br/>
                     <Link to="/products" style={{ textDecoration: 'none' }}><Button  color="primary"  style={{width : "50%",marginBottom : 5, marginTop : 10}}   >Retour 返回</Button></Link>

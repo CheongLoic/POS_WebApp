@@ -24,3 +24,10 @@ lien intéressant :
 //https://bofip.impots.gouv.fr/bofip/10691-PGP.html/identifiant=BOI-TVA-DECLA-30-10-30-20210519
 
 // https://github.com/seokju-na/react-thermal-printer
+
+To solve 'X.ps1 cannot be loaded because running scripts is disabled on this system'
+https://bobbyhadz.com/blog/yarn-cannot-be-loaded-running-scripts-disabled
+- pour avoir la liste des policy : `Get-ExecutionPolicy -List`
+- `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned`
+
+https://github.com/theallmightyjohnmanning/electron-express/blob/master/main.js
