@@ -1,11 +1,11 @@
 import React,  { useState} from "react";
-import "./Modal_invoice.css";
+import "./ModalCustomer.css";
 import {Button,Form, FormGroup, Input, Col, Label} from 'reactstrap';
 import customerDB from "../../database/customers.json"
 import { sortCustomeByCompany } from "../../backend/localStorageManager";
-import "./Modal_customer.css"
+import "./ModalCustomer.css"
 
-function Modal_customer({ setOpenModal, setCustomer , setModalPaymentOpen} ) {
+function ModalCustomer({ setOpenModal, setCustomer , setModalPaymentOpen} ) {
 
   const [newCustomer, setNewCustomer] = useState(false)
   const [CUSTOMER, chooseCustomer] = useState("N°"+sortCustomeByCompany(customerDB)[0].id +" "+ sortCustomeByCompany(customerDB)[0].company +" "+ sortCustomeByCompany(customerDB)[0].address +" "+ sortCustomeByCompany(customerDB)[0].zip_code +" "+ sortCustomeByCompany(customerDB)[0].city)
@@ -251,4 +251,4 @@ function Modal_customer({ setOpenModal, setCustomer , setModalPaymentOpen} ) {
   );
 }
 
-export default Modal_customer;
+export default ModalCustomer;

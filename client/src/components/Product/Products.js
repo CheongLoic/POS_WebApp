@@ -5,9 +5,9 @@ import "./Products.css"
 import products from "../../database/products.json"
 import ProductList from "./ProductList"
 import { sortDataByFullName } from '../../backend/localStorageManager';
-import loading_gif from "../../img/loading-gif.gif"
-import ProductsCataloguePDF from './ProductsCataloguePDF';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+// import loading_gif from "../../img/loading-gif.gif"
+// import ProductsCataloguePDF from './ProductsCataloguePDF';
+// import { PDFDownloadLink } from '@react-pdf/renderer';
 
 // import image_test from "../image_test.png" ;
 
@@ -58,7 +58,7 @@ class Products extends Component {
                 
                 <div className='product_catalogue'>
                     {
-                        this.state.All_products.map((product, index) =>( <ProductList key={index} index ={index} product_data={product}  />))
+                        this.state.All_products.map((product, index) =>( <ProductList key={index} index={index} product_data={product}  />))
                     }
                 </div>
                 

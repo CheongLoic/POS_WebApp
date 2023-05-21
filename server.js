@@ -40,7 +40,32 @@ const PrinterTypes = require("node-thermal-printer").types;
 const storage = multer.diskStorage({
   destination : path.join(__dirname, '/client/public', 'img'), //detination of the image file in the folder /client/public
   filename : function ( req, file, cb) {
-    cb(null, file.originalname)
+    // console.log('Destination', destination)//return error
+    // console.log('FILE IMAGE', file)
+    /*
+    FILE IMAGE {
+   fieldname: 'avatar',
+   originalname: 'mcoc_ga.jpg',
+   encoding: '7bit',
+   mimetype: 'image/jpeg'
+ }*/
+    // console.log('FILEdir ', path.join(__dirname, '/client/public/img', 'mcoc_ga.jpg')) //concatenate current directory with other param
+
+    // console.log('Find image', JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', 'mcoc_ga.jpg'))))
+    let FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', file.originalname)))
+    let i = 0 
+    let newImageName = file.originalname
+    while (FindImage) {
+      i += 1
+      // console.log(newImageName.split('.').slice(1).join("."))
+      newImageName = file.originalname.split('.')[0] + '('+ i + ')' + file.originalname.split('.').slice(1, file.originalname.split('.').length -2).join(".") + "."+file.originalname.split('.')[file.originalname.split('.').length-1]
+      FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', newImageName)))
+    }
+    console.log('newImageName', newImageName)
+    
+
+    cb(null, newImageName)
+    // console.log('cb', cb) // return [Function (anonymous)]
   }
 })
 
@@ -48,9 +73,14 @@ app.post('/products/addNewProduct', async (req,res) => {
   // Add product photo in the folder
   // console.log("display form " + req.form)
   try { 
-    // console.log("display body " + JSON.stringify( req.body)) //nothing
+    // console.log("display body " + JSON.stringify( req.body)) //nothing 
     let upload = multer({ storage : storage}).single('avatar');
-    // console.log("upload : " + upload) 
+    //console.log("upload : ",  upload) //return function descripion  [Function: multerMiddleware]
+    //console.log("storage : ", storage)
+     /**storage :  DiskStorage {
+      [0]   getFilename: [Function: filename],
+      [0]   getDestination: [Function (anonymous)]
+      [0] } */
     upload(req, res, function(err) {
       //req.file contains info of uploaded file 
       //req.body contains info of text fields
@@ -69,6 +99,23 @@ app.post('/products/addNewProduct', async (req,res) => {
 app.post('/products/addNewProduct-send-data', async (req,res) => {
   const newData = req.body
   const filename = "client/src/database/products.json"
+
+  let originalName = newData[newData.length - 1].image.substring(6)
+  let FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img',originalName)))
+    let i = 0 
+    
+    let newImageName = originalName
+    while (FindImage) {
+      i += 1
+      // console.log(newImageName.split('.').slice(1).join("."))
+      newImageName = originalName.split('.')[0] + '('+ i + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
+      FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', newImageName)))
+      newData[newData.length - 1].image = "./img/"+newImageName
+    }
+    i -=1
+    newImageName = originalName.split('.')[0] + '('+ i  + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
+    newData[newData.length - 1].image = "./img/"+newImageName
+    console.log('newImageName from app.post(/products/addNewProduct-send-data ', newImageName)
 
   // console.log("display form " + req.form)
       // console.log("display body from addNewProduct-send-data " +  newData) //Return :  display body from addNewProduct-send-data [object Object],[object Object],[object Object],[object Object],[object Object]
@@ -97,7 +144,7 @@ app.post('/discounts', async (req,res) => {
 // var router = express.Router();
 app.post('/tickets',  (req, res) => {
   // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
-console.log(req.body.data)
+  // console.log(req.body.data)
 
    if (req.body.action === "print") {
     console.log("Connecting to printer ...");
@@ -106,6 +153,15 @@ console.log(req.body.data)
     interface: 'tcp://192.168.0.29'
     });
     // console.log("Printer connected !");
+    let isConnected =  printer.isPrinterConnected();
+    console.log('Printer connection status', isConnected)
+    console.log('isConnected === false', isConnected === false)
+    console.log('isConnected === true', isConnected === true)
+    // console.log('isConnected === Promise { <pending> }', isConnected === new Promise ( pending ))
+    
+    // if (isConnected === false) {
+    //   console.log("printer not connected ! ")
+    //   res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")}
     
     printer.alignCenter();
     printer.setTextQuadArea();
@@ -242,7 +298,8 @@ console.log(req.body.data)
       console.log("Print done!");
     } catch (error) {
       console.log("Print failed:", error);
-      console.warn(" Impossible de se connecter à l'imprimante !")
+      console.warn("Impossible de se connecter à l'imprimante !")
+      res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
     }
     res.status(200).send("Try to print !");
 
@@ -264,6 +321,19 @@ console.log(req.body.data)
     // console.log("newData ",newData) 
     const filename = "client/src/database/tickets.json"
     fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
+
+    //##################################################################################################################################
+
+    //delete invoice in json file
+    const invoiceFilename = "client/src/database/invoices.json"
+    const loadJSON_invoices = JSON.parse(fs.existsSync(invoiceFilename)) ? fs.readFileSync(invoiceFilename).toString()  : '""' 
+    let invoices_data = JSON.parse(loadJSON_invoices); //string to JSON object 
+    invoices_data = invoices_data.filter((invoice) => invoice.ticket_id !== req.body.data.ticket_id && invoice.date_of_purchase !== req.body.data.date_of_purchase )
+    //remove duplicate item
+    let newInvoiceData = invoices_data.filter((c, index) => {
+      return invoices_data.indexOf(c) === index;
+    });
+    fs.writeFileSync(invoiceFilename, JSON.stringify(newInvoiceData, null, 2)) 
     res.status(200).send({status : "OK"})
    }
     
@@ -273,7 +343,8 @@ console.log(req.body.data)
 
 app.post('/tickets/addNewTicket',  (req, res) => {
   // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
-  console.log(req.body)
+  // console.log(req.body)
+  console.log("HELLO !")
     
   if (req.body.ticketData.invoice ) { 
     //save new customer in json file
@@ -310,102 +381,105 @@ app.post('/tickets/addNewTicket',  (req, res) => {
     fs.writeFileSync(invoiceFilename, JSON.stringify(newInvoiceData, null, 2)) 
   }
 
-
-    if (req.body.printTicket ) {
-      console.log("Connecting to printer ...");
-      let printer = new ThermalPrinter({
-      type: PrinterTypes.EPSON,
-      interface: 'tcp://192.168.0.29'
-      });
-      // console.log("Printer connected !");
-      
-      printer.alignCenter();
-      printer.setTextQuadArea();
-      printer.println("X.H" );
-      printer.setTextNormal();
-      printer.println("19 RUE CIVIALE" );
-      printer.println("75010 PARIS" );
-      printer.println("TEL : 07.86.31.63.88" );
-      printer.println("SIRET : 887752137 PARIS" );
-      printer.newLine(); 
-      // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
-      printer.leftRight('Date : ' + new Date(req.body.ticketData.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.body.ticketData.ticket_id.toString()+" ");
-      printer.drawLine();
-
-      printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-        { text:"DESIGNATION", align:"LEFT", width:0.58, bold : true },
-        { text:"QTExP.U", align:"CENTER", width:0.20, bold:true },
-        { text:"MONTANT", align:"RIGHT", width:0.20, bold : true}
-      ]);
-
-      // let total_article = 0;
-      for (let i in req.body.ticketData.product_list) {
-        printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-          { text: req.body.ticketData.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
-          { text: req.body.ticketData.product_list[i].quantity +"x"+ Number(req.body.ticketData.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},
-          { text: Number(req.body.ticketData.product_list[i].product_total_price_before_discount).toFixed(2) +"$" , align:"RIGHT" , width:0.20 }
-        ]);
-        if (req.body.ticketData.product_list[i].total_discount !== "") {
-          printer.leftRight('   REMISE'  , '-'+ Number(req.body.ticketData.product_list[i].total_discount).toFixed(2)+"$" );
-        }
-        // if (req.body.data.product_list[i].type_of_sale === "unit") total_article += req.body.data.product_list[i].quantity;
-        // else  total_article += 1;
-        // total_article += 1;
-      }
-
-      printer.drawLine();
-      // printer.leftRight( "TOTAL ARTICLE",  total_article);
-      if (req.body.ticketData.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  Number(req.body.ticketData.TOTAL_DISCOUNT).toFixed(2) +"$ ");
-      printer.setTextQuadArea();
-      printer.println("TOTAL TTC \t\t"+Number(req.body.ticketData.TTC).toFixed(2) +"$");
-      printer.setTextNormal();
-      printer.leftRight( "MODE DE PAIEMENT",  req.body.ticketData.PAYMENT_METHOD);
-      // if ( req.body.data.PAYMENT_METHOD === "ESPECES") {
-      //   printer.leftRight( "RECU",  Number(req.body.data.RECU).toFixed(2) +"$ ");
-      //   printer.leftRight( "RENDUE",  Number(req.body.data.RENDU).toFixed(2) +"$ ");
-      // }
-      
-      printer.newLine(); 
-      printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-        { text:"Taux TVA", align:"LEFT", width:0.33, bold:true },
-        { text:"TVA", align:"CENTER", width:0.33, bold:true },
-        { text:"HT ", align:"RIGHT", width:0.33, bold:true },
-      ]);
-      printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-        { text:"5.5%", align:"LEFT", width:0.33 },
-        { text: req.body.ticketData.TVA +"$", align:"CENTER", width:0.33},
-        { text: req.body.ticketData.HT+"$ ", align:"RIGHT", width:0.33},
-      ]);
+  //SAVE TICKET DATA
+  const ticketFilename = "client/src/database/tickets.json"
+  const loadJSON_tickets = JSON.parse(fs.existsSync(ticketFilename)) ? fs.readFileSync(ticketFilename).toString()  : '""' 
+  const tickets_data = JSON.parse(loadJSON_tickets); //string to JSON object 
+  let conca3 = tickets_data.concat([req.body.ticketData]); //put json in an array
+  //remove duplicate item
+  let newTicketData = conca3.filter((c, index) => {
+    return conca3.indexOf(c) === index;
+  });
+  fs.writeFileSync(ticketFilename, JSON.stringify(newTicketData, null, 2))
+  // res.status(200).send({status : "OK"})
 
 
-      printer.drawLine();
-      printer.alignCenter();
-      printer.println("MERCI DE VOTRE VISITE" );
-      printer.println("A BIENTOT !" );
-      printer.cut();
-
-      try {
-      let execute = printer.execute()
-        console.log("Print done!");
-      } catch (error) {
-        console.log("Print failed:", error);
-        console.warn(" Impossible de se connecter à l'imprimante !")
-      }
-      // res.status(200).send("Try to print !");
-   } 
-   
-   
-    //SAVE TICKET DATA
-    const ticketFilename = "client/src/database/tickets.json"
-    const loadJSON_tickets = JSON.parse(fs.existsSync(ticketFilename)) ? fs.readFileSync(ticketFilename).toString()  : '""' 
-    const tickets_data = JSON.parse(loadJSON_tickets); //string to JSON object 
-    let conca3 = tickets_data.concat([req.body.ticketData]); //put json in an array
-    //remove duplicate item
-    let newTicketData = conca3.filter((c, index) => {
-      return conca3.indexOf(c) === index;
+  if (req.body.printTicket ) {
+    console.log("Connecting to printer ...");
+    let printer = new ThermalPrinter({
+    type: PrinterTypes.EPSON,
+    interface: 'tcp://192.168.0.29'
     });
-    fs.writeFileSync(ticketFilename, JSON.stringify(newTicketData, null, 2))
-    res.status(200).send({status : "OK"})
+    // console.log("Printer connected !");
+    
+    printer.alignCenter();
+    printer.setTextQuadArea();
+    printer.println("X.H" );
+    printer.setTextNormal();
+    printer.println("19 RUE CIVIALE" );
+    printer.println("75010 PARIS" );
+    printer.println("TEL : 07.86.31.63.88" );
+    printer.println("SIRET : 887752137 PARIS" );
+    printer.newLine(); 
+    // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
+    printer.leftRight('Date : ' + new Date(req.body.ticketData.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.body.ticketData.ticket_id.toString()+" ");
+    printer.drawLine();
+
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"DESIGNATION", align:"LEFT", width:0.58, bold : true },
+      { text:"QTExP.U", align:"CENTER", width:0.20, bold:true },
+      { text:"MONTANT", align:"RIGHT", width:0.20, bold : true}
+    ]);
+
+    // let total_article = 0;
+    for (let i in req.body.ticketData.product_list) {
+      printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+        { text: req.body.ticketData.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
+        { text: req.body.ticketData.product_list[i].quantity +"x"+ Number(req.body.ticketData.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},
+        { text: Number(req.body.ticketData.product_list[i].product_total_price_before_discount).toFixed(2) +"$" , align:"RIGHT" , width:0.20 }
+      ]);
+      if (req.body.ticketData.product_list[i].total_discount !== "") {
+        printer.leftRight('   REMISE'  , '-'+ Number(req.body.ticketData.product_list[i].total_discount).toFixed(2)+"$" );
+      }
+      // if (req.body.data.product_list[i].type_of_sale === "unit") total_article += req.body.data.product_list[i].quantity;
+      // else  total_article += 1;
+      // total_article += 1;
+    }
+
+    printer.drawLine();
+    // printer.leftRight( "TOTAL ARTICLE",  total_article);
+    if (req.body.ticketData.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  Number(req.body.ticketData.TOTAL_DISCOUNT).toFixed(2) +"$ ");
+    printer.setTextQuadArea();
+    printer.println("TOTAL TTC \t\t"+Number(req.body.ticketData.TTC).toFixed(2) +"$");
+    printer.setTextNormal();
+    printer.leftRight( "MODE DE PAIEMENT",  req.body.ticketData.PAYMENT_METHOD);
+    // if ( req.body.data.PAYMENT_METHOD === "ESPECES") {
+    //   printer.leftRight( "RECU",  Number(req.body.data.RECU).toFixed(2) +"$ ");
+    //   printer.leftRight( "RENDUE",  Number(req.body.data.RENDU).toFixed(2) +"$ ");
+    // }
+    
+    printer.newLine(); 
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"Taux TVA", align:"LEFT", width:0.33, bold:true },
+      { text:"TVA", align:"CENTER", width:0.33, bold:true },
+      { text:"HT ", align:"RIGHT", width:0.33, bold:true },
+    ]);
+    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+      { text:"5.5%", align:"LEFT", width:0.33 },
+      { text: req.body.ticketData.TVA +"$", align:"CENTER", width:0.33},
+      { text: req.body.ticketData.HT+"$ ", align:"RIGHT", width:0.33},
+    ]);
+
+
+    printer.drawLine();
+    printer.alignCenter();
+    printer.println("MERCI DE VOTRE VISITE" );
+    printer.println("A BIENTOT !" );
+    printer.cut();
+
+    try {
+    let execute = printer.execute()
+      console.log("Print done!");
+    } catch (error) {
+      console.log("Print failed:", error);
+      console.warn(" Impossible de se connecter à l'imprimante !")
+      res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
+    }
+    
+  } 
+   
+  res.status(200).send({response :"Try to print !"})
+    
 });
 
 

@@ -1,16 +1,13 @@
 import React from "react";
-import "./Modal_payment.css";
+import "./ModalPayment.css";
 import CB from "../../img/logo-carte-bleue.png"
 import Cash from "../../img/espece-logo.png"
 import Cheque from "../../img/bank-cheque-logo.png"
 import {Button} from 'reactstrap';
 
-function Modal_product({ setOpenModal, setMeansOfPayment , getTTC, getInvoiceBool, setModalPrintTicketOpen, saveTicket} ) {
+function ModalPayment({ setOpenModal , getTTC, getInvoiceBool, setModalPrintTicketOpen, saveTicket} ) {
 
   const meansOfPayment = (means_of_payment) => {
-    if (means_of_payment === "CB" ) setMeansOfPayment("CB")
-    else if (means_of_payment === "Espèces" ) setMeansOfPayment("ESPECES")
-    else setMeansOfPayment("Chèque")
     saveTicket(getInvoiceBool(), means_of_payment )
     setOpenModal(false)
     setModalPrintTicketOpen(true)
@@ -64,10 +61,10 @@ function Modal_product({ setOpenModal, setMeansOfPayment , getTTC, getInvoiceBoo
       </div>
 
       {/* <Button  color="warning" style={{margin : "10px"}} onClick={() => {setModalPrintOpen(true)}}>Test modal print</Button> */}
-      {/* {modalOpen && <Modal_payment setOpenModal={setModalPaymentOpen} />} */}
+      {/* {modalOpen && <ModalPayment setOpenModal={setModalPaymentOpen} />} */}
     
     </div>
   );
 }
 
-export default Modal_product;
+export default ModalPayment;

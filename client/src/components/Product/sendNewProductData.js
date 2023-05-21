@@ -7,8 +7,6 @@ import { Navigate } from "react-router-dom";
 
  const SendNewProductData =() => {
     
-    
-
         const productDB = getDataFromLS("productDB")
         const requestOptions = {
             method: 'POST',
@@ -21,19 +19,6 @@ import { Navigate } from "react-router-dom";
         // this.setState({changePage : true})
         // goToPage("/products/addNewProduct");
         return( <Navigate  to="/products"  replace={true} />) 
-
-    
-    
-
-
-        // console.log("Hello world" + this.props.index);
-        // console.log("../img/"+this.state.productDB.image);
-        // return (
-        //     <div>
-        //         <img src={loading} alt="loading"></img>
-                
-        //     </div>
-        // );
 
 }
 

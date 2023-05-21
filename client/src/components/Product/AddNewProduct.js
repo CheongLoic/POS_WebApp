@@ -9,27 +9,8 @@ import { getDataFromLS, setDataInLS } from '../../backend/localStorageManager';
 // Video for uploading an image : https://www.youtube.com/watch?v=1KZ-tJRLU5I&list=LL&index=3&t=603s
 const AddNewProduct = () => {
 
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             product_name : "",
-//             product_image : "",
-//             isAddingProduct: false,
-//             errors: []
-//         };
-//         this.handleChangeProductName = this.handleChangeProductName.bind(this);
-//         this.handleChangeProductName = this.handleChangeProductName.bind(this);
-//         this.enableAddingProduct = this.enableAddingProduct.bind(this);
-//         this.addProduct = this.addProduct.bind(this);
-//     }
-
-//     handleChangeProductName = event => {
-//         this.setState({ product_name : event.target.value });
-//     }
-
-
     const [error, setError] = useState(false) // Error for the form
-    const [chinese_caracter_recognized, setChineseRecognized] = useState(false) // Error for the form
+    // const [chinese_caracter_recognized, setChineseRecognized] = useState(false) // Error for the form
     let ERROR = false // error in backend 
     const [form_data, setFormData] = useState({
         product_full_name:"", 
@@ -45,6 +26,55 @@ const AddNewProduct = () => {
         default_sold_weight_kg : "",
         display_product_name : "Oui 要"
     });
+    const [image_data, getImage] = useState({file : []})
+    const handleInputImageChange = (event) => {
+        // console.log("from handleInputImageChange :")
+        const img_file = event.target.files[0]
+        const chinese_caracter_array = event.target.files[0].name.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chinese caracters
+        if (chinese_caracter_array.length > 0 ) {
+          setError(true)
+          ERROR = true
+          getImage({
+            ...image_data, file:event.target.files[0],
+            // ...image_data, file: img_file_name_rectified[0],
+        })
+        } else {
+          console.log("event.target.files[0] : ",event.target.files[0]); //array
+          console.log("event.target.files[0].name : "  , event.target.files[0].name); //file name
+          console.log("event.target.files[0].name after : "  , event.target.files[0].name); //file name
+
+          
+          let file_name = img_file.name.replaceAll(" ", "_")
+          file_name = file_name.replaceAll("é", "e")
+          file_name = file_name.replaceAll("è", "e")
+          file_name = file_name.replaceAll("ê", "e")
+          file_name = file_name.replaceAll("à", "a")
+          file_name = file_name.replaceAll("â", "a")
+          file_name = file_name.replaceAll("ù", "u")
+          file_name = file_name.replaceAll("'", "_")
+          file_name = file_name.replaceAll("ç", "c")
+          file_name = file_name.replaceAll("ï", "i")
+          file_name = file_name.replaceAll("î", "i")
+          file_name = file_name.replaceAll("ô", "o")
+
+          // const newImgFile  = new File([img_file], file_name , {type: img_file.type})
+          // // img_file.name = img_file.name.replaceAll(" ", "_")
+          // console.log("test : "  , newImgFile); //file name
+
+          const img_file_name_rectified = [new File([img_file], file_name , {type: img_file.type})]
+          getImage({
+              // ...image_data, file:event.target.files[0],
+              ...image_data, file: img_file_name_rectified[0],
+          })
+          console.log("image_data : " , image_data); //Nothing
+          console.log("image_data.file : " , image_data.file); //Nothing
+          console.log("image_data.file.name : " , image_data.file.name); //Nothing
+        }
+        
+
+    }
+
+
     const changeHandler = (e) => {
         // console.log(e.target.value)  
         
@@ -74,42 +104,7 @@ const AddNewProduct = () => {
         
     };
 
-    const [image_data, getImage] = useState({file : []})
-    const handleInputImageChange = (event) => {
-        // console.log("from handleInputImageChange :")
-        console.log("event.target.files[0] : ",event.target.files[0]); //array
-        console.log("event.target.files[0].name : "  , event.target.files[0].name); //file name
-        console.log("event.target.files[0].name after : "  , event.target.files[0].name); //file name
-
-        const img_file = event.target.files[0]
-        let file_name = img_file.name.replaceAll(" ", "_")
-        file_name = file_name.replaceAll("é", "e")
-        file_name = file_name.replaceAll("è", "e")
-        file_name = file_name.replaceAll("ê", "e")
-        file_name = file_name.replaceAll("à", "a")
-        file_name = file_name.replaceAll("â", "a")
-        file_name = file_name.replaceAll("ù", "u")
-        file_name = file_name.replaceAll("'", "_")
-        file_name = file_name.replaceAll("ç", "c")
-        file_name = file_name.replaceAll("ï", "i")
-        file_name = file_name.replaceAll("î", "i")
-        file_name = file_name.replaceAll("ô", "o")
-
-
-        // const newImgFile  = new File([img_file], file_name , {type: img_file.type})
-        // // img_file.name = img_file.name.replaceAll(" ", "_")
-        // console.log("test : "  , newImgFile); //file name
-
-        const img_file_name_rectified = [new File([img_file], file_name , {type: img_file.type})]
-        getImage({
-            // ...image_data, file:event.target.files[0],
-            ...image_data, file: img_file_name_rectified[0],
-        })
-        console.log("image_data : " , image_data); //Nothing
-        console.log("image_data.file : " , image_data.file); //Nothing
-        console.log("image_data.file.name : " , image_data.file.name); //Nothing
-
-    }
+    
 
     const checkField = ()=>{
       //this function checks if there is what it is expected in the fields
@@ -126,7 +121,7 @@ const AddNewProduct = () => {
           // console.log("before set error true from checkfield",error)
           setError(true) ;
           ERROR = true
-          setChineseRecognized(true)
+          // setChineseRecognized(true)
           // console.log("chinese_caracter_recognized :", chinese_caracter_array)
           // console.log("chinese_caracter_recognized :", chinese_caracter_recognized)
           // console.log("image_data.file.name before : '", image_data.file.name, "'");
@@ -138,7 +133,7 @@ const AddNewProduct = () => {
       } else {
           setError(false)
           ERROR = false
-          setChineseRecognized(false)
+          // setChineseRecognized(false)
           // console.log("Set error false", error)
           // console.log("Set ERROR false", ERROR)
       }
@@ -363,7 +358,7 @@ const AddNewProduct = () => {
                 {/* <p style={{fontSize: 15, color: "orange"}}>{error && form_data.expiration_date.length===0 ? "Veuillez entrer la date d'expiration. 请输入到期日期" : ""}</p> */}
 
                 <FormGroup row>
-                  <Label sm={3} style={{fontSize: "60%"}}>Code-barre disponible?<br/>有没有条码? </Label>
+                  <Label sm={3} style={{fontSize: "60%"}}>Code-barre disponible?<br/>有没有条形码? </Label>
                   <Col sm={8}>
                   <Input type="select" name="barCode_available" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.barCode_available}  >
                     <option>Oui 有</option>
@@ -375,12 +370,12 @@ const AddNewProduct = () => {
                 {form_data.barCode_available ==="Oui 有" ? 
                   <div>
                     <FormGroup row>
-                      <Label sm={3} style={{fontSize: "60%"}}>Code-barre 条码*</Label>
+                      <Label sm={3} style={{fontSize: "60%"}}>Code-barre 条形码*</Label>
                       <Col sm={8}>
-                      <Input type="number" name="barCode" min="0" max="9999999999999" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.barCode}  placeholder="Code-barre 条码" />
+                      <Input type="number" name="barCode" min="0" max="9999999999999" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.barCode}  placeholder="Code-barre 条形码" />
                       </Col>
                     </FormGroup>
-                    <p style={{fontSize: 15, color: "orange"}}>{error && form_data.barCode.length===0 ? "Veuillez entrer votre nom. 请输入您的姓氏" : ""}</p>
+                    <p style={{fontSize: 15, color: "orange"}}>{error && form_data.barCode.length<13 ? "Veuillez entrer un code-barre correcte. 请输入条形码" : ""}</p>
                   </div>
                 : "" }
 
@@ -403,6 +398,9 @@ const AddNewProduct = () => {
                   <Input type="file" name="upload_file" accept='image/*' onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={handleInputImageChange}/>
                   </Col>
                 </FormGroup>
+                <p style={{fontSize: 15, color: "orange"}}>{error && image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)).length >0 ? "Caractères chinois non acceptés. 不能写汉字" : ""}</p>
+
+
                   
                 
                 <Button  color="success" style={{margin : "10px"}} onClick={() => submit()}>Ajouter 加食品</Button>

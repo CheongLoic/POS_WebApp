@@ -75,7 +75,7 @@ class InvoiceList  extends Component {
                         <Button className='print_icon'  color="light" ><img src={download_logo} height="30px" width="30px" border-radius ="11%" alt="download_logo"></img></Button>)}
                     </PDFDownloadLink>
                     {/* <InvoicePDF invoiceDB={this.state.invoiceDB} /> */}
-                    <Button className='print_icon' style={{marginLeft : 10}} onClick={() => this.delete()} ><img src={trash_can_icon} height="30px" width="30px" border-radius ="11%" alt="trash_can_icon"></img></Button>
+                    <Button className='print_icon' style={{marginLeft : 50}} onClick={() => this.delete()} ><img src={trash_can_icon} height="30px" width="30px" border-radius ="11%" alt="trash_can_icon"></img></Button>
                 
                 
                 

@@ -1,16 +1,17 @@
 import React, { useState, useEffect} from 'react';
-import {Link, Navigate } from "react-router-dom";
-// import {Link } from "react-router-dom";
+// import {Link, Navigate } from "react-router-dom";
+import {Link } from "react-router-dom";
 // import {Link, useNavigate } from "react-router-dom";
 import {Button, Form, FormGroup, Input, Label} from 'reactstrap';
 import { getDataFromLS, setDataInLS } from '../../backend/localStorageManager';
 import discountDB from "../../database/discounts.json"
 // import Modal from "../Modal/Modal2"
-import Modal_payment from "../Modal/Modal_payment"
-import Modal_product_without_barcode from "../Modal/Modal_product_without_barcode"
-import Modal_invoice from "../Modal/Modal_invoice"
-import Modal_print_ticket from "../Modal/Modal_print_ticket"
-import Modal_customer from '../Modal/Modal_customer'
+import ModalPayment from "../Modal/ModalPayment"
+import ModalProductWithoutBarcode from "../Modal/ModalProductWithoutBarcode"
+import ModalInvoice from "../Modal/ModalInvoice"
+import ModalPrintTicket from "../Modal/ModalPrintTicket"
+import ModalCustomer from '../Modal/ModalCustomer'
+import ModalBarcodeNotFound from '../Modal/ModalBarcodeNotFound'
 import ticketDB from "../../database/tickets.json"
 import { sortDataTicketID_ASC } from '../../backend/localStorageManager';
 
@@ -31,8 +32,8 @@ const AddNewTicket = () => {
   const [modalOpenInvoice, setModalInvoiceOpen] = useState(false);
   const [modalOpenCustomer, setModalCustomerOpen] = useState(false);
   const [modalPrintTicket, setModalPrintTicketOpen] = useState(false);
+  const [modalOpenWarning, setModalWarning] = useState(false);
   const [count, setCount] = useState(0)
-  const [means_of_payment, setMeansOfPayment] = useState("")
   const [invoice, setInvoice] = useState(false)
   const [customer, setCustomer] = useState({})
   const [newTicket, setTicket] = useState({})
@@ -291,6 +292,7 @@ const AddNewTicket = () => {
               } else {
                 //the barcode is not stored in the database 
                 console.warn("LE BARCODE ", barcode_string, "N'EST PAS RECONNU !")
+                setModalWarning(true)
 
                 //TO DO : display  a messega error on the screen
               }
@@ -413,7 +415,7 @@ const AddNewTicket = () => {
 
   }
  
-  const [quantityOnScreen, setQtyOnScreen] = useState({});
+  // const [quantityOnScreen, setQtyOnScreen] = useState({});
   const changeHandler = (e) => {
     // console.log(e.target.value)  
     
@@ -446,22 +448,22 @@ const AddNewTicket = () => {
           newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,2)
         }
         product_list_chg[name].quantity = newValue 
-        setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
+        // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
       } else {
         const newValue = value.split('.')[0] 
         product_list_chg[name].quantity = newValue 
-        setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
+        // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
       }
     } else {
       product_list_chg[name].quantity = value
-      setQtyOnScreen((qty) => ({ ...qty, [name]: value }));
+      // setQtyOnScreen((qty) => ({ ...qty, [name]: value }));
     }
 
-    console.log('quantityOnScreen :', quantityOnScreen)
-    console.log('e.target :', e.target)
+    // console.log('quantityOnScreen :', quantityOnScreen)
+    // console.log('e.target :', e.target)
      
     product_list_chg[name].product_total_price_before_discount = (Number(product_list_chg[name].quantity) * Number(product_list_chg[name].product_price) ).toFixed(2)
-    console.log('product_list_chg :', product_list_chg)
+    // console.log('product_list_chg :', product_list_chg)
 
     // if (value === "0" ) {
     //   console.log('Trying to delete data from product_scanned :', product_list_chg)
@@ -575,7 +577,8 @@ const reinitializeData = () => {
                     product.quantity !== "" ? (
                   
                     <div className='product_in_basket' key={index}>
-                      <a href={product.image.includes('http') ? product.image : './.' + product.image} target="_blank">
+                      {console.log("barcodeList in map ", product_list_to_display_on_screen)}
+                      <a href={product.image.includes('http') ? product.image : './.' + product.image} target="_blank" rel="noopener noreferrer">
                       <img src={ product.image.includes('http') ? product.image : './.' + product.image} style={{marginRight:5, marginLeft:10}} height="55px" width="55px" border-radius ="20%" align="left" alt={product.product_full_name}  />
                       </a>
                       <Form >
@@ -599,7 +602,7 @@ const reinitializeData = () => {
                     </div>)
                     : (
                     <div className='product_in_basket_wrong' key={index}>
-                      <a href={product.image.includes('http') ? product.image : './.' + product.image} target="_blank">
+                      <a href={product.image.includes('http') ? product.image : './.' + product.image} target="_blank" rel="noopener noreferrer">
                       <img src={ product.image.includes('http') ? product.image : './.' + product.image} style={{marginRight:5, marginLeft:10}} height="55px" width="55px" border-radius ="20%" align="left" alt={product.product_full_name}  />
                       </a>
                       <Form >
@@ -627,12 +630,13 @@ const reinitializeData = () => {
 
               </div>
 
-              {modalOpenProduct && <Modal_product_without_barcode setOpenModal={setModalProductOpen}  setProductList={setProduct_list} setTTC={setTTC} />}
+              {modalOpenProduct && <ModalProductWithoutBarcode setOpenModal={setModalProductOpen}  setProductList={setProduct_list} setTTC={setTTC} />}
+              {modalOpenWarning && <ModalBarcodeNotFound setOpenModal={setModalWarning}/>}
 
-              {modalOpenInvoice && <Modal_invoice setOpenModal={setModalInvoiceOpen} setInvoice={setInvoice}  setModalPaymentOpen={setModalPaymentOpen} setModalCustomerOpen={setModalCustomerOpen} setCustomer={setCustomer}  />} 
-              {modalOpenCustomer && <Modal_customer setOpenModal={setModalCustomerOpen} setCustomer={setCustomer}  setModalPaymentOpen={setModalPaymentOpen}  />}
-              {modalOpenPayment && <Modal_payment setOpenModal={setModalPaymentOpen} setMeansOfPayment={setMeansOfPayment} getTTC={getTTC}  getInvoiceBool={getInvoiceBool} setModalPrintTicketOpen={setModalPrintTicketOpen} saveTicket={saveTicket} />}
-              {modalPrintTicket && <Modal_print_ticket setOpenModal={setModalPrintTicketOpen} getCustomer={getCustomer} getTicket={getTicket} reinitializeData={reinitializeData} />}
+              {modalOpenInvoice && <ModalInvoice setOpenModal={setModalInvoiceOpen} setInvoice={setInvoice}  setModalPaymentOpen={setModalPaymentOpen} setModalCustomerOpen={setModalCustomerOpen} setCustomer={setCustomer}  />} 
+              {modalOpenCustomer && <ModalCustomer setOpenModal={setModalCustomerOpen} setCustomer={setCustomer}  setModalPaymentOpen={setModalPaymentOpen}  />}
+              {modalOpenPayment && <ModalPayment setOpenModal={setModalPaymentOpen}  getTTC={getTTC}  getInvoiceBool={getInvoiceBool} setModalPrintTicketOpen={setModalPrintTicketOpen} saveTicket={saveTicket} />}
+              {modalPrintTicket && <ModalPrintTicket setOpenModal={setModalPrintTicketOpen} getCustomer={getCustomer} getTicket={getTicket} reinitializeData={reinitializeData} />}
               
             </div>
         );

@@ -235,7 +235,7 @@ class Discounts extends Component  {
                             <div className='discountContainer'>
                                 <div className='firstColumn'>
                                         {/* <span>Hello</span> */}
-                                        <a href={'./.' + productDB.filter((product)=> product.product_id === discount.product_id )[0].image} target="_blank">
+                                        <a href={'./.' + productDB.filter((product)=> product.product_id === discount.product_id )[0].image}  target="_blank" rel="noopener noreferrer">
                                     <img src={ './.' + productDB.filter((product)=> product.product_id === discount.product_id )[0].image } style={{marginRight:5, marginLeft:10}} height="55px" width="55px" border-radius ="20%" align="left" alt={productDB.filter((product)=> product.product_id === discount.product_id )[0].product_full_name}  />
                                     </a>
                                 </div>

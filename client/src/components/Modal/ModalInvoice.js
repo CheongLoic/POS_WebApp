@@ -1,10 +1,10 @@
 import React from "react";
-import "./Modal_invoice.css";
+import "./ModalInvoice.css";
 import nofacture from "../../img/facture_logo6.png"
 import facture from "../../img/facture_logo5.png"
 import {Button} from 'reactstrap';
 
-function Modal_payment({ setOpenModal, setInvoice , setModalPaymentOpen, setModalCustomerOpen, setCustomer} ) {
+function ModalInvoice({ setOpenModal, setInvoice , setModalPaymentOpen, setModalCustomerOpen, setCustomer} ) {
 
 
   const toggleModal=()=>{
@@ -56,4 +56,4 @@ function Modal_payment({ setOpenModal, setInvoice , setModalPaymentOpen, setModa
   );
 }
 
-export default Modal_payment;
+export default ModalInvoice;

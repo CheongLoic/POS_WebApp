@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 // import {Button} from 'reactstrap';
 import {Link} from "react-router-dom";
 import no_img from "../../img/no_image.jpg"
+import { setDataInLS } from '../../backend/localStorageManager';
 
 
 class ProductList  extends Component {
@@ -12,22 +13,10 @@ class ProductList  extends Component {
         });
     }
 
-    // isOverflown = ({ clientHeight, scrollHeight }) => scrollHeight > clientHeight
-    // resizeText = ({ element, parent }) => {
-    //     let i = 12 // let's start with 12px
-    //     let overflow = false
-    //     const maxSize = 128 // very huge text size
-      
-    //     while (!overflow && i < maxSize) {
-    //       element.style.fontSize = `${i}px`
-    //       overflow = this.isOverflown(element,parent)
-    //       if (!overflow) i++
-    //     }
-      
-    //     // revert to last state where no overflow happened:
-    //     element.style.fontSize = `${i - 1}px`
-    //   }
-    
+    setChangeProductParam =() => {
+        setDataInLS('change_product_data', this.state.product_database)
+        // console.log("product_data", product_data)
+    }
 
     render() {
         // console.log("Hello world" + this.props.index);
@@ -35,10 +24,10 @@ class ProductList  extends Component {
         return (
             <div className='product_catalogue_icon'>
                 {/* <p>{".."+ this.state.product_database.image}</p> */}
-                <Link to="/" style={{ textDecoration: 'none' , color:"white"}}>
+                <Link to="/products/modifyProductPage" style={{ textDecoration: 'none' , color:"white"}} onClick={this.setChangeProductParam}>
                     
                 <div  className="img_product_container">
-                    <img src={`${this.state.product_database.image}` === "" ? no_img : `${this.state.product_database.image}` } height="200px" width="200px" border-radius ="20%" align="left" alt={this.state.product_database.product_full_name} />
+                    <img src={`${this.state.product_database.image}` === "" ? no_img : `${this.state.product_database.image}` } height="200px" width="200px" border-radius ="20%" align="center" alt={this.state.product_database.product_full_name} />
                 </div>
 
                 <div className="text-container" >

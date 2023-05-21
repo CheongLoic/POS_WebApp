@@ -1,13 +1,12 @@
 import React from "react";
-import "./Modal_invoice.css";
+import "./ModalPrintTicket.css";
 import print from "../../img/print_icon.png"
 import no_print from "../../img/noprint_icon.png"
 import {Button } from 'reactstrap';
-import "./Modal_print_ticket.css"
-import { setDataInLS } from "../../backend/localStorageManager";
+import "./ModalPrintTicket.css"
 
 
-function Modal_print_ticket({ setOpenModal, getCustomer, getTicket,reinitializeData} ) {
+function ModalPrintTicket({ setOpenModal, getCustomer, getTicket,reinitializeData} ) {
 
   
 
@@ -23,7 +22,7 @@ function Modal_print_ticket({ setOpenModal, getCustomer, getTicket,reinitializeD
       ticketData : getTicket()
     }
 
-    // console.log(dataToSend)
+    console.log("dataToSend",dataToSend)
     setOpenModal(false)
 
     const requestOptions = {
@@ -63,4 +62,4 @@ function Modal_print_ticket({ setOpenModal, getCustomer, getTicket,reinitializeD
   );
 }
 
-export default Modal_print_ticket;
+export default ModalPrintTicket;

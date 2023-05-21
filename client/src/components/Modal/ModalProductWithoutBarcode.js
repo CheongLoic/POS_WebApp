@@ -1,25 +1,38 @@
 import React from "react";
-import "./Modal_product_without_barcode.css";
+import "./ModalProductWithoutBarcode.css";
 import no_img from "../../img/no_image.jpg"
 import {Button} from 'reactstrap';
 import { getDataFromLS,setDataInLS } from '../../backend/localStorageManager';
 
-function Modal_product_without_barcode({ setOpenModal, setProductList, setTTC } ) {
+function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
   const product_with_no_barcode = getDataFromLS("product_with_no_barcode")
+  let product_basket_LS = getDataFromLS("product_basket_LS")
+  let product_with_no_barcode_filtered = product_with_no_barcode
+  if (product_basket_LS !== null ) {
+    if (product_basket_LS.length !==0) {
+      // console.log(product_basket_LS)
+      for (let i in product_basket_LS) {
+        product_with_no_barcode_filtered = product_with_no_barcode_filtered.filter((product) => product.product_id !== product_basket_LS[i].product_id )
+      }
+      // console.log(product_with_no_barcode_filtered)
+    }
+  } else {
+    product_basket_LS = [];
+    setDataInLS("product_basket_LS", product_basket_LS)
+  }
 
 
   const productClicked = (index) => {
     let barcodeScan_history = getDataFromLS("barcodeScan_history")
-    let product_basket_LS = getDataFromLS("product_basket_LS")
+    
     let TOTAL_DISCOUNT_IN_THE_BASKET_LS = getDataFromLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS")
     let TTC_LS = getDataFromLS("TTC_LS")
-    if (barcodeScan_history === null && product_basket_LS === null && TTC_LS === null && TOTAL_DISCOUNT_IN_THE_BASKET_LS === null) {
+    if (barcodeScan_history === null  && TTC_LS === null && TOTAL_DISCOUNT_IN_THE_BASKET_LS === null) {
       barcodeScan_history = []
-      product_basket_LS = [];
       TTC_LS = 0;
       TOTAL_DISCOUNT_IN_THE_BASKET_LS = 0
       setDataInLS("barcodeScan_history", barcodeScan_history)
-      setDataInLS("product_basket_LS", product_basket_LS)
+      
       setDataInLS("TTC_LS", TTC_LS)
       setDataInLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS", TOTAL_DISCOUNT_IN_THE_BASKET_LS)
     }
@@ -27,18 +40,18 @@ function Modal_product_without_barcode({ setOpenModal, setProductList, setTTC } 
     let productc_list = product_basket_LS
     console.log("productInBasket : ", productc_list)
     productc_list.push({
-      product_id: product_with_no_barcode[index].product_id,
-      product_full_name: product_with_no_barcode[index].product_full_name,
-      product_name_on_ticket: product_with_no_barcode[index].product_name_on_ticket,
-      quantity: product_with_no_barcode[index].typeOfSale === "unit" ? "1" : "",
-      product_price: Number(product_with_no_barcode[index].current_price).toFixed(2),
-      product_total_price_before_discount: product_with_no_barcode[index].typeOfSale === "unit" ? Number(product_with_no_barcode[index].current_price).toFixed(2) : "",
+      product_id: product_with_no_barcode_filtered[index].product_id,
+      product_full_name: product_with_no_barcode_filtered[index].product_full_name,
+      product_name_on_ticket: product_with_no_barcode_filtered[index].product_name_on_ticket,
+      quantity: product_with_no_barcode_filtered[index].typeOfSale === "unit" ? "1" : "",
+      product_price: Number(product_with_no_barcode_filtered[index].current_price).toFixed(2),
+      product_total_price_before_discount: product_with_no_barcode_filtered[index].typeOfSale === "unit" ? Number(product_with_no_barcode_filtered[index].current_price).toFixed(2) : "",
       total_discount : "",
-      type_of_sale : product_with_no_barcode[index].typeOfSale,
-      image : product_with_no_barcode[index].image
+      type_of_sale : product_with_no_barcode_filtered[index].typeOfSale,
+      image : product_with_no_barcode_filtered[index].image
     })
 
-    if (product_with_no_barcode[index].typeOfSale === "unit") {
+    if (product_with_no_barcode_filtered[index].typeOfSale === "unit") {
       let TTC_LS = getDataFromLS("TTC_LS")
       TTC_LS += Number(product_with_no_barcode[index].current_price)
       setDataInLS("TTC_LS", TTC_LS)
@@ -76,7 +89,7 @@ function Modal_product_without_barcode({ setOpenModal, setProductList, setTTC } 
         </div>
         <div className="body">
           {
-            product_with_no_barcode.map((product, index) => (
+            product_with_no_barcode_filtered.map((product, index) => (
               <Button color="light" key={index} style={{marginBottom : "20px", marginRight: "10px"}} onClick={() => productClicked(index)}> 
 
                 <div  className="img_product_container">
@@ -113,4 +126,4 @@ function Modal_product_without_barcode({ setOpenModal, setProductList, setTTC } 
   );
 }
 
-export default Modal_product_without_barcode;
+export default ModalProductWithoutBarcode;
