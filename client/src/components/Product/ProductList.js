@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import no_img from "../../img/no_image.jpg"
 import { setDataInLS } from '../../backend/localStorageManager';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 
 class ProductList  extends Component {
@@ -27,7 +28,7 @@ class ProductList  extends Component {
                 <Link to="/products/modifyProductPage" style={{ textDecoration: 'none' , color:"white"}} onClick={this.setChangeProductParam}>
                     
                 <div  className="img_product_container">
-                    <img src={`${this.state.product_database.image}` === "" ? no_img : `${this.state.product_database.image}` } height="200px" width="200px" border-radius ="20%" align="center" alt={this.state.product_database.product_full_name} />
+                    <LazyLoadImage effect='blur' src={`${this.state.product_database.image}` === "" ? no_img : `${this.state.product_database.image}` } height="200px" width="200px" border-radius ="20%" align="center" alt={this.state.product_database.product_full_name} />
                 </div>
 
                 <div className="text-container" >

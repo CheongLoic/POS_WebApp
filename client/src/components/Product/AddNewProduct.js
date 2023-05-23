@@ -34,11 +34,12 @@ const AddNewProduct = () => {
         if (chinese_caracter_array.length > 0 ) {
           setError(true)
           ERROR = true
-          getImage({
-            ...image_data, file:event.target.files[0],
-            // ...image_data, file: img_file_name_rectified[0],
-        })
-        } else {
+        //   getImage({
+        //     ...image_data, file:event.target.files[0],
+        //     // ...image_data, file: img_file_name_rectified[0],
+        // })
+        }
+        //  else {
           console.log("event.target.files[0] : ",event.target.files[0]); //array
           console.log("event.target.files[0].name : "  , event.target.files[0].name); //file name
           console.log("event.target.files[0].name after : "  , event.target.files[0].name); //file name
@@ -66,10 +67,10 @@ const AddNewProduct = () => {
               // ...image_data, file:event.target.files[0],
               ...image_data, file: img_file_name_rectified[0],
           })
-          console.log("image_data : " , image_data); //Nothing
-          console.log("image_data.file : " , image_data.file); //Nothing
-          console.log("image_data.file.name : " , image_data.file.name); //Nothing
-        }
+          console.log("image_data : " , image_data); //Nothing at first render
+          console.log("image_data.file : " , image_data.file); //Nothing at first render
+          console.log("image_data.file.name : " , image_data.file.name); //Nothing at first render
+        // }
         
 
     }
@@ -109,13 +110,15 @@ const AddNewProduct = () => {
     const checkField = ()=>{
       //this function checks if there is what it is expected in the fields
       //Otherwise, it will display a msg error
-      const chinese_caracter_array = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
-      
+      const chinese_caracter_product_name_on_ticket = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
+      const chinese_caracter_image = image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
+
       if (form_data.product_full_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
       // ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
       // || form_data.date_of_purchase === "" || form_data.expiration_date === "" 
       ||   ( form_data.barCode === ""  && form_data.barCode_available === "Oui 有")  
-      || chinese_caracter_array.length > 0
+      || chinese_caracter_product_name_on_ticket.length > 0
+      || chinese_caracter_image.length > 0
       // || image_data.file.name.includes(" ")  || image_data.file.name.includes("_") 
       ) {
           // console.log("before set error true from checkfield",error)
@@ -151,7 +154,7 @@ const AddNewProduct = () => {
     const submit = async () => {
         const formdata = new FormData();
         
-        formdata.append('avatar', image_data.file);
+        
         // formdata.append('test', "Hello world");
         // console.log("from submit :")
         // console.log(image_data.file);
@@ -186,6 +189,32 @@ const AddNewProduct = () => {
           // console.log("last_barCodeID: ", last_barCodeID)
           let newBarcode = form_data.barCode
           if (form_data.barCode.length <13) newBarcode= "0".repeat(13-form_data.barCode.length) + newBarcode
+          
+          let imageExisted = productDB.filter((product) => product.image === "./img/"+image_data.file.name )
+          console.log("imageExisted 1" , imageExisted)
+          let newImageName = "./img/"+ image_data.file.name 
+          let i = 0
+          while (imageExisted.length !== 0) {
+            i += 1
+            // console.log(newImageName.split('.').slice(1).join("."))
+            newImageName = "./img/"+ image_data.file.name.split('.')[0] + '('+ i + ')' + image_data.file.name.split('.').slice(1, image_data.file.name.split('.').length -2).join(".") + "."+image_data.file.name.split('.')[image_data.file.name.split('.').length-1]
+            imageExisted = productDB.filter((product) => product.image === newImageName )
+            console.log("newImageName" , newImageName)
+            console.log("imageExisted" , imageExisted)
+          }
+          if (i >= 1) {
+            // i -= 1
+          newImageName =  "./img/"+image_data.file.name.split('.')[0] + '('+ i + ')' + image_data.file.name.split('.').slice(1, image_data.file.name.split('.').length -2).join(".") + "."+image_data.file.name.split('.')[image_data.file.name.split('.').length-1]
+
+            const img_file_name_rectified = [new File([image_data], newImageName , {type: image_data.file.type})]
+          // getImage({
+          //     // ...image_data, file:event.target.files[0],
+          //     ...image_data, file: img_file_name_rectified[0],
+          // })
+          
+          }
+          formdata.append('avatar', image_data.file);
+         
 
           const dataToSend = {
             product_id : productID+1,
@@ -215,7 +244,7 @@ const AddNewProduct = () => {
             current_price : form_data.product_price,
             typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": "weight",
             default_sold_weight_kg : form_data.default_sold_weight_kg,
-            image : image_data.file.name === undefined ? "" : "./img/"+image_data.file.name,
+            image : image_data.file.name === undefined ? "" : newImageName,
             display_on_ticket: form_data.display_product_name === "Oui 要" ? true : false
           }
 
@@ -312,7 +341,7 @@ const AddNewProduct = () => {
                   </Col>
                 </FormGroup>
 
-                {form_data.type_of_sale ===  "Au poids 体重" ? 
+                {/* {form_data.type_of_sale ===  "Au poids 体重" ? 
                   <div>
                     <FormGroup row>
                       <Label sm={3} style={{fontSize: "60%"}}>Poids vendu par défaut<br/>默认出售重量</Label>
@@ -321,9 +350,9 @@ const AddNewProduct = () => {
                         onChange={changeHandler} value={form_data.default_sold_weight_kg}  placeholder="Poids vendu par défaut 默认出售重量" />
                       </Col>
                     </FormGroup>
-                    {/* <p style={{fontSize: 15, color: "orange"}}>{error && form_data.default_sold_weight_kg.length===0 ? "Veuillez entrer le poids vendu par défaut. 请输入默认出售重量" : ""}</p> */}
+                    <p style={{fontSize: 15, color: "orange"}}>{error && form_data.default_sold_weight_kg.length===0 ? "Veuillez entrer le poids vendu par défaut. 请输入默认出售重量" : ""}</p>
                   </div>
-                : "" }
+                : "" } */}
 
                 {/* <FormGroup row>
                   <Label sm={3} style={{fontSize: "60%"}}>Quantité 数量</Label>

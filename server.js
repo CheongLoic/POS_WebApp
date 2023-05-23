@@ -49,19 +49,24 @@ const storage = multer.diskStorage({
    encoding: '7bit',
    mimetype: 'image/jpeg'
  }*/
-    // console.log('FILEdir ', path.join(__dirname, '/client/public/img', 'mcoc_ga.jpg')) //concatenate current directory with other param
 
-    // console.log('Find image', JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', 'mcoc_ga.jpg'))))
     let FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', file.originalname)))
     let i = 0 
     let newImageName = file.originalname
+    console.log('file.originalname', file.originalname)
     while (FindImage) {
       i += 1
       // console.log(newImageName.split('.').slice(1).join("."))
       newImageName = file.originalname.split('.')[0] + '('+ i + ')' + file.originalname.split('.').slice(1, file.originalname.split('.').length -2).join(".") + "."+file.originalname.split('.')[file.originalname.split('.').length-1]
       FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', newImageName)))
+      console.log('newImageName in while', newImageName)
     }
-    console.log('newImageName', newImageName)
+    if (i >=1) {
+      // i -=1
+      newImageName = file.originalname.split('.')[0] + '('+ i + ')' + file.originalname.split('.').slice(1, file.originalname.split('.').length -2).join(".") + "."+file.originalname.split('.')[file.originalname.split('.').length-1]
+      console.log('newImageName to save', newImageName)
+    }
+    
     
 
     cb(null, newImageName)
@@ -101,21 +106,23 @@ app.post('/products/addNewProduct-send-data', async (req,res) => {
   const filename = "client/src/database/products.json"
 
   let originalName = newData[newData.length - 1].image.substring(6)
-  let FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img',originalName)))
-    let i = 0 
+  console.log('originalName from app.post(/products/addNewProduct-send-data ', originalName)
+
+  // let FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img',originalName)))
+  //   let i = 1 
     
-    let newImageName = originalName
-    while (FindImage) {
-      i += 1
-      // console.log(newImageName.split('.').slice(1).join("."))
-      newImageName = originalName.split('.')[0] + '('+ i + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
-      FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', newImageName)))
-      newData[newData.length - 1].image = "./img/"+newImageName
-    }
-    i -=1
-    newImageName = originalName.split('.')[0] + '('+ i  + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
-    newData[newData.length - 1].image = "./img/"+newImageName
-    console.log('newImageName from app.post(/products/addNewProduct-send-data ', newImageName)
+  //   let newImageName = originalName
+  //   while (FindImage) {
+  //     i += 1
+  //     // console.log(newImageName.split('.').slice(1).join("."))
+  //     newImageName = originalName.split('.')[0] + '('+ i + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
+  //     FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', newImageName)))
+  //     newData[newData.length - 1].image = "./img/"+newImageName
+  //   }
+  //   i -=1
+  //   newImageName = originalName.split('.')[0] + '('+ i  + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
+  //   newData[newData.length - 1].image = "./img/"+newImageName
+    // console.log('newImageName from app.post(/products/addNewProduct-send-data ', newImageName)
 
   // console.log("display form " + req.form)
       // console.log("display body from addNewProduct-send-data " +  newData) //Return :  display body from addNewProduct-send-data [object Object],[object Object],[object Object],[object Object],[object Object]
@@ -344,7 +351,6 @@ app.post('/tickets',  (req, res) => {
 app.post('/tickets/addNewTicket',  (req, res) => {
   // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
   // console.log(req.body)
-  console.log("HELLO !")
     
   if (req.body.ticketData.invoice ) { 
     //save new customer in json file
@@ -367,18 +373,20 @@ app.post('/tickets/addNewTicket',  (req, res) => {
     const invoiceFilename = "client/src/database/invoices.json"
     const loadJSON_invoices = JSON.parse(fs.existsSync(invoiceFilename)) ? fs.readFileSync(invoiceFilename).toString()  : '""' 
     const invoices_data = JSON.parse(loadJSON_invoices); //string to JSON object 
-    let conca2 = invoices_data.concat([{
-      invoice_id: invoices_data[invoices_data.length -1 ].invoice_id +1,
-      ticket_id: req.body.ticketData.ticket_id,
-      customer_id: req.body.customerData.customer.id,
-      date: req.body.ticketData.date_of_purchase
-    }]); //put json in an array
-    
-    //remove duplicate item
-    let newInvoiceData = conca2.filter((c, index) => {
-      return conca2.indexOf(c) === index;
-    });
-    fs.writeFileSync(invoiceFilename, JSON.stringify(newInvoiceData, null, 2)) 
+    if (invoices_data.filter((invoice) => invoice.ticket_id === req.body.ticketData.ticket_id ).length ===0 ) {
+      let conca2 = invoices_data.concat([{
+        invoice_id: invoices_data[invoices_data.length -1 ].invoice_id +1,
+        ticket_id: req.body.ticketData.ticket_id,
+        customer_id: req.body.customerData.customer.id,
+        date: req.body.ticketData.date_of_purchase
+      }]); //put json in an array
+      
+      //remove duplicate item
+      let newInvoiceData = conca2.filter((c, index) => {
+        return conca2.indexOf(c) === index;
+      });
+      fs.writeFileSync(invoiceFilename, JSON.stringify(newInvoiceData, null, 2)) 
+    }
   }
 
   //SAVE TICKET DATA

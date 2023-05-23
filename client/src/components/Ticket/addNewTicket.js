@@ -557,7 +557,7 @@ const reinitializeData = () => {
 
                     <br/>
                     <br/>
-                  <p>Produits dans le panier 篮子里的食物产品 :</p>
+                  <p>Produits choisis par le client 客户选择的食物产品 :</p>
                   {/* {console.log("product_list : ", product_list)
                   //console.log("barcodeScan_history : ", barcodeScan_history)
                 } */}

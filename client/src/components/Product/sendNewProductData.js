@@ -18,6 +18,9 @@ import { Navigate } from "react-router-dom";
         // console.log("Data to send from /customers/addNewProduct-send-data :", JSON.stringify(productDB))
         // this.setState({changePage : true})
         // goToPage("/products/addNewProduct");
+        setTimeout(() => {
+          console.log("waiting")
+      }, 100000)
         return( <Navigate  to="/products"  replace={true} />) 
 
 }

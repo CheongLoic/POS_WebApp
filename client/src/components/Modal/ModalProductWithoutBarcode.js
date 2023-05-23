@@ -3,9 +3,11 @@ import "./ModalProductWithoutBarcode.css";
 import no_img from "../../img/no_image.jpg"
 import {Button} from 'reactstrap';
 import { getDataFromLS,setDataInLS } from '../../backend/localStorageManager';
+import productDB from "../../database/products.json"
+import { sortDataByFullName } from "../../backend/localStorageManager";
 
 function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
-  const product_with_no_barcode = getDataFromLS("product_with_no_barcode")
+  const product_with_no_barcode = sortDataByFullName(productDB.filter((product) => product.barCode_available === false ))
   let product_basket_LS = getDataFromLS("product_basket_LS")
   let product_with_no_barcode_filtered = product_with_no_barcode
   if (product_basket_LS !== null ) {
