@@ -111,7 +111,8 @@ const AddNewProduct = () => {
       //this function checks if there is what it is expected in the fields
       //Otherwise, it will display a msg error
       const chinese_caracter_product_name_on_ticket = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
-      const chinese_caracter_image = image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
+      let chinese_caracter_image = []
+      if (image_data.file.length >0) chinese_caracter_image = image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
 
       if (form_data.product_full_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
       // ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
@@ -206,7 +207,7 @@ const AddNewProduct = () => {
             // i -= 1
           newImageName =  "./img/"+image_data.file.name.split('.')[0] + '('+ i + ')' + image_data.file.name.split('.').slice(1, image_data.file.name.split('.').length -2).join(".") + "."+image_data.file.name.split('.')[image_data.file.name.split('.').length-1]
 
-            const img_file_name_rectified = [new File([image_data], newImageName , {type: image_data.file.type})]
+            // const img_file_name_rectified = [new File([image_data], newImageName , {type: image_data.file.type})]
           // getImage({
           //     // ...image_data, file:event.target.files[0],
           //     ...image_data, file: img_file_name_rectified[0],
@@ -274,12 +275,13 @@ const AddNewProduct = () => {
             header : { "Content-Type" : "multipart/form-data"}
           })
           .then( res => {
-              console.log(res.data);
+              console.log(res);
           })
             .then(response => response.json())
           // console.log("old product DB :",productDB)
           productDB.push(dataToSend)
           setDataInLS("productDB", productDB)
+          setDataInLS("add_modify_product", dataToSend)
           // console.log("new product DB :", productDB)
           AddButtonClicked(true);
         }
@@ -427,7 +429,8 @@ const AddNewProduct = () => {
                   <Input type="file" name="upload_file" accept='image/*' onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={handleInputImageChange}/>
                   </Col>
                 </FormGroup>
-                <p style={{fontSize: 15, color: "orange"}}>{error && image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)).length >0 ? "Caractères chinois non acceptés. 不能写汉字" : ""}</p>
+                {image_data.file.length > 0 ? <p style={{fontSize: 15, color: "orange"}}>{error && image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)).length >0 ? "Caractères chinois non acceptés. 不能写汉字" : ""}</p>
+                : ""}
 
 
                   

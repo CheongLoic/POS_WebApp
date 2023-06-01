@@ -54,7 +54,7 @@ img {
 }
 
 .product_catalogue {    
-    background-color: rgba(80, 75, 75, 0.965);
+    /* background-color: rgba(80, 75, 75, 0.965); */
     width: 100%;
     border-radius: 20px;
     /* position: relative; */
@@ -86,9 +86,13 @@ img {
     /* background-color: rgba(255, 0, 0, 0.406); */
     height : 50px ;
     width: 200px;
-    font-size: 16px;
+    font-size: 87%;
     text-align: center;
+    max-height: 100%;
     /* padding: 10px 0; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 

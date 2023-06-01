@@ -1,0 +1,57 @@
+.searchbar_basket {
+    /* display: block; */
+    /* width: 80%;
+    margin-left: 10%;
+    height : 80px ;
+     */
+    /* align-items: center; */
+    /* justify-content: space-evenly; */
+    /* padding : 15px 10px; */
+    /* padding-left: 15px;
+    padding-right: 15px;
+    color: rgb(19, 73, 124);
+    border-radius: 20px ;
+    margin-bottom: 10px;
+    margin-top: 5px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    position: fixed;
+    z-index: 2;
+
+}
+
+.searchbox {
+    display: flex;
+    /* padding: 20px; */
+    border-color: rgb(42, 51, 54);
+    border-style:solid ;
+    border-width: 2px;
+    border-radius: 10px;
+    /* background-color: aqua; */
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 12.5%;
+}
+
+.searchbar_basket_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.below_searchbar {
+    margin-top: 100px;
+}
+
+.price_qty_block {
+    display: flex ;
+    /* background-color: aqua; */
+}

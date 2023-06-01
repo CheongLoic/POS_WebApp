@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 
  const SendNewProductData =() => {
     
-        const productDB = getDataFromLS("productDB")
+        const productDB = getDataFromLS("add_modify_product")
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -18,9 +18,7 @@ import { Navigate } from "react-router-dom";
         // console.log("Data to send from /customers/addNewProduct-send-data :", JSON.stringify(productDB))
         // this.setState({changePage : true})
         // goToPage("/products/addNewProduct");
-        setTimeout(() => {
-          console.log("waiting")
-      }, 100000)
+        
         return( <Navigate  to="/products"  replace={true} />) 
 
 }

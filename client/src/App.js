@@ -17,6 +17,7 @@ import Performances from "./components/Performances"
 import AddNewTicket from './components/Ticket/addNewTicket';
 import DownloadProductCataloguePage from './components/Product/DownloadCataloguePage';
 import ModifyProductPage from "./components/Product/ModifyProductPage"
+import CreateInvoice from "./components/Invoice/CreateInvoice"
 // import server from "./server";
 
 // import { render, Printer, Text } from 'react-thermal-printer';
@@ -227,6 +228,7 @@ class App extends Component {
         <Route exact path="/tickets" element={<Tickets/>}></Route>
         <Route exact path="/tickets/addNewTicket" element={<AddNewTicket/>}></Route>
         <Route exact path="/invoices" element={<Invoices/>}></Route>
+        <Route exact path="/invoices/createInvoice" element={<CreateInvoice/>}></Route>
         <Route exact path="/customers" element={<Customers/>}></Route>
         <Route exact path="/customers/addNewCustomer" element={<AddNewCustomer/>}></Route>
         <Route exact path="/discounts" element={<Discounts/>}></Route>

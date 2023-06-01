@@ -38,6 +38,7 @@ const PrinterTypes = require("node-thermal-printer").types;
 // });
 
 const storage = multer.diskStorage({
+  
   destination : path.join(__dirname, '/client/public', 'img'), //detination of the image file in the folder /client/public
   filename : function ( req, file, cb) {
     // console.log('Destination', destination)//return error
@@ -59,16 +60,13 @@ const storage = multer.diskStorage({
       // console.log(newImageName.split('.').slice(1).join("."))
       newImageName = file.originalname.split('.')[0] + '('+ i + ')' + file.originalname.split('.').slice(1, file.originalname.split('.').length -2).join(".") + "."+file.originalname.split('.')[file.originalname.split('.').length-1]
       FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', newImageName)))
-      console.log('newImageName in while', newImageName)
+      // console.log('newImageName in while', newImageName)
     }
     if (i >=1) {
       // i -=1
       newImageName = file.originalname.split('.')[0] + '('+ i + ')' + file.originalname.split('.').slice(1, file.originalname.split('.').length -2).join(".") + "."+file.originalname.split('.')[file.originalname.split('.').length-1]
       console.log('newImageName to save', newImageName)
     }
-    
-    
-
     cb(null, newImageName)
     // console.log('cb', cb) // return [Function (anonymous)]
   }
@@ -79,6 +77,9 @@ app.post('/products/addNewProduct', async (req,res) => {
   // console.log("display form " + req.form)
   try { 
     // console.log("display body " + JSON.stringify( req.body)) //nothing 
+    console.log("########################################################################################################################")
+    console.log("Date :", new Date().toLocaleString())
+
     let upload = multer({ storage : storage}).single('avatar');
     //console.log("upload : ",  upload) //return function descripion  [Function: multerMiddleware]
     //console.log("storage : ", storage)
@@ -90,7 +91,7 @@ app.post('/products/addNewProduct', async (req,res) => {
       //req.file contains info of uploaded file 
       //req.body contains info of text fields
       if (!req.file) {
-        return res.send("Please select an image to upload");
+        return res.send("No image to upload");
       } else if (err instanceof multer.MulterError) {
         return res.send(err);
       } else if (err) {
@@ -102,35 +103,40 @@ app.post('/products/addNewProduct', async (req,res) => {
 })
 
 app.post('/products/addNewProduct-send-data', async (req,res) => {
-  const newData = req.body
-  const filename = "client/src/database/products.json"
+  try {
+    const newData = req.body
+    let originalName = newData.image.substring(6)
+    console.log('originalName from app.post(/products/addNewProduct-send-data ', originalName)
 
-  let originalName = newData[newData.length - 1].image.substring(6)
-  console.log('originalName from app.post(/products/addNewProduct-send-data ', originalName)
-
-  // let FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img',originalName)))
-  //   let i = 1 
+    const productFilename = "client/src/database/products.json"
+    const loadJSON_products = JSON.parse(fs.existsSync(productFilename)) ? fs.readFileSync(productFilename).toString()  : '""' 
+    const products_data = JSON.parse(loadJSON_products); //string to JSON object 
+    let newproductData =[]
+    if (products_data.filter((product) => product.product_id === req.body.product_id).length === 0  ) {
+      let conca = products_data.concat([req.body]); //put json in an array
     
-  //   let newImageName = originalName
-  //   while (FindImage) {
-  //     i += 1
-  //     // console.log(newImageName.split('.').slice(1).join("."))
-  //     newImageName = originalName.split('.')[0] + '('+ i + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
-  //     FindImage = JSON.parse(fs.existsSync(path.join(__dirname, '/client/public/img', newImageName)))
-  //     newData[newData.length - 1].image = "./img/"+newImageName
-  //   }
-  //   i -=1
-  //   newImageName = originalName.split('.')[0] + '('+ i  + ')' + originalName.split('.').slice(1, originalName.split('.').length -2).join(".") + "."+originalName.split('.')[originalName.split('.').length-1]
-  //   newData[newData.length - 1].image = "./img/"+newImageName
-    // console.log('newImageName from app.post(/products/addNewProduct-send-data ', newImageName)
-
-  // console.log("display form " + req.form)
-      // console.log("display body from addNewProduct-send-data " +  newData) //Return :  display body from addNewProduct-send-data [object Object],[object Object],[object Object],[object Object],[object Object]
-      
-  fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
-  res.status(200).send({status : "OK"})
-   
-
+      //remove duplicate item
+      newproductData = conca.filter((c, index) => {
+        return conca.indexOf(c) === index;
+      });   
+    }  else {
+     const index =  products_data.findIndex((product) => product.product_id === req.body.product_id )
+     if (products_data[index].image !== req.body.image && products_data[index].image !=="") {
+      fs.unlink(path.join(__dirname, '/client/public', products_data[index].image.substring(1) ),  (err) => {
+         if (err) console.log(err);
+        else {
+          console.log("\nDeleted file: ", path.join(__dirname, '/client/public', products_data[index].image.substring(1) ))}
+          })
+     }
+     newproductData = newproductData.concat(products_data)
+     newproductData[index] = req.body
+    }
+    fs.writeFileSync(productFilename, JSON.stringify(newproductData, null, 2))
+    res.status(200).send({status : "OK"})
+  } catch(err) {
+    // res.send(err)
+    console.log("ERROR from '/products/addNewProduct-send-data'",err)
+  }
 })
 
 app.post('/discounts', async (req,res) => {

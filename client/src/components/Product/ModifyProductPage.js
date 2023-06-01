@@ -107,13 +107,17 @@ const handleInputImageChange = (event) => {
 const checkField = ()=>{
   //this function checks if there is what it is expected in the fields
   //Otherwise, it will display a msg error
-  const chinese_caracter_array = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
-  
+  const chinese_caracter_product_name_on_ticket = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
+  let chinese_caracter_image = []
+  if (image_data.file.length >0) chinese_caracter_image = image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
+
+
   if (form_data.product_full_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
   // ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
   // || form_data.date_of_purchase === "" || form_data.expiration_date === "" 
-  ||   ( barcodeInput.length < 13  && form_data.barCode_available === "Oui 有")  
-  || chinese_caracter_array.length > 0
+  ||   (showBarcodeField && barcodeInput.length < 10  && form_data.barCode_available === "Oui 有")  
+  || chinese_caracter_product_name_on_ticket.length > 0
+  || chinese_caracter_image.length > 0
   // || image_data.file.name.includes(" ")  || image_data.file.name.includes("_") 
   ) {
       setError(true) ;
@@ -136,93 +140,75 @@ const submit = async () => {
     const formdata = new FormData();
     
     formdata.append('avatar', image_data.file);
-    // formdata.append('test', "Hello world");
-    // console.log("from submit :")
-    // console.log(image_data.file);
-    // console.log("image name : '", image_data.file.name, "'");
-    // console.log(image_data.file[0]); //undefined
-    // console.log("from formdata :")
-    // console.log(form_data)
     checkField()
 
     if (ERROR === false) {
       const current_date = new Date();
       let productDB = getDataFromLS("productDB")
-      let productDB_sorted = productDB.sort((a, b) => {//tricroissant par product_id
-      if (a.product_id < b.product_id) {
-          return -1;
-        }
-        if (a.product_id > b.product_id) {
-            return 1;
-          }
-          // a must be equal to b
-          return 0;
-      })
-      let last_product = productDB_sorted[productDB_sorted.length - 1 ]
-      const productID = last_product.product_id
+      // let productDB_sorted = productDB.sort((a, b) => {//tricroissant par product_id
+      // if (a.product_id < b.product_id) {
+      //     return -1;
+      //   }
+      //   if (a.product_id > b.product_id) {
+      //       return 1;
+      //     }
+      //     // a must be equal to b
+      //     return 0;
+      // })
+      // let last_product = productDB_sorted[productDB_sorted.length - 1 ]
+      // const productID = last_product.product_id
 
-      // let product_with_no_barcode = getDataFromLS("product_with_no_barcode")
-      // let last_barCodeID = product_with_no_barcode[ Object.keys(product_with_no_barcode).sort().pop() ]
-      // last_barCodeID = last_barCodeID.barCode_list
-      // last_barCodeID = last_barCodeID[ Object.keys(last_barCodeID).sort().pop() ]
-      // console.log("last_barCodeID: ", last_barCodeID)
-      // last_barCodeID = last_barCodeID.barCode
-      // console.log("last_barCodeID: ", last_barCodeID)
-      let newBarcode = barcodeInput
-      if (barcodeInput.length <13) newBarcode= "0".repeat(13-barcodeInput.length) + newBarcode
+      
+      let newPriceHisto = product_data_to_change.price_history
+      if (product_data_to_change.price_history[product_data_to_change.price_history.length -1].product_price !== form_data.product_price) {
+       newPriceHisto.push({
+          date : current_date.toISOString().substring(0, 10),
+          product_price: form_data.product_price
+        })
+      }
 
       const dataToSend = {
-        product_id : productID+1,
+        product_id : product_data_to_change.product_id,
         product_full_name: form_data.product_full_name, 
         product_name_on_ticket : form_data.product_name_on_ticket ,
         barCode_available : form_data.barCode_available === "Oui 有" ? true : false,
         barCode_list : form_data.barCode_available === "Oui 有" ? 
-          [{
-            barCode : newBarcode,
-            quantity: form_data.quantity,
-            buying_price: form_data.buying_price, 
-            date_of_purchase: form_data.date_of_purchase,
-            expiration_date : form_data.expiration_date,
-          }] 
+        barcodeList
           :
           [{
             barCode : "",
-            quantity: form_data.quantity,
-            buying_price: form_data.buying_price, 
-            date_of_purchase: form_data.date_of_purchase,
-            expiration_date : form_data.expiration_date,
+            quantity: "",
+            buying_price: "", 
+            date_of_purchase: "",
+            expiration_date : "",
           }],
-        price_history : [{
-          date : current_date.toISOString().substring(0, 10),
-          product_price: form_data.product_price
-        }],
+        price_history : newPriceHisto,
         current_price : form_data.product_price,
         typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": "weight",
         default_sold_weight_kg : form_data.default_sold_weight_kg,
-        image : image_data.file.name === undefined ? "" : "./img/"+image_data.file.name,
+        image : (imageDeleted ||clickOnPenButton  ) ? (image_data.file.name === undefined ? "" : "./img/"+image_data.file.name) : product_data_to_change.image ,
         display_on_ticket: form_data.display_product_name === "Oui 要" ? true : false
       }
 
 
-      if (form_data.barCode_available === "Oui 有" ) {
-        let product_with_barcode = getDataFromLS("product_with_barcode")
-        product_with_barcode.push(dataToSend)
-        setDataInLS("product_with_barcode", product_with_barcode)
+      // if (form_data.barCode_available === "Oui 有" ) {
+      //   let product_with_barcode = getDataFromLS("product_with_barcode")
+      //   product_with_barcode.push(dataToSend)
+      //   setDataInLS("product_with_barcode", product_with_barcode)
 
-        let barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID")
-        const db = {
-          barCode: newBarcode,
-          productID : dataToSend.product_id
-        }
-        barCodeAvailable_productID.push(db)
-        setDataInLS("barCodeAvailable_productID", barCodeAvailable_productID)
+      //   let barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID")
+      //   const db = {
+      //     barCode: newBarcode,
+      //     productID : dataToSend.product_id
+      //   }
+      //   barCodeAvailable_productID.push(db)
+      //   setDataInLS("barCodeAvailable_productID", barCodeAvailable_productID)
 
-      } else {
-        let product_with_no_barcode = getDataFromLS("product_with_no_barcode")
-        product_with_no_barcode.push(dataToSend)
-        setDataInLS("product_with_no_barcode", product_with_no_barcode)
-        
-      }
+      // } else {
+      //   let product_with_no_barcode = getDataFromLS("product_with_no_barcode")
+      //   product_with_no_barcode.push(dataToSend)
+      //   setDataInLS("product_with_no_barcode", product_with_no_barcode)
+      // }
 
 
       axios.post("http://localhost:5000/products/addNewProduct", formdata,{
@@ -233,8 +219,9 @@ const submit = async () => {
       })
         .then(response => response.json())
       // console.log("old product DB :",productDB)
-      productDB.push(dataToSend)
-      setDataInLS("productDB", productDB)
+      // productDB.push(dataToSend)
+      // setDataInLS("productDB", productDB)
+      setDataInLS("add_modify_product", dataToSend)
       // console.log("new product DB :", productDB)
       AddButtonClicked(true);
     }
@@ -267,7 +254,7 @@ const deleteBarcode = (index) => {
 
 const addBarcode = () => {
   
-  if ( ( barcodeInput.length <13  && form_data.barCode_available === "Oui 有")   ) {
+  if ( ( barcodeInput.length <10  && form_data.barCode_available === "Oui 有")   ) {
       setError(true) ;
       ERROR = true
   } else {
@@ -275,8 +262,10 @@ const addBarcode = () => {
       ERROR = false
       if(barcodeList.length === 1 && showBarcodeField === false) {
         console.log("barcodeList before", barcodeList)
+        let newBarcode = barcodeInput
+      if (barcodeInput.length <13) newBarcode= "0".repeat(13-barcodeInput.length) + newBarcode
         setBarcodeList([{
-            barCode: barcodeInput,
+            barCode: newBarcode,
             quantity: "",
             buying_price: "",
             date_of_purchase:"", 
@@ -285,8 +274,10 @@ const addBarcode = () => {
           setBarcode("")
           console.log("barcodeList after", barcodeList)
       } else {
+        let newBarcode = barcodeInput
+      if (barcodeInput.length <13) newBarcode= "0".repeat(13-barcodeInput.length) + newBarcode
         let  barcodeListChanged = barcodeList.concat([{
-          barCode: barcodeInput,
+          barCode: newBarcode,
             quantity: "",
             buying_price: "",
             date_of_purchase:"", 
@@ -339,10 +330,13 @@ const addBarcode = () => {
                   <div>
                     <FormGroup row>
                     <Label sm={3} style={{fontSize: "60%"}}>Photo 照片</Label>
-                    <Col sm={8}>
+                    <Col sm={6}>
                     <Input type="file" name="upload_file" accept='image/*' onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={handleInputImageChange}/>
                     </Col>
+                    <Button color='danger' style={{marginLeft: "5%", width : 40, height : 40,  borderRadius : "50%" , fontWeight : "bolder"}} onClick={() => {setClickOnPenButton(false); deleteImage(false) }} >X</Button>
                   </FormGroup>
+                  {image_data.file.length > 0 ? <p style={{fontSize: 15, color: "orange"}}>{error && image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)).length >0 ? "Caractères chinois non acceptés. 不能写汉字" : ""}</p>
+                : ""}
                   </div>
                   :""
                 }
@@ -383,7 +377,7 @@ const addBarcode = () => {
                   </Col>
                 </FormGroup>
 
-                {form_data.type_of_sale ===  "Au poids 体重" ? 
+                {/* {form_data.type_of_sale ===  "Au poids 体重" ? 
                   <div>
                     <FormGroup row>
                       <Label sm={3} style={{fontSize: "60%"}}>Poids vendu par défaut<br/>默认出售重量</Label>
@@ -393,7 +387,7 @@ const addBarcode = () => {
                       </Col>
                     </FormGroup>
                   </div>
-                : "" }
+                : "" } */}
 
                 <FormGroup row>
                   <Label sm={3} style={{fontSize: "60%"}}>Afficher nom du produit sur ticket 显示在收据上食品名称 </Label>
@@ -455,7 +449,7 @@ const addBarcode = () => {
                                     <img src={check_icon} alt='check_icon' style={{width : 60, height : 40,marginLeft: "2%",  cursor : "pointer" }} onClick={() => addBarcode()}  /> 
                                     {/* <Button color='danger' style={{marginLeft: "2.5%", width : 40, height : 40,  borderRadius : "50%" , fontWeight : "bolder"}} >X</Button> */}
                                 </Row>
-                                <p style={{fontSize: 15, color: "orange"}}>{error && barcodeInput.length===0 ? "Veuillez entrer un code-barre correcte. 请输入条形码" : ""}</p>
+                                <p style={{fontSize: 15, color: "orange"}}>{error && barcodeInput.length<10 ? "Veuillez entrer un code-barre correcte. 请输入条形码" : ""}</p>
 
                               </div>
                            :

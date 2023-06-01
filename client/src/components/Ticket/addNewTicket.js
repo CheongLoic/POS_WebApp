@@ -445,7 +445,7 @@ const AddNewTicket = () => {
         if (valueArray[1] === "") {
           newValue = value.split('.')[0] 
         } else {
-          newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,2)
+          newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,3)
         }
         product_list_chg[name].quantity = newValue 
         // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
@@ -454,7 +454,8 @@ const AddNewTicket = () => {
         product_list_chg[name].quantity = newValue 
         // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
       }
-    } else {
+    } 
+    else {
       product_list_chg[name].quantity = value
       // setQtyOnScreen((qty) => ({ ...qty, [name]: value }));
     }
@@ -585,7 +586,7 @@ const reinitializeData = () => {
                         <FormGroup row>
                           <Label  style={{fontSize: "60%", width :'55%', height: '40px', verticalAlign : 'middle',  marginLeft:"0px", marginRight:"1%", marginTop : "5px"}} >{product.product_full_name }</Label>
                           {/* <Col sm={2} style={{ marginRight:"0px", backgroundColor :'red'}}> */}
-                          <Input type="number" style={{marginTop : "5px", width :'7%', height : '40px', textAlign:"center"}} name={index} min="0" max="100" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={product.quantity} placeholder="quantity" />
+                          <Input type="number" style={{marginTop : "5px", width :'9%', height : '40px', textAlign:"center"}} name={index} min="0" max="100" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={product.quantity} placeholder="quantity" />
                           {/* <Label  style={{fontSize: "50%", marginRight:"10px", marginTop : "5px"}} > X {product.product_price} = {product.product_total_price_before_discount }</Label> */}
 
                           {/* </Col> */}
@@ -609,7 +610,7 @@ const reinitializeData = () => {
                         <FormGroup row>
                           <Label  style={{fontSize: "60%", width :'55%', height: '40px', verticalAlign : 'middle',  marginLeft:"0px", marginRight:"1%", marginTop : "5px"}} >{product.product_full_name }</Label>
                           {/* <Col sm={2} style={{ marginRight:"0px", backgroundColor :'red'}}> */}
-                          <Input type="number" style={{marginTop : "5px", width :'7%', height : '40px', textAlign:"center"}} name={index} min="0" max="100" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={product.quantity} placeholder="quantity" />
+                          <Input type="number" style={{marginTop : "5px", width :'9%', height : '40px', textAlign:"center"}} name={index} min="0" max="100" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={product.quantity} placeholder="quantity" />
                           {/* <Label  style={{fontSize: "50%", marginRight:"10px", marginTop : "5px"}} > X {product.product_price} = {product.product_total_price_before_discount }</Label> */}
 
                           {/* </Col> */}
