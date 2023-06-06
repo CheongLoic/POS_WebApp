@@ -1,0 +1,102 @@
+.modalCreateInvoiceBackground, .modalCreateInvoice {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(49, 49, 49, 0.259);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+
+
+  button.facture {
+    border-radius: 50%;
+    margin-top: 30px;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .modalContainerCreateInvoice {
+    border-radius: 12px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    overflow-y: auto;
+    width: 60vw;
+    max-height: 90vh;
+    z-index: 3;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    overflow-x: hidden;
+  }
+  
+  .modalContainerCreateInvoice .title {
+    display: inline-block;
+    text-align: center;
+    color: #2B3336;
+  }
+
+  
+  
+  .titleCloseBtn {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .titleCloseBtn button {
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    padding-right: 15px;
+  }
+  
+  /* .modalContainerCreateInvoice  */
+  .body2 {
+    flex: 50%;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    text-align: center;
+    color: black;
+    margin-bottom: 30px;
+    /* background-color: aqua; */
+    margin-top: 20px;
+    /* width: 300px; */
+    /* padding-top: 30px; */
+    
+  }
+
+  .basket_product_container {
+    /* position: inherit; */
+    /* display: block; */
+    width: 80%;
+    margin-left: 10%;
+    height : 80px ;
+    background-color: rgb(240, 240, 240);
+    /* align-items: center; */
+    /* justify-content: space-evenly; */
+    padding : 15px 10px;
+    color: rgb(19, 73, 124);
+    border-radius: 20px ;
+    margin-bottom: 10px;
+    position: relative;
+    /* flex: 1;
+    display: flex; */
+    /* flex-direction: row; */
+    /* display:inline-block; */
+    /* background-color: yellow; */
+    /* font-size: 70%; */
+  /* align-items: center;
+  justify-content: center; */
+  }

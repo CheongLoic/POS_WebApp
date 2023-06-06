@@ -505,6 +505,35 @@ app.post('/invoices', async (req, res) => {
   res.status(200).send({status : "OK"})
 });
 
+
+
+
+app.post('/invoices/createInvoice', async (req, res) => {
+  const ticketFilename = "client/src/database/tickets.json"
+  const loadJSON_tickets = JSON.parse(fs.existsSync(ticketFilename)) ? fs.readFileSync(ticketFilename).toString()  : '""' 
+  const tickets_data = JSON.parse(loadJSON_tickets); //string to JSON object 
+  let conca = tickets_data.concat([req.body.newTicketData]); //put json in an array
+  //remove duplicate item
+  let newticketData = conca.filter((c, index) => {
+    return conca.indexOf(c) === index;
+  });
+  fs.writeFileSync(ticketFilename, JSON.stringify(newticketData, null, 2)) 
+
+  // ######################################################
+  const invoiceFilename = "client/src/database/invoices.json"
+  const loadJSON_invoices = JSON.parse(fs.existsSync(invoiceFilename)) ? fs.readFileSync(invoiceFilename).toString()  : '""' 
+  const invoices_data = JSON.parse(loadJSON_invoices); //string to JSON object 
+   conca = invoices_data.concat([req.body.newInvoiceData]); //put json in an array
+  //remove duplicate item
+  let newinvoiceData = conca.filter((c, index) => {
+    return conca.indexOf(c) === index;
+  });
+  fs.writeFileSync(invoiceFilename, JSON.stringify(newinvoiceData, null, 2)) 
+
+  res.status(200).send({status : "OK"})
+});
+
+
 //Add New Customer data in json file
 app.post('/customers/addNewCustomer', async (req, res) => {
     const newCustomer = req.body;

@@ -245,7 +245,8 @@ const AddNewTicket = () => {
                     product_total_price_before_discount: product_tot_price_before_discount.toFixed(2), 
                     total_discount : tot_discount === 0 ? "" : tot_discount.toFixed(2),
                     type_of_sale : productDB[0].typeOfSale,
-                    image : productDB[0].image
+                    image : productDB[0].image,
+                    display_on_ticket  : productDB[0].display_on_ticket
                   }
                   Products_scanned.push(product)
                   // console.log("Products_scanned : ", Products_scanned)
@@ -437,27 +438,30 @@ const AddNewTicket = () => {
     // console.log('product_list_chg :', product_list_chg)
     // if (product_list_chg[name].type_of_sale === "unit" && value[value.length] ===".") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
     // if (value === "") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
-
-    if (value.includes('.')) {
-      if (product_list_chg[name].type_of_sale === "weight") {
-        const valueArray =  value.split('.')
-        let newValue = ""
-        if (valueArray[1] === "") {
-          newValue = value.split('.')[0] 
+    if (Number(value) > 100) {
+      product_list_chg[name].quantity = '100'
+    } else {
+      if (value.includes('.')) {
+        if (product_list_chg[name].type_of_sale === "weight") {
+          const valueArray =  value.split('.')
+          let newValue = ""
+          if (valueArray[1] === "") {
+            newValue = value.split('.')[0] 
+          } else {
+            newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,3)
+          }
+          product_list_chg[name].quantity = newValue 
+          // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
         } else {
-          newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,3)
+          const newValue = value.split('.')[0] 
+          product_list_chg[name].quantity = newValue 
+          // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
         }
-        product_list_chg[name].quantity = newValue 
-        // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
-      } else {
-        const newValue = value.split('.')[0] 
-        product_list_chg[name].quantity = newValue 
-        // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
+      } 
+      else {
+        product_list_chg[name].quantity = value
+        // setQtyOnScreen((qty) => ({ ...qty, [name]: value }));
       }
-    } 
-    else {
-      product_list_chg[name].quantity = value
-      // setQtyOnScreen((qty) => ({ ...qty, [name]: value }));
     }
 
     // console.log('quantityOnScreen :', quantityOnScreen)
@@ -579,6 +583,15 @@ const reinitializeData = () => {
                   
                     <div className='product_in_basket' key={index}>
                       {console.log("barcodeList in map ", product_list_to_display_on_screen)}
+                        
+                      {
+                          !product.display_on_ticket ? 
+                              <div className='no_facture'> 
+                                  没发票
+                              </div>
+                          : ""
+                      }
+                     
                       <a href={product.image.includes('http') ? product.image : './.' + product.image} target="_blank" rel="noopener noreferrer">
                       <img src={ product.image.includes('http') ? product.image : './.' + product.image} style={{marginRight:5, marginLeft:10}} height="55px" width="55px" border-radius ="20%" align="left" alt={product.product_full_name}  />
                       </a>
@@ -603,6 +616,13 @@ const reinitializeData = () => {
                     </div>)
                     : (
                     <div className='product_in_basket_wrong' key={index}>
+                      {
+                          !product.display_on_ticket ? 
+                              <div className='no_facture'> 
+                                  没发票
+                              </div>
+                          : ""
+                      }
                       <a href={product.image.includes('http') ? product.image : './.' + product.image} target="_blank" rel="noopener noreferrer">
                       <img src={ product.image.includes('http') ? product.image : './.' + product.image} style={{marginRight:5, marginLeft:10}} height="55px" width="55px" border-radius ="20%" align="left" alt={product.product_full_name}  />
                       </a>

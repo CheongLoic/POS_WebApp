@@ -26,6 +26,14 @@ class ProductList  extends Component {
             <div className='product_catalogue_icon'>
                 {/* <p>{".."+ this.state.product_database.image}</p> */}
                 <Link to="/products/modifyProductPage" style={{ textDecoration: 'none' , color:"white"}} onClick={this.setChangeProductParam}>
+
+                {
+                    !this.state.product_database.display_on_ticket ? 
+                        <div className='no_facture'> 
+                            没发票
+                        </div>
+                    : ""
+                }
                     
                 <div  className="img_product_container">
                     <LazyLoadImage effect='blur' src={`${this.state.product_database.image}` === "" ? no_img : `${this.state.product_database.image}` } height="200px" width="200px" border-radius ="20%" align="center" alt={this.state.product_database.product_full_name} />

@@ -8,15 +8,18 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import basket from "../../img/Cart-Logo.png"
 import white_cart from "../../img/Cart-Logo-white.png"
 import white_basket from "../../img/white_basket.png"
-import { setDataInLS, getDataFromLS } from '../../backend/localStorageManager';
+import { setDataInLS } from '../../backend/localStorageManager';
 import "./CreateInvoice.css"
 import loupe from "../../img/loupe.png"
+import ModalCreateInvoice from "../Modal/ModalCreateInvoice"
 
 
 const CreateInvoice = () => {
       
      const [searchInput, setSearchInput] = useState("")
      const [HT, setHT] = useState(0)
+     const getHT =() =>{ return HT }
+     const [openModal, setOpenModal] = useState(false)
      let product_list = sortDataByFullName(productDB).map((product) => {
          return {
               product_id: product.product_id,
@@ -27,11 +30,20 @@ const CreateInvoice = () => {
               product_total_price_before_discount: "", 
               total_discount : "",
               type_of_sale : product.typeOfSale,
-              image : product.image
+              image : product.image,
+              display_on_ticket  : product.display_on_ticket
             }
     })
     // product_list = product_list.slice(0,20)
     const [product_list_to_display_on_screen, setProduct_list] = useState(product_list);
+    const getProductLst =() =>{ return product_list_to_display_on_screen }
+
+    if(openModal) {
+        document.body.classList.add('active-modal')
+      } else {
+        document.body.classList.remove('active-modal')
+      }
+    
 
     const handleSearchBar =(e) => {
         setSearchInput(e.target.value)
@@ -57,31 +69,34 @@ const CreateInvoice = () => {
         // console.log('product_list :', product_list)
         // if (product_list[name].type_of_sale === "unit" && value[value.length] ===".") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
         // if (value === "") {console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!")}
-
-        if (value.includes('.')) {
-            if (product_list[name].type_of_sale === "weight") {
-                const valueArray =  value.split('.')
-                let newValue = ""
-                if (valueArray[1] === "") {
-                    newValue = value.split('.')[0] 
+        if (Number(value) > 100) {
+            product_list[name].quantity = '100'
+        } else {
+            if (value.includes('.')) {
+                if (product_list[name].type_of_sale === "weight") {
+                    const valueArray =  value.split('.')
+                    let newValue = ""
+                    if (valueArray[1] === "") {
+                        newValue = value.split('.')[0] 
+                    } else {
+                        newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,3)
+                    }
+                    product_list[name].quantity = newValue 
+                    // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
                 } else {
-                    newValue = value.split('.')[0] + "." + value.split('.')[1].substr(0,3)
+                    const newValue = value.split('.')[0] 
+                    product_list[name].quantity = newValue 
+                    // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
                 }
-                product_list[name].quantity = newValue 
-                // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
-            } else {
-                const newValue = value.split('.')[0] 
-                product_list[name].quantity = newValue 
-                // setQtyOnScreen((qty) => ({ ...qty, [name]: newValue }));
+            } else if (value === "") {
+                product_list[name].quantity= ""
+                product_list[name].product_total_price_before_discount=  ""
+                product_list[name].total_discount = ""
             }
-        } else if (value === "") {
-            product_list[name].quantity= ""
-            product_list[name].product_total_price_before_discount=  ""
-            product_list[name].total_discount = ""
-        }
-        else {
-            product_list[name].quantity = value
-            // setQtyOnScreen((qty) => ({ ...qty, [name]: value }));
+            else {
+                product_list[name].quantity = value
+                // setQtyOnScreen((qty) => ({ ...qty, [name]: value }));
+            }
         }
 
         // console.log('quantityOnScreen :', quantityOnScreen)
@@ -137,7 +152,7 @@ const CreateInvoice = () => {
             setProduct_list(product_list)
             var PRX_BF_DISC = product_list.map(product => Number(product.product_total_price_before_discount)).reduce((tot, amount) => tot + amount)
             var DISC = product_list.map(product => Number(product.total_discount)).reduce((tot, amount) => tot + amount)
-            setHT(PRX_BF_DISC -DISC)
+            setHT(PRX_BF_DISC - DISC)
         } else {
             product_list[index].quantity = (Number(product_list[index].quantity) - 1 ).toString()
             product_list[index].product_total_price_before_discount = (Number(product_list[index].quantity) * Number(product_list[index].product_price) ).toFixed(2)            
@@ -174,7 +189,7 @@ const CreateInvoice = () => {
 
                         // TOTAL_DISCOUNT_IN_THE_BASKET_LS = Math.trunc( (TOTAL_DISCOUNT_IN_THE_BASKET_LS + tot_discount ) *100)/100
                         // setDataInLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS", TOTAL_DISCOUNT_IN_THE_BASKET_LS)
-                        product_list[i].total_discount = tot_discount
+                        product_list[i].total_discount = tot_discount.toFixed(2)
                         HT_LS -= tot_discount //HT
                         TOTAL_DISCOUNT_IN_THE_BASKET_LS +=  tot_discount
                         // console.log("/!\\ PRODUIT A DISCOUNTER !!! TOTAL DISCOUNT : ", tot_discount)
@@ -183,7 +198,7 @@ const CreateInvoice = () => {
             }
         }
         // console.log("Products_scanned : ", product_list)
-        setDataInLS("HT_LS", HT_LS)//HT
+        // setDataInLS("HT_LS", HT_LS)//HT
         setHT(HT_LS)
         // console.log("HT", HT)
         // console.log("HT_LS", HT_LS)
@@ -195,17 +210,26 @@ const CreateInvoice = () => {
     }
     
 
+    const toggleModal = () =>{
+        if (HT >0) setOpenModal(true)
+    }
 
     return (
         <div style={{overflowX : "hidden"}}>
             <div className='searchbar_basket_container'>
                 <div className='searchbar_basket'> 
+                <div className='basket_icon' onClick={() =>  toggleModal()}>
+                            <img src={basket} width={50} height={50} alt="panier"/>
+                            <span style={{color: "red", marginLeft: "10%"}}>{(HT* 1.055 ).toFixed(2)}€</span>
+                        </div>
+
                         <div className='searchbox'> 
                             <Input type="text" name="searchInputBar" value={searchInput} style={{width : "100%", boxShadow : "none", borderColor: "white"}} onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  onChange={handleSearchBar} />
                             <img src={loupe} style={{marginLeft: "1%", marginTop: "1%"}}  width={40} height={40} alt="loupe"/>
                         </div>
-                        <img src={basket} width={50} height={50} alt="panier"/>
-                        <span style={{color: "red", marginLeft: "1%"}}>{(HT* 1.055 ).toFixed(2)}</span>
+                        
+                        
+                        
                 </div>
             </div>
             
@@ -219,7 +243,15 @@ const CreateInvoice = () => {
                     { product_list_to_display_on_screen.map((product, index) =>( 
                             searchInput === "" ? 
                                 <div className='product_catalogue_icon' key={index}>
-                                        
+
+                                    {
+                                        !product.display_on_ticket ? 
+                                            <div className='no_facture'> 
+                                                没发票
+                                            </div>
+                                        : ""
+                                    }
+
                                     <div  className="img_product_container">
                                         <LazyLoadImage effect='blur' src={`${product.image}` === "" ? no_img : "./."+`${product.image}` } height="200px" width="200px" border-radius ="20%" align="center" alt={product.product_full_name} />
                                     </div>
@@ -234,9 +266,10 @@ const CreateInvoice = () => {
                                             <img src={white_basket} width={33} height={33} style={{cursor : "pointer", backgroundColor : "#0970E6", position : "absolute" , right: "10px", borderRadius: "50%", paddingBottom : 2, paddingRight : 2, paddingLeft : 2}}  onClick={() => addToBasket(index) } alt="white_cart" />
                                         : <div> 
                                             <FormGroup row>
-                                                <Button style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"#2B3336", marginLeft: "20px"}} onClick={() =>removeFromBasket(index)} >-</Button>
+                                                <Button 
+                                                style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"#2B3336", marginLeft: "20px", justifyContent : "center", alignItems : "center", display : "flex"}} onClick={() =>removeFromBasket(index)} >-</Button>
                                                 <Input type="number"  name={index} min="0" max="100" style={{width :'70px', height : '30px', textAlign:"center", marginLeft: "5px"}} onChange={handleQtyFromInput} value={product.quantity} placeholder="quantity" />
-                                                <Button style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"red", marginLeft: "5px"}}  onClick={() =>addToBasket(index)}>+</Button>
+                                                <Button style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"red", marginLeft: "5px", justifyContent : "center", alignItems : "center", display : "flex"}}  onClick={() =>addToBasket(index)}>+</Button>
                                             {/* <span>{ product.quantity}</span> */}
                                             </FormGroup>
                                         </div>
@@ -249,6 +282,14 @@ const CreateInvoice = () => {
                             :
                             product.product_full_name.toLowerCase().includes(searchInput.toLowerCase()) ?
                                     <div className='product_catalogue_icon' key={index}>
+
+                                    {
+                                        !product.display_on_ticket ? 
+                                            <div className='no_facture'> 
+                                                没发票
+                                            </div>
+                                        : ""
+                                    }
                                                 
                                         <div  className="img_product_container">
                                             <LazyLoadImage effect='blur' src={`${product.image}` === "" ? no_img : "./."+`${product.image}` } height="200px" width="200px" border-radius ="20%" align="center" alt={product.product_full_name} />
@@ -264,9 +305,9 @@ const CreateInvoice = () => {
                                             <img src={white_basket} width={33} height={33} style={{cursor : "pointer", backgroundColor : "#0970E6", position : "absolute" , right: "10px", borderRadius: "50%", paddingBottom : 2, paddingRight : 2, paddingLeft : 2}}  onClick={() => addToBasket(index) } alt="white_cart" />
                                         : <div> 
                                             <FormGroup row>
-                                                <Button style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"#2B3336", marginLeft: "20px"}} onClick={() =>removeFromBasket(index)} >-</Button>
+                                                <Button style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"#2B3336", marginLeft: "20px", justifyContent : "center", alignItems : "center", display : "flex"}} onClick={() =>removeFromBasket(index)} >-</Button>
                                                 <Input type="number"  name={index} min="0" max="100" style={{width :'70px', height : '30px', textAlign:"center", marginLeft: "5px"}} onChange={handleQtyFromInput} value={product.quantity} placeholder="quantity" />
-                                                <Button style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"red", marginLeft: "5px"}}  onClick={() =>addToBasket(index)}>+</Button>
+                                                <Button style={{width :'30px', height : '30px', borderRadius : "50%", color : "white", backgroundColor:"red", marginLeft: "5px", justifyContent : "center", alignItems : "center", display : "flex"}}  onClick={() =>addToBasket(index)}>+</Button>
                                             {/* <span>{ product.quantity}</span> */}
                                             </FormGroup>
                                         </div>
@@ -280,6 +321,11 @@ const CreateInvoice = () => {
                     }
                 </div>
             </div>
+
+            {openModal && HT >0 && <ModalCreateInvoice setOpenModal={setOpenModal} getProductLst={getProductLst} 
+            setProduct_list={setProduct_list}  computeDiscount={computeDiscount}
+            setHT={setHT}  getHT={getHT}  />}
+
 
         </div>
     )

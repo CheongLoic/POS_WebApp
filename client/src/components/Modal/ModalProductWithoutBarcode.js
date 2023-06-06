@@ -50,7 +50,8 @@ function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
       product_total_price_before_discount: product_with_no_barcode_filtered[index].typeOfSale === "unit" ? Number(product_with_no_barcode_filtered[index].current_price).toFixed(2) : "",
       total_discount : "",
       type_of_sale : product_with_no_barcode_filtered[index].typeOfSale,
-      image : product_with_no_barcode_filtered[index].image
+      image : product_with_no_barcode_filtered[index].image,
+      display_on_ticket  : product_with_no_barcode_filtered[index].display_on_ticket
     })
 
     if (product_with_no_barcode_filtered[index].typeOfSale === "unit") {

@@ -1,3 +1,7 @@
+body.active-modal {
+    overflow-y: hidden;
+}
+
 .searchbar_basket {
     /* display: block; */
     /* width: 80%;
@@ -37,7 +41,7 @@
     /* background-color: aqua; */
     width: 50%;
     margin-left: 25%;
-    margin-right: 12.5%;
+    margin-right: 20%;
 }
 
 .searchbar_basket_container {
@@ -54,4 +58,37 @@
 .price_qty_block {
     display: flex ;
     /* background-color: aqua; */
+}
+
+.basket_icon  {
+    /* background-color: rgb(195, 203, 206); */
+    display: flex;
+    margin-left: 20px;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 10px;
+    top : 0;
+    right: 0;
+    position: absolute;
+    cursor: pointer;
+    margin: 10px; 
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    /* &:hover {
+        opacity: 0.7;
+    } */
+    
+    
+}
+
+.no_facture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: red;
+    color: white;
+    font-size: small;
+    z-index: 1;
+    
 }
