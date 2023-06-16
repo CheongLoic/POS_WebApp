@@ -5,7 +5,7 @@ import {Button, Input, FormGroup, Label, Form,Col,FormFeedback} from 'reactstrap
 import customerDB from "../../database/customers.json";
 import ticketDB from "../../database/tickets.json";
 import invoiceDB from "../../database/invoices.json";
-import productDB from "../../database/products.json"
+// import productDB from "../../database/products.json"
 import { getDataFromLS, setDataInLS, sortCustomeByCompany ,sortDataTicketID_ASC, sortDataInvoiceID_desc} from "../../backend/localStorageManager";
 
 
@@ -35,7 +35,7 @@ function ModalCreateInvoice ({ setOpenModal, getProductLst, setProduct_list, com
     // localStorage.removeItem("product_basket_LS")
     // localStorage.removeItem("barcodeScan_history")q
     // localStorage.removeItem("TOTAL_DISCOUNT_IN_THE_BASKET_LS")
-    let product_list_chg = [... getProductLst()]
+    let product_list_chg = [...getProductLst()]
     const product_id_to_delecte = product_list_chg[index].product_id
     product_list_chg = product_list_chg.filter((product) => product.product_id !== product_id_to_delecte)
 
@@ -143,6 +143,7 @@ const submit =() => {
   if (!ERROR){
     let sortedTickedDB_ID_ASC = sortDataTicketID_ASC(ticketDB)
     let TOTAL_DISCOUNT_IN_THE_BASKET_LS = getDataFromLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS")
+    // console.log(TOTAL_DISCOUNT_IN_THE_BASKET_LS)
     const ticketID = sortedTickedDB_ID_ASC[ sortedTickedDB_ID_ASC.length -1 ].ticket_id + 1 
     const newTicket = {
       ticket_id : ticketID,
@@ -150,7 +151,7 @@ const submit =() => {
       date_of_purchase : new Date(DATE_OF_PURCHASE).toISOString(),
       product_list : product_list_to_display_on_screen.filter(product => product.quantity !== ""),//vide pour le moment
       PAYMENT_METHOD: MEANS_OF_PAYMENT,
-      TOTAL_DISCOUNT : TOTAL_DISCOUNT_IN_THE_BASKET_LS.toFixed(2).toString(),
+      TOTAL_DISCOUNT : TOTAL_DISCOUNT_IN_THE_BASKET_LS === null ? "" : TOTAL_DISCOUNT_IN_THE_BASKET_LS.toFixed(2),
       RECU: "",
       RENDU: "",
       TVA: (Number((getHT()* 1.055 ).toFixed(2)) - getHT()).toFixed(2), //string
@@ -182,6 +183,7 @@ const submit =() => {
 
     setDataInLS('TOTAL_DISCOUNT_IN_THE_BASKET_LS', 0)
     changePage(true)
+    document.body.classList.remove('active-modal')
   }
 }
 

@@ -153,7 +153,10 @@ const AddNewTicket = () => {
       // console.log("before set setProduct_list")
 
       // setProduct_list(() => {
-        let Products_scanned = getDataFromLS("product_basket_LS")
+        let Products_scanned = [...product_list_to_display_on_screen]
+        // getDataFromLS("product_basket_LS") //OLD CODE
+        // console.log('Products_scanned from getDataFromLS("product_basket_LS")',  Products_scanned)
+        // console.log('Products_scanned.length from getDataFromLS("product_basket_LS")',  Products_scanned.length)
         // let TTC_LS = getDataFromLS("TTC_LS")
         
         // let TOTAL_DISCOUNT_IN_THE_BASKET_LS = getDataFromLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS")
@@ -654,10 +657,11 @@ const reinitializeData = () => {
               {modalOpenProduct && <ModalProductWithoutBarcode setOpenModal={setModalProductOpen}  setProductList={setProduct_list} setTTC={setTTC} />}
               {modalOpenWarning && <ModalBarcodeNotFound setOpenModal={setModalWarning}/>}
 
+
               {modalOpenInvoice && <ModalInvoice setOpenModal={setModalInvoiceOpen} setInvoice={setInvoice}  setModalPaymentOpen={setModalPaymentOpen} setModalCustomerOpen={setModalCustomerOpen} setCustomer={setCustomer}  />} 
               {modalOpenCustomer && <ModalCustomer setOpenModal={setModalCustomerOpen} setCustomer={setCustomer}  setModalPaymentOpen={setModalPaymentOpen}  />}
               {modalOpenPayment && <ModalPayment setOpenModal={setModalPaymentOpen}  getTTC={getTTC}  getInvoiceBool={getInvoiceBool} setModalPrintTicketOpen={setModalPrintTicketOpen} saveTicket={saveTicket} />}
-              {modalPrintTicket && <ModalPrintTicket setOpenModal={setModalPrintTicketOpen} getCustomer={getCustomer} getTicket={getTicket} reinitializeData={reinitializeData} />}
+              {modalPrintTicket && <ModalPrintTicket setOpenModal={setModalPrintTicketOpen} getCustomer={getCustomer} getTicket={getTicket} reinitializeData={reinitializeData}  />}
               
             </div>
         );

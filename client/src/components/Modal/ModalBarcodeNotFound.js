@@ -11,7 +11,7 @@ function ModalBarcodeNotFound({ setOpenModal} ) {
 
   return (
     <div className="modalBarcodeNotFound" >
-        <div className="modalBackground" onClick={toggleModal}></div>
+        <div className="modalBackgroundBarcodeNotFound" onClick={toggleModal}></div>
         <div className="modalContainerBarcodeNotFound">
             <div className="titleCloseBtn">
             <button onClick={() => {  setOpenModal(false); }}  >X</button>

@@ -126,7 +126,7 @@ function ModalCustomer({ setOpenModal, setCustomer , setModalPaymentOpen} ) {
     
     newCustomer ? 
       <div className="modalCustomer" >
-        <div className="modalBackground" onClick={toggleModal}></div>
+        <div className="modalBackgroundCustomer" onClick={toggleModal}></div>
           <div className="modalContainerCustomer1">
               <div className="titleCloseBtn">
               <button onClick={() => {  setOpenModal(false); }}  >X</button>
@@ -211,7 +211,7 @@ function ModalCustomer({ setOpenModal, setCustomer , setModalPaymentOpen} ) {
       
     : 
     <div className="modalCustomer" >
-      <div className="modalBackground" onClick={toggleModal}></div>
+      <div className="modalBackgroundCustomer" onClick={toggleModal}></div>
         <div className="modalContainerCustomer2">
             <div className="titleCloseBtn">
             <button onClick={() => {  setOpenModal(false); }}  >X</button>

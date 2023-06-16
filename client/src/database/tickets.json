@@ -34,30 +34,5 @@
     "TVA": "1.59",
     "HT": "27.38",
     "TTC": "28.97"
-  },
-  {
-    "ticket_id": 1,
-    "invoice": true,
-    "date_of_purchase": "2023-02-21T22:30:02.413Z",
-    "product_list": [
-      {
-        "product_id": 0,
-        "product_full_name": "Poisson Trident M",
-        "product_name_on_ticket": "Poisson Trident M",
-        "quantity": "2",
-        "product_price": "8.50",
-        "product_total_price_before_discount": "17.00",
-        "total_discount": "",
-        "type_of_sale": "weight",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Scardinius_erythrophthalmus.jpg/330px-Scardinius_erythrophthalmus.jpg"
-      }
-    ],
-    "PAYMENT_METHOD": "CB",
-    "TOTAL_DISCOUNT": "9.00",
-    "RECU": "",
-    "RENDU": "",
-    "TVA": "0.93",
-    "HT": "16.07",
-    "TTC": "17.00"
   }
 ]

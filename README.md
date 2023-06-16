@@ -31,3 +31,6 @@ https://bobbyhadz.com/blog/yarn-cannot-be-loaded-running-scripts-disabled
 - `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned`
 
 https://github.com/theallmightyjohnmanning/electron-express/blob/master/main.js
+
+React-pdf/renderer fontWeight : 
+https://github.com/diegomura/react-pdf/issues/402

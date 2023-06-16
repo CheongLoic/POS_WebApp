@@ -1363,8 +1363,8 @@
   },
   {
     "product_id": 52,
-    "product_full_name": "Poulet laqué",
-    "product_name_on_ticket": "Poulet laqué ",
+    "product_full_name": "Poulet fumé",
+    "product_name_on_ticket": "Poulet fumé",
     "barCode_available": true,
     "barCode_list": [
       {
@@ -2269,7 +2269,7 @@
     "current_price": "3.2",
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
-    "image": "./img/Sauce_de_soja_assaisonnee_pour_fruits_de_mer_410_mL_078895423037_-_3.2.jpg",
+    "image": "./img/Sauce_de_soja_assaisonnee_pour_fruits_de_mer_410_mL.jpg",
     "display_on_ticket": true
   },
   {
@@ -4143,5 +4143,1182 @@
     "default_sold_weight_kg": "",
     "image": "./img/false_8.5_FROZEN_SHARK_FILLET_400g_(prionace_glauca)_6925599700992.jpg",
     "display_on_ticket": false
+  },
+  {
+    "product_id": 159,
+    "product_full_name": "Cacahuète 500g",
+    "product_name_on_ticket": "Cacahuète 500g",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6940596192724",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      },
+      {
+        "barCode": "6930755604809",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "5.80"
+      }
+    ],
+    "current_price": "5.80",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Cacahuete_500G_6940596192724_6930755604809-5.80.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 160,
+    "product_full_name": "Patates douces cuites 500g",
+    "product_name_on_ticket": "Patates douces cuites 500g",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6945670818828",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "5"
+      }
+    ],
+    "current_price": "5",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/false_Patates_douces_cuites_500g_5.00_-6945670818828.jpg",
+    "display_on_ticket": false
+  },
+  {
+    "product_id": 161,
+    "product_full_name": "Poulet fumé",
+    "product_name_on_ticket": "Poulet fumé",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6927115264421",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "18.00"
+      }
+    ],
+    "current_price": "18.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/false_Poulet_fume_18.00_-_les_3_paquets_a_50_euros__6927115264421.jpg",
+    "display_on_ticket": false
+  },
+  {
+    "product_id": 162,
+    "product_full_name": "Seiche séchée et congelée",
+    "product_name_on_ticket": "Seiche séchée et congelée",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6925599700749",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "30.00"
+      }
+    ],
+    "current_price": "30.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/false_Seiche_seche_et_congelee_6925599700749_-30.00.jpg",
+    "display_on_ticket": false
+  },
+  {
+    "product_id": 163,
+    "product_full_name": "Shiitake 香菇 1kg",
+    "product_name_on_ticket": "Shiitake 1kg",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6934474200014",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "25.00"
+      }
+    ],
+    "current_price": "25.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/false_Shitake_2_6934474200014_25.00.jpg",
+    "display_on_ticket": false
+  },
+  {
+    "product_id": 164,
+    "product_full_name": "Shiitake 香菇 1kg",
+    "product_name_on_ticket": "Shiitake 1kg",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6924395216256",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "25.00"
+      }
+    ],
+    "current_price": "25.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/false_Shitake_3_6924395216256_25.00.jpg",
+    "display_on_ticket": false
+  },
+  {
+    "product_id": 165,
+    "product_full_name": "Ombrina du pacifique sec et salé (miichthys miiuy) cod croaker 400g 鮸鱼鲞",
+    "product_name_on_ticket": "Ombrina du pacifique 400g",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6920239252602",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "5"
+      }
+    ],
+    "current_price": "5",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/false_Ombrina_du_pacifique_sec_et_sale_(miichthys_miiuy)_cod_croaker_400g_5.00_-_6920239252602.jpg",
+    "display_on_ticket": false
+  },
+  {
+    "product_id": 166,
+    "product_full_name": "Infusion datte au noix",
+    "product_name_on_ticket": "Infusion datte au noix",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "3760249076385",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "8.00"
+      }
+    ],
+    "current_price": "8.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Infusion_datte_au_noix_3760249076385_-8.00.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 167,
+    "product_full_name": "Méduse salée 1.7kg",
+    "product_name_on_ticket": "Méduse salée 1.7kg",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "9780201372755",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "25.00"
+      }
+    ],
+    "current_price": "25.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Meduse_sale_25.00-_9780201372755.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 168,
+    "product_full_name": "Méduse salée 1.7kg",
+    "product_name_on_ticket": "Méduse salée 1.7kg",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6944014800017",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "25.00"
+      }
+    ],
+    "current_price": "25.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Meduse_salee_6944014800017.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 169,
+    "product_full_name": "Mélange de fruits de mer",
+    "product_name_on_ticket": "Mélange de fruits de mer",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8719214281793",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "3.90"
+      }
+    ],
+    "current_price": "3.90",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__3.9_Melange_de_fruits_de_mer_8719214281793.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 170,
+    "product_full_name": "Tisane aux racines d'isatis 200g ",
+    "product_name_on_ticket": "Tisane au racine d'Isatis",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6970770880062",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "3.50"
+      }
+    ],
+    "current_price": "3.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__3.50_Tisane_aux_racnes_d_isatis_200g_6970770880062.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 171,
+    "product_full_name": "Graines de tournesol 350g ",
+    "product_name_on_ticket": "Graines de tournesol 350g ",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6926858900061",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "4.20"
+      }
+    ],
+    "current_price": "4.20",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__4.2_Graines_de_tournesol_350g_6926858900061.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 172,
+    "product_full_name": "Gâteaux au citrouille",
+    "product_name_on_ticket": "Gâteaux au citrouille",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8436032780702",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "4.50"
+      }
+    ],
+    "current_price": "4.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__4.5_gateaux_au_citrouille_8436032780702.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 173,
+    "product_full_name": "Crevette tempura",
+    "product_name_on_ticket": "Crevette tempura",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8930650110014",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "4.50"
+      }
+    ],
+    "current_price": "4.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_-_4.50_-Crevette_tempura_8930650110014.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 174,
+    "product_full_name": "Saucisses au poulet",
+    "product_name_on_ticket": "Saucisses au poulet",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8436032781327",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "4.50"
+      }
+    ],
+    "current_price": "4.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__4.50_saucisses_au_poulet_8436032781327_-4.50.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 175,
+    "product_full_name": "Tranches de boeuf et d'agneau enroulées 牛肉和羊肉卷 2x150g",
+    "product_name_on_ticket": "Tranches de boeuf/agneau",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8425402718223",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "5.00"
+      }
+    ],
+    "current_price": "5.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Tranches_de_boeuf_enroulees_2x150g.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 176,
+    "product_full_name": "Patates douces",
+    "product_name_on_ticket": "Patates douces",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6940596192007",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "6.00"
+      }
+    ],
+    "current_price": "6.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__6.00_Steamed_dried_sweet_potato_6940596192007.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 177,
+    "product_full_name": "Filets papillon de dorade Sébaste congelés",
+    "product_name_on_ticket": "Filets de dorade Sébaste",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "3576470127006",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "6.50"
+      }
+    ],
+    "current_price": "6.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__6.5_Filets_papillon_de_dorade_Sebaste_congeles_3576470127006.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 178,
+    "product_full_name": "Filet de Tilapia",
+    "product_name_on_ticket": "Filet de Tilapia",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "3576470235022",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "7.00"
+      }
+    ],
+    "current_price": "7.00",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__-7.00_Filet_de_Tilapia_3576470235022.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 179,
+    "product_full_name": "Noix de Saint-Jacques ",
+    "product_name_on_ticket": "Noix de Saint-Jacques ",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "5413270220422",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "30"
+      }
+    ],
+    "current_price": "30",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__30._00Noix_de_Saint_-Jacques_5413270220422.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 180,
+    "product_full_name": "Noix de Saint-Jacques de l'Atlantique Nord 1kg",
+    "product_name_on_ticket": "Noix de Saint-Jacques",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "0058438805032",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "48"
+      }
+    ],
+    "current_price": "48",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__48.00_Noix_de_Saint-Jacques_de_l_Atlantique_Nord_1kg__0058438805032.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 181,
+    "product_full_name": "Red abalone",
+    "product_name_on_ticket": "Red abalone",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "0040232582509",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "50"
+      }
+    ],
+    "current_price": "50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__50.00_Red_abalone_040232582509.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 182,
+    "product_full_name": "Noix de Saint-Jacques de l'Atlantique Nord",
+    "product_name_on_ticket": "Noix de Saint-Jacques",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8720634620505",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "52"
+      }
+    ],
+    "current_price": "52",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__52.00_Noix_de_Saint-Jacques_de_l_Atlantique_Nord_(2)_8720634620505.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 183,
+    "product_full_name": "Crabe de mangrove cru congelé",
+    "product_name_on_ticket": "Crabe de mangrove",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "3379141101837",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "15"
+      }
+    ],
+    "current_price": "15",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__Crabe_de_mangrove_cru_congele_3379141101837_-_15.00.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 184,
+    "product_full_name": "Crevettes tropicales avec tête et carapace  (litopenaeus vannamei)",
+    "product_name_on_ticket": "Crevettes tropicales",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8813069407343",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "12"
+      }
+    ],
+    "current_price": "12",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true__Crevettes_tropicales_avec_tete_et_carapace__(litopenaeus_vannamei)_8813069407343_-_12.0.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 185,
+    "product_full_name": "Rouleaux de calamar",
+    "product_name_on_ticket": "Rouleaux de calamar",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8436032780900",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "4.50"
+      }
+    ],
+    "current_price": "4.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_4.50_Rouleaux_de_calamar_8436032780900.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 186,
+    "product_full_name": "Panga mariné",
+    "product_name_on_ticket": "Panga mariné",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "3265221910355",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "7.50"
+      }
+    ],
+    "current_price": "7.50",
+    "typeOfSale": "weight",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_7.5_weight_Panga_marine_avec_eau_ajoutee_congelee_3265221910355.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 187,
+    "product_full_name": "Tubes d'encornets ",
+    "product_name_on_ticket": "Tubes d'encornets ",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "5413270216197",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "7.50"
+      }
+    ],
+    "current_price": "7.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_7.50_Tubes_d_encornets_5413270216197.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 188,
+    "product_full_name": "Homard Canadien cuit",
+    "product_name_on_ticket": "Homard Canadien cuit",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "0676804013005",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "10"
+      }
+    ],
+    "current_price": "10",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_10.00_Homard_Canadien_cuit_0676804013005.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 189,
+    "product_full_name": "Anguille séchée",
+    "product_name_on_ticket": "Anguille séchée",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6920239300600",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "16.90"
+      }
+    ],
+    "current_price": "16.90",
+    "typeOfSale": "weight",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Anguille_sechee_6920239300600_-_16.9_a_peser.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 190,
+    "product_full_name": "Boulettes de poisson Fuzhou",
+    "product_name_on_ticket": "Boulettes de poisson",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8436032780696",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "5"
+      }
+    ],
+    "current_price": "5",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Boulettes_de_poisson_Fuzhou___-_5.0.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 191,
+    "product_full_name": "Instant berbal tea",
+    "product_name_on_ticket": "Instant berbal tea",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "6970770828682",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "2"
+      }
+    ],
+    "current_price": "2",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Instant_berbal_tea_6970770828682_-_2.00.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 192,
+    "product_full_name": "Queue de crevette crue",
+    "product_name_on_ticket": "Queue de crevette crue",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "3265220746733",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "10.50"
+      }
+    ],
+    "current_price": "10.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Queue_de_crevette_crue_3265220746733_-_10.50.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 193,
+    "product_full_name": "Seiches entières nettoyées",
+    "product_name_on_ticket": "Seiches entières nettoyées",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8719214289812",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "8.50"
+      }
+    ],
+    "current_price": "8.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Seiches_entieres_nettoyees_8719214289812_-8.50.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 194,
+    "product_full_name": "Squille congelées  (squilla mantis)",
+    "product_name_on_ticket": "Squille congelées",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8410547965175",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "10.50"
+      }
+    ],
+    "current_price": "10.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Squille_congelees__(squilla_mantis)_8410547965175_-10.50.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 195,
+    "product_full_name": "Steaks de Flétan du Groenland congelés",
+    "product_name_on_ticket": "Steaks de Flétan du Groenl",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "0318050800014",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "11.99"
+      }
+    ],
+    "current_price": "11.99",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Steaks_de_Fletan_du_Groenland_congeles_0318050800014_-11.99.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 196,
+    "product_full_name": "Tendon de boeuf",
+    "product_name_on_ticket": "Tendon de boeuf",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8813069833005",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "7.50"
+      }
+    ],
+    "current_price": "7.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Tendon_de_boeuf_7.50_-_8813069833005.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 197,
+    "product_full_name": "Tronçons de poisson sabre",
+    "product_name_on_ticket": "Tronçons de poisson sabre",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "3379141103022",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "7.50"
+      }
+    ],
+    "current_price": "7.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Troncons_de_poisson_sabre_3379141103022_-_7.50.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 198,
+    "product_full_name": "Tranches de boeuf enroulées 300g 牛肉卷",
+    "product_name_on_ticket": "Tranches de boeuf enroulée",
+    "barCode_available": true,
+    "barCode_list": [
+      {
+        "barCode": "8436032781402",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "4.50"
+      }
+    ],
+    "current_price": "4.50",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/true_Tranches_de_boeuf_enroulees_300g_8436032781402_-4.50.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 199,
+    "product_full_name": "Crabe bleu",
+    "product_name_on_ticket": "Crabe bleu",
+    "barCode_available": false,
+    "barCode_list": [
+      {
+        "barCode": "",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "10"
+      }
+    ],
+    "current_price": "10",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Crabe_bleu_surgele_10.00.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 200,
+    "product_full_name": "Dattes confites 500g 蜜枣",
+    "product_name_on_ticket": "Dattes confites 500g",
+    "barCode_available": false,
+    "barCode_list": [
+      {
+        "barCode": "",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "5"
+      }
+    ],
+    "current_price": "5",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/dattes_confites_500g_5euros.png",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 201,
+    "product_full_name": "Huile de colza 2.5L",
+    "product_name_on_ticket": "Huile de colza 2.5L",
+    "barCode_available": false,
+    "barCode_list": [
+      {
+        "barCode": "",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "28"
+      }
+    ],
+    "current_price": "28",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Huile_de_colza_2.5L_28.00.jpg",
+    "display_on_ticket": true
+  },
+  {
+    "product_id": 202,
+    "product_full_name": "Boulettes de poisson 鱼丸",
+    "product_name_on_ticket": "Boulettes de poisson",
+    "barCode_available": false,
+    "barCode_list": [
+      {
+        "barCode": "",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-10",
+        "product_price": "15"
+      }
+    ],
+    "current_price": "15",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Boulettes_de_poisson_15.00.jpg",
+    "display_on_ticket": false
+  },
+  {
+    "product_id": 203,
+    "product_full_name": "Moutarde séchée 芥菜干 500g",
+    "product_name_on_ticket": "Moutarde séchée",
+    "barCode_available": false,
+    "barCode_list": [
+      {
+        "barCode": "",
+        "quantity": "",
+        "buying_price": "",
+        "date_of_purchase": "",
+        "expiration_date": ""
+      }
+    ],
+    "price_history": [
+      {
+        "date": "2023-06-16",
+        "product_price": "5"
+      }
+    ],
+    "current_price": "5",
+    "typeOfSale": "unit",
+    "default_sold_weight_kg": "",
+    "image": "./img/Moutarde_sechee__5.00_500g.jpg",
+    "display_on_ticket": true
   }
 ]

@@ -1,4 +1,4 @@
-.modalBackground, .modalPayment {
+.modalBackgroundPayment, .modalPayment {
     width: 100vw;
     height: 100vh;
     background-color: rgba(200, 200, 200);
@@ -7,6 +7,7 @@
     justify-content: center;
     align-items: center;
     top: 0px; left: 0px;
+    z-index: 2;
   }
   
   .modalContainerPayment {
@@ -19,6 +20,7 @@
     display: flex;
     flex-direction: column;
     padding: 25px;
+    z-index: 3;
   }
   
   .modalContainerPayment .title {

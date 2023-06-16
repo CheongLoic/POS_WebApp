@@ -39,8 +39,9 @@ function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
       setDataInLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS", TOTAL_DISCOUNT_IN_THE_BASKET_LS)
     }
 
-    let productc_list = product_basket_LS
-    console.log("productInBasket : ", productc_list)
+    let productc_list = [...product_basket_LS]
+    // console.log("productInBasket before : ", productc_list)
+    // console.log("productInBasket length before : ", productc_list.length)
     productc_list.push({
       product_id: product_with_no_barcode_filtered[index].product_id,
       product_full_name: product_with_no_barcode_filtered[index].product_full_name,
@@ -61,6 +62,9 @@ function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
       setTTC(TTC_LS)
     }
 
+    console.log("productInBasket after : ", productc_list)
+    console.log("productInBasket length after : ", productc_list.length)
+
     setDataInLS('product_basket_LS',productc_list)//product_list_to_display_on_screen
     // setDataInLS('TOTAL_DISCOUNT_IN_THE_BASKET_LS',TOTAL_DISCOUNT_IN_THE_BASKET_LS) // TO DO    
     setProductList(productc_list)
@@ -75,7 +79,7 @@ function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
 
   return (
     <div className="modalNoBarcode" >
-    <div className="modalBackground" onClick={toggleModal}></div>
+    <div className="modalBackgroundNoBarcode" onClick={toggleModal}></div>
       <div className="modalContainerNoBarcode">
         <div className="titleCloseBtn">
           <button
@@ -93,8 +97,15 @@ function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
         <div className="body">
           {
             product_with_no_barcode_filtered.map((product, index) => (
-              <Button color="light" key={index} style={{marginBottom : "20px", marginRight: "10px"}} onClick={() => productClicked(index)}> 
-
+              
+              <Button color="light" key={index} style={{marginBottom : "20px", marginRight: "10px", position : "relative"}} onClick={() => productClicked(index)}> 
+          {
+                          !product.display_on_ticket ? 
+                              <div className='no_facture'> 
+                                  没发票
+                              </div>
+                          : ""
+                      }
                 <div  className="img_product_container">
                     <img src={ product.image.includes('http') ? product.image : (product.image === "" ? no_img : './.' + product.image)  } height="200px" width="200px" border-radius ="20%"  alt={product.product_full_name} />
                 </div>

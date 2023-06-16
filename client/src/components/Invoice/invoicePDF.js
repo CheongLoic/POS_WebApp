@@ -203,6 +203,9 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     marginLeft : 20,
     // backgroundColor : "yellow",
+    display : "flex",
+    justifyContent : "center",
+    alignItems : "left",
   },
   rightColumn: {
     flexDirection: 'column',
@@ -234,7 +237,7 @@ const styles = StyleSheet.create({
 
 
 const InvoicePDF = ({invoiceDB, customer, ticket}) => (
-  <Document>
+  <Document title={"XH_Facture_n°".concat(invoiceDB.invoice_id,".pdf")} >
     <Page size="A4" style={styles.body} wrap>
       <View style={{ color: 'black',fontSize: 28, textAlign: 'center', marginBottom: 30 }}>
         <Text>FACTURE n°{invoiceDB.invoice_id}</Text>
@@ -258,6 +261,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
         </View>
       </View>
       
+      <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date d'achat : {new Date(ticket.date_of_purchase).toLocaleString().substring(0,10)}</Text>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date de facturation : {new Date(invoiceDB.date).toLocaleString().substring(0,10)}</Text>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 20}}>Mode de paiement : {ticket.PAYMENT_METHOD}</Text>
       

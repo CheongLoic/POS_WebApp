@@ -36,7 +36,7 @@ function ModalInvoice({ setOpenModal, setInvoice , setModalPaymentOpen, setModal
 
   return (
     <div className="modalInvoice" >
-        <div className="modalBackground" onClick={toggleModal}></div>
+        <div className="modalBackgroundInvoice" onClick={toggleModal}></div>
         <div className="modalContainerInvoice">
             <div className="titleCloseBtn">
             <button onClick={() => {  setOpenModal(false); }}  >X</button>

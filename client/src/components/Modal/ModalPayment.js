@@ -20,7 +20,7 @@ function ModalPayment({ setOpenModal , getTTC, getInvoiceBool, setModalPrintTick
 
   return (
     <div className="modalPayment">
-    <div className="modalBackground" onClick={toggleModal}> </div>
+    <div className="modalBackgroundPayment" onClick={toggleModal}> </div>
       <div className="modalContainerPayment">
         <div className="titleCloseBtn">
           <button

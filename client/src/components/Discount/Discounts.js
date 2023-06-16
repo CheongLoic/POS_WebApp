@@ -117,7 +117,7 @@ class Discounts extends Component  {
             const ID_selected = Number(this.state.productToGiveDiscountSelected.split(" ")[0].substring(2))
             newDiscountDB.push({
                 product_id : ID_selected,
-                product_full_name : productDB[ID_selected].product_full_name,
+                product_full_name : productDB.filter((prod) => prod.product_id === ID_selected)[0].product_full_name,
                 quantity_for_discount : Number(this.state.quantity_for_discount),
                 total_discount_when_condition_met_once : Number(this.state.total_discount_when_condition_met_once)
             })

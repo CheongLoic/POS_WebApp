@@ -26,19 +26,18 @@ const AddNewProduct = () => {
         default_sold_weight_kg : "",
         display_product_name : "Oui 要"
     });
-    const [image_data, getImage] = useState({file : []})
+    const [image_data, setImage] = useState({file : []})
     const handleInputImageChange = (event) => {
         // console.log("from handleInputImageChange :")
         const img_file = event.target.files[0]
         const chinese_caracter_array = event.target.files[0].name.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chinese caracters
-        if (chinese_caracter_array.length > 0 ) {
+        if (chinese_caracter_array.length > 0 )
           setError(true)
           ERROR = true
-        //   getImage({
+        //   setImage({
         //     ...image_data, file:event.target.files[0],
         //     // ...image_data, file: img_file_name_rectified[0],
         // })
-        }
         //  else {
           console.log("event.target.files[0] : ",event.target.files[0]); //array
           console.log("event.target.files[0].name : "  , event.target.files[0].name); //file name
@@ -63,7 +62,7 @@ const AddNewProduct = () => {
           // console.log("test : "  , newImgFile); //file name
 
           const img_file_name_rectified = [new File([img_file], file_name , {type: img_file.type})]
-          getImage({
+          setImage({
               // ...image_data, file:event.target.files[0],
               ...image_data, file: img_file_name_rectified[0],
           })
@@ -112,7 +111,8 @@ const AddNewProduct = () => {
       //Otherwise, it will display a msg error
       const chinese_caracter_product_name_on_ticket = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
       let chinese_caracter_image = []
-      if (image_data.file.length >0) chinese_caracter_image = image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
+      if (image_data.file instanceof File ) chinese_caracter_image = image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char))      //return an array of chineese caracterss 
+
 
       if (form_data.product_full_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
       // ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
@@ -165,7 +165,8 @@ const AddNewProduct = () => {
         // console.log(form_data)
         checkField()
 
-        if (ERROR === false) {
+
+        if (!ERROR ) {
           const current_date = new Date();
           let productDB = getDataFromLS("productDB")
           let productDB_sorted = productDB.sort((a, b) => {//tricroissant par product_id
@@ -208,7 +209,7 @@ const AddNewProduct = () => {
           newImageName =  "./img/"+image_data.file.name.split('.')[0] + '('+ i + ')' + image_data.file.name.split('.').slice(1, image_data.file.name.split('.').length -2).join(".") + "."+image_data.file.name.split('.')[image_data.file.name.split('.').length-1]
 
             // const img_file_name_rectified = [new File([image_data], newImageName , {type: image_data.file.type})]
-          // getImage({
+          // setImage({
           //     // ...image_data, file:event.target.files[0],
           //     ...image_data, file: img_file_name_rectified[0],
           // })
@@ -412,7 +413,7 @@ const AddNewProduct = () => {
 
 
                 <FormGroup row>
-                  <Label sm={3} style={{fontSize: "60%"}}>Afficher nom du produit sur ticket 显示在收据上食品名称 </Label>
+                  <Label sm={3} style={{fontSize: "60%"}}>Facture disponible 有发票吗 ?</Label>
                   <Col sm={8}>
                   <Input type="select" name="display_product_name" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.display_product_name}  >
                     <option>Oui 要</option>
@@ -429,9 +430,8 @@ const AddNewProduct = () => {
                   <Input type="file" name="upload_file" accept='image/*' onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={handleInputImageChange}/>
                   </Col>
                 </FormGroup>
-                {image_data.file.length > 0 ? <p style={{fontSize: 15, color: "orange"}}>{error && image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)).length >0 ? "Caractères chinois non acceptés. 不能写汉字" : ""}</p>
+                {image_data.file instanceof File ? <p style={{fontSize: 15, color: "orange"}}>{error && image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char)).length >0 ? "Caractères chinois non acceptés. 不能写汉字" : ""}</p>
                 : ""}
-
 
                   
                 

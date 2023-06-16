@@ -7,7 +7,7 @@ import { setDataInLS } from '../backend/localStorageManager';
 import productDB from '../database/products.json'
 import ticketDB from "../database/tickets.json"
 // import customerDB from "../database/customers.json"
-import invoiceDB from "../database/invoices.json"
+// import invoiceDB from "../database/invoices.json"
 import { sortDataByFullName } from '../backend/localStorageManager';
 
 

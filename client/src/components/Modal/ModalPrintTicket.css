@@ -1,4 +1,4 @@
-.modalBackground, .modalPrintTicket {
+.modalBackgroundTicket, .modalPrintTicket {
     width: 100vw;
     height: 100vh;
     background-color: rgba(200, 200, 200);
@@ -7,6 +7,7 @@
     justify-content: center;
     align-items: center;
     top: 0px; left: 0px;
+    z-index: 2;
   }
 
 
@@ -31,6 +32,7 @@
     overflow-y: auto;
     width: 40vw;
     /* height: 50vh; */
+    z-index: 3;
   }
   
   .modalContainerPrintTicket .title {

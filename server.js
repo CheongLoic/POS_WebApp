@@ -10,7 +10,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const bodyParser = require('body-parser');
+
+
+const bodyParser = require('body-parser'); 
 // // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -34,7 +36,8 @@ const PrinterTypes = require("node-thermal-printer").types;
 // app.use("/",express.static(path.resolve(__dirname, '../client/build')));
 
 // app.get('/', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  // res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  // res.json({"blabala" : "aouhjnkef"})
 // });
 
 const storage = multer.diskStorage({
@@ -158,166 +161,191 @@ app.post('/discounts', async (req,res) => {
 app.post('/tickets',  (req, res) => {
   // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
   // console.log(req.body.data)
+  console.log("########################################################################################################################")
 
-   if (req.body.action === "print") {
+  if (req.body.action === "print") {
     console.log("Connecting to printer ...");
     let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
     interface: 'tcp://192.168.0.29'
     });
-    // console.log("Printer connected !");
+
     let isConnected =  printer.isPrinterConnected();
-    console.log('Printer connection status', isConnected)
-    console.log('isConnected === false', isConnected === false)
-    console.log('isConnected === true', isConnected === true)
-    // console.log('isConnected === Promise { <pending> }', isConnected === new Promise ( pending ))
+    // console.log('Printer connection status', isConnected) // return Promise { <pending> }
     
-    // if (isConnected === false) {
-    //   console.log("printer not connected ! ")
-    //   res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")}
+    isConnected
+    .then(connected => { 
+      console.log("connection status :", connected )
+      if (connected) {
+        console.log("Printer connected !");
+        printer.alignCenter();
+        printer.setTextQuadArea();
+        printer.println("X.H" );
+        printer.setTextNormal();
+        printer.println("19 RUE CIVIALE" );
+        printer.println("75010 PARIS" );
+        printer.println("TEL : 07.86.31.63.88" );
+        printer.println("SIRET : 887752137 PARIS" );
+        printer.newLine(); 
+        // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
+        printer.leftRight('Date : ' + new Date(req.body.data.date_of_purchase).toLocaleString() , 'N. ticket : '+ req.body.data.ticket_id.toString()+" ");
+        printer.drawLine();
+
+        printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+          { text:"DESIGNATION", align:"LEFT", width:0.58, bold : true },
+          { text:"QTExP.U", align:"CENTER", width:0.20, bold:true },
+          { text:"MONTANT", align:"RIGHT", width:0.20, bold : true}
+        ]);
+
+        let total_article = 0;
+        for (let i in req.body.data.product_list) {
+          if (req.body.data.product_list[i].type_of_sale === "unit") {
+            printer.tableCustom([      // Prints table with custom settings (text, align, width, cols, bold)
+            { text: req.body.data.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
+            { text: req.body.data.product_list[i].quantity +"x"+ Number(req.body.data.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},
+            { text: Number(req.body.data.product_list[i].product_total_price_before_discount).toFixed(2) +"$" , align:"RIGHT" , width:0.20 }
+            ]);
+          } else {
+            printer.tableCustom([      // Prints table with custom settings (text, align, width, cols, bold)
+            { text: req.body.data.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
+            { text: Number(req.body.data.product_list[i].quantity).toFixed(3) +"kgx "+ Number(req.body.data.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},
+            { text: Number(req.body.data.product_list[i].product_total_price_before_discount).toFixed(2) +"$" , align:"RIGHT" , width:0.20 }
+            ]);
+          }
+          
+          if (req.body.data.product_list[i].total_discount !== "") {
+            printer.leftRight('   REMISE'  , '-'+ Number(req.body.data.product_list[i].total_discount).toFixed(2)+"$" );
+          }
+          // if (req.body.data.product_list[i].type_of_sale === "unit") total_article += req.body.data.product_list[i].quantity;
+          // else  total_article += 1;
+          total_article += 1;
+        }
+        //     printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+        //   { text:"01234567890123456790123456", align:"LEFT", width:0.58, bold : true },
+        //   { text:"0.000kgx 00.00$", align:"CENTER", width:0.22, bold:true },
+        //   { text:"00.00$", align:"RIGHT",  width:0.20, bold : true}
+        // ]);
+
+        printer.drawLine();
+        // printer.leftRight( "TOTAL ARTICLE",  total_article);
+        if (req.body.data.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  Number(req.body.data.TOTAL_DISCOUNT).toFixed(2) +"$ ");
+        printer.setTextQuadArea();
+        // // printer.bold(true); 
+        // // printer.setTextSize(1, 1);
+        // printer.alignLeft();
+        printer.println("TOTAL TTC \t\t"+Number(req.body.data.TTC).toFixed(2) +"$");
+        //  printer.alignRight();
+        // printer.print( Number(req.body.data.TTC).toFixed(2) +"$");
+      
+        // printer.setTextNormal();
+        // printer.setTextDoubleHeight();
+        // printer.leftRight( "TOTAL TTC",  Number(req.body.data.TTC).toFixed(2) +"$");
+        printer.setTextNormal();
+        printer.leftRight( "MODE DE PAIEMENT",  req.body.data.PAYMENT_METHOD);
+        // if ( req.body.data.PAYMENT_METHOD === "ESPECES") {
+        //   printer.leftRight( "RECU",  Number(req.body.data.RECU).toFixed(2) +"$ ");
+        //   printer.leftRight( "RENDUE",  Number(req.body.data.RENDU).toFixed(2) +"$ ");
+        // }
     
-    printer.alignCenter();
-    printer.setTextQuadArea();
-    printer.println("X.H" );
-    printer.setTextNormal();
-    printer.println("19 RUE CIVIALE" );
-    printer.println("75010 PARIS" );
-    printer.println("TEL : 07.86.31.63.88" );
-    printer.println("SIRET : 887752137 PARIS" );
-    printer.newLine(); 
-    // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
-    printer.leftRight('Date : ' + new Date(req.body.data.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.body.data.ticket_id.toString()+" ");
-    printer.drawLine();
+        printer.newLine(); 
+        printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+          { text:"Taux TVA", align:"LEFT", width:0.33, bold:true },
+          { text:"TVA", align:"CENTER", width:0.33, bold:true },
+          { text:"HT ", align:"RIGHT", width:0.33, bold:true },
+        ]);
+        printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+          { text:"5.5%", align:"LEFT", width:0.33 },
+          { text: req.body.data.TVA +"$", align:"CENTER", width:0.33},
+          { text: req.body.data.HT+"$ ", align:"RIGHT", width:0.33},
+        ]);
 
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"DESIGNATION", align:"LEFT", width:0.58, bold : true },
-      { text:"QTExP.U", align:"CENTER", width:0.20, bold:true },
-      { text:"MONTANT", align:"RIGHT", width:0.20, bold : true}
-    ]);
+        // printer.bold(true); 
+        // // printer.setTextSize(7, 7);
+        // printer.table(["Taux TVA", "TVA","HT", "TTC"]);
+        // printer.setTextNormal();
+        // printer.table(["5.5%",req.body.data.TVA +"$" ,req.body.data.HT+"$",Number(req.body.data.TTC).toFixed(2) +"$" ]);
 
-    let total_article = 0;
-    for (let i in req.body.data.product_list) {
-      printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-        { text: req.body.data.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
-        { text: req.body.data.product_list[i].quantity +"x"+ Number(req.body.data.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},
-        { text: Number(req.body.data.product_list[i].product_total_price_before_discount).toFixed(2) +"$" , align:"RIGHT" , width:0.20 }
-      ]);
-      if (req.body.data.product_list[i].total_discount !== "") {
-        printer.leftRight('   REMISE'  , '-'+ Number(req.body.data.product_list[i].total_discount).toFixed(2)+"$" );
+        printer.drawLine();
+        printer.alignCenter();
+        printer.println("MERCI DE VOTRE VISITE" );
+        printer.println("A BIENTOT !" );
+
+        printer.cut();
+
+        // printer.upsideDown(true);
+        // printer.println('Hello World upside down!');
+        // printer.upsideDown(false);
+        // printer.drawLine();
+
+        // printer.invert(true);
+        // printer.println('Hello World inverted!');
+        // printer.invert(false);
+        // printer.drawLine();
+
+        // printer.setTypeFontB();
+        // printer.println('Type font B');
+        // printer.setTypeFontA();
+        // printer.println('Type font A');
+        // printer.drawLine();
+
+        // printer.alignLeft();
+        // printer.println('This text is on the left');
+        // printer.alignCenter();
+        // printer.println('This text is in the middle');
+        // printer.alignRight();
+        // printer.println('This text is on the right');
+        // printer.alignLeft();
+        // printer.drawLine();
+
+        // printer.setTextDoubleHeight();
+        // printer.println('This is double height');
+        // printer.setTextDoubleWidth();
+        // printer.println('This is double width');
+        // printer.setTextQuadArea();
+        // printer.println('This is quad');
+        // printer.setTextSize(7, 7);
+        // printer.println('Wow');
+        // printer.setTextSize(0, 0);
+        // printer.setTextNormal();
+        // printer.println('This is normal');
+        // printer.drawLine();
+        
+        // printer.table(['One', 'Two', 'Three', 'Four']);
+        // printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
+        //   { text:"Left TEXT", align:"LEFT", width:0.5 },
+        //   { text:"Center TEXT", align:"CENTER", width:0.25, bold:true },
+        //   { text:"Right TEXT", align:"RIGHT", cols:8 }
+        // ]);    
+    
+        try {
+        let execute = printer.execute()
+          console.log("Print done!");
+        } catch (error) {
+          console.log("Print failed:", error);
+          // console.warn("Impossible de se connecter à l'imprimante !")
+          // res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
+        }
+        res.json({"printerConnected" : true})
+
+      } else {
+        console.log("printer not connected ! ", new Date().toLocaleString())
+        // res.render('error.ejs', {})
+        // res.redirect('http://localhost:3000')
+        // res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
+        // res.status(404).send({"status" : "not OK"})
+
+        res.json({"printerConnected" : false})
+        // res.sendFile(path.join(__dirname, "/client/public", "test.html"));
+        // res.status(404).render('trfygvbhj',{})
+        // console.log("blabla")
       }
-      // if (req.body.data.product_list[i].type_of_sale === "unit") total_article += req.body.data.product_list[i].quantity;
-      // else  total_article += 1;
-      total_article += 1;
-    }
-//     printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-//   { text:"01234567890123456790123456", align:"LEFT", width:0.58, bold : true },
-//   { text:"0.000kgx 00.00$", align:"CENTER", width:0.22, bold:true },
-//   { text:"00.00$", align:"RIGHT",  width:0.20, bold : true}
-// ]);
+    })    
 
-    printer.drawLine();
-    // printer.leftRight( "TOTAL ARTICLE",  total_article);
-    if (req.body.data.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  Number(req.body.data.TOTAL_DISCOUNT).toFixed(2) +"$ ");
-    printer.setTextQuadArea();
-    // // printer.bold(true); 
-    // // printer.setTextSize(1, 1);
-    // printer.alignLeft();
-    printer.println("TOTAL TTC \t\t"+Number(req.body.data.TTC).toFixed(2) +"$");
-    //  printer.alignRight();
-    // printer.print( Number(req.body.data.TTC).toFixed(2) +"$");
-   
-    // printer.setTextNormal();
-    // printer.setTextDoubleHeight();
-    // printer.leftRight( "TOTAL TTC",  Number(req.body.data.TTC).toFixed(2) +"$");
-    printer.setTextNormal();
-    printer.leftRight( "MODE DE PAIEMENT",  req.body.data.PAYMENT_METHOD);
-    // if ( req.body.data.PAYMENT_METHOD === "ESPECES") {
-    //   printer.leftRight( "RECU",  Number(req.body.data.RECU).toFixed(2) +"$ ");
-    //   printer.leftRight( "RENDUE",  Number(req.body.data.RENDU).toFixed(2) +"$ ");
-    // }
     
-    printer.newLine(); 
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"Taux TVA", align:"LEFT", width:0.33, bold:true },
-      { text:"TVA", align:"CENTER", width:0.33, bold:true },
-      { text:"HT ", align:"RIGHT", width:0.33, bold:true },
-    ]);
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"5.5%", align:"LEFT", width:0.33 },
-      { text: req.body.data.TVA +"$", align:"CENTER", width:0.33},
-      { text: req.body.data.HT+"$ ", align:"RIGHT", width:0.33},
-    ]);
-
-    // printer.bold(true); 
-    // // printer.setTextSize(7, 7);
-    // printer.table(["Taux TVA", "TVA","HT", "TTC"]);
-    // printer.setTextNormal();
-    // printer.table(["5.5%",req.body.data.TVA +"$" ,req.body.data.HT+"$",Number(req.body.data.TTC).toFixed(2) +"$" ]);
-
-    printer.drawLine();
-    printer.alignCenter();
-    printer.println("MERCI DE VOTRE VISITE" );
-    printer.println("A BIENTOT !" );
-
-    printer.cut();
-
-    // printer.upsideDown(true);
-    // printer.println('Hello World upside down!');
-    // printer.upsideDown(false);
-    // printer.drawLine();
-
-    // printer.invert(true);
-    // printer.println('Hello World inverted!');
-    // printer.invert(false);
-    // printer.drawLine();
-
-    // printer.setTypeFontB();
-    // printer.println('Type font B');
-    // printer.setTypeFontA();
-    // printer.println('Type font A');
-    // printer.drawLine();
-
-    // printer.alignLeft();
-    // printer.println('This text is on the left');
-    // printer.alignCenter();
-    // printer.println('This text is in the middle');
-    // printer.alignRight();
-    // printer.println('This text is on the right');
-    // printer.alignLeft();
-    // printer.drawLine();
-
-    // printer.setTextDoubleHeight();
-    // printer.println('This is double height');
-    // printer.setTextDoubleWidth();
-    // printer.println('This is double width');
-    // printer.setTextQuadArea();
-    // printer.println('This is quad');
-    // printer.setTextSize(7, 7);
-    // printer.println('Wow');
-    // printer.setTextSize(0, 0);
-    // printer.setTextNormal();
-    // printer.println('This is normal');
-    // printer.drawLine();
-    
-    // printer.table(['One', 'Two', 'Three', 'Four']);
-    // printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-    //   { text:"Left TEXT", align:"LEFT", width:0.5 },
-    //   { text:"Center TEXT", align:"CENTER", width:0.25, bold:true },
-    //   { text:"Right TEXT", align:"RIGHT", cols:8 }
-    // ]);    
-    
-    try {
-    let execute = printer.execute()
-      console.log("Print done!");
-    } catch (error) {
-      console.log("Print failed:", error);
-      console.warn("Impossible de se connecter à l'imprimante !")
-      res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
-    }
-    res.status(200).send("Try to print !");
 
    } else  {
     //DELETE TICKET DATA
+    console.log("Deleting ticket data")
     const data = req.body.full_data
     // console.log("full data",data) 
     let newData = data.filter((ticket) => ticket.ticket_id !== req.body.data.ticket_id)
@@ -357,7 +385,8 @@ app.post('/tickets',  (req, res) => {
 app.post('/tickets/addNewTicket',  (req, res) => {
   // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
   // console.log(req.body)
-    
+  console.log("########################################################################################################################")
+  
   if (req.body.ticketData.invoice ) { 
     //save new customer in json file
     if (req.body.customerData.newCustomer) {
@@ -367,15 +396,15 @@ app.post('/tickets/addNewTicket',  (req, res) => {
       let conca = customers_data.concat([req.body.customerData.customer]); //put json in an array
       
       //remove duplicate item
-      let newCustomerData = conca.filter((c, index) => {
-        return conca.indexOf(c) === index;
-      });
+      let newCustomerData = conca.filter((thing, index, self) =>
+      index === self.findIndex((t) => t.id === thing.id)
+  );
       fs.writeFileSync(customerFilename, JSON.stringify(newCustomerData, null, 2)) 
     }
     
-    //############################################################################################################################################
+  //   //############################################################################################################################################
 
-    //save new invoice in json file
+  //   //save new invoice in json file
     const invoiceFilename = "client/src/database/invoices.json"
     const loadJSON_invoices = JSON.parse(fs.existsSync(invoiceFilename)) ? fs.readFileSync(invoiceFilename).toString()  : '""' 
     const invoices_data = JSON.parse(loadJSON_invoices); //string to JSON object 
@@ -401,99 +430,11 @@ app.post('/tickets/addNewTicket',  (req, res) => {
   const tickets_data = JSON.parse(loadJSON_tickets); //string to JSON object 
   let conca3 = tickets_data.concat([req.body.ticketData]); //put json in an array
   //remove duplicate item
-  let newTicketData = conca3.filter((c, index) => {
-    return conca3.indexOf(c) === index;
-  });
+  let newTicketData = conca3.filter((thing, index, self) =>
+      index === self.findIndex((t) => t.ticket_id === thing.ticket_id)
+  );
   fs.writeFileSync(ticketFilename, JSON.stringify(newTicketData, null, 2))
-  // res.status(200).send({status : "OK"})
-
-
-  if (req.body.printTicket ) {
-    console.log("Connecting to printer ...");
-    let printer = new ThermalPrinter({
-    type: PrinterTypes.EPSON,
-    interface: 'tcp://192.168.0.29'
-    });
-    // console.log("Printer connected !");
-    
-    printer.alignCenter();
-    printer.setTextQuadArea();
-    printer.println("X.H" );
-    printer.setTextNormal();
-    printer.println("19 RUE CIVIALE" );
-    printer.println("75010 PARIS" );
-    printer.println("TEL : 07.86.31.63.88" );
-    printer.println("SIRET : 887752137 PARIS" );
-    printer.newLine(); 
-    // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
-    printer.leftRight('Date : ' + new Date(req.body.ticketData.date_of_purchase).toLocaleString() , 'N° ticket : '+ req.body.ticketData.ticket_id.toString()+" ");
-    printer.drawLine();
-
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"DESIGNATION", align:"LEFT", width:0.58, bold : true },
-      { text:"QTExP.U", align:"CENTER", width:0.20, bold:true },
-      { text:"MONTANT", align:"RIGHT", width:0.20, bold : true}
-    ]);
-
-    // let total_article = 0;
-    for (let i in req.body.ticketData.product_list) {
-      printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-        { text: req.body.ticketData.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
-        { text: req.body.ticketData.product_list[i].quantity +"x"+ Number(req.body.ticketData.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},
-        { text: Number(req.body.ticketData.product_list[i].product_total_price_before_discount).toFixed(2) +"$" , align:"RIGHT" , width:0.20 }
-      ]);
-      if (req.body.ticketData.product_list[i].total_discount !== "") {
-        printer.leftRight('   REMISE'  , '-'+ Number(req.body.ticketData.product_list[i].total_discount).toFixed(2)+"$" );
-      }
-      // if (req.body.data.product_list[i].type_of_sale === "unit") total_article += req.body.data.product_list[i].quantity;
-      // else  total_article += 1;
-      // total_article += 1;
-    }
-
-    printer.drawLine();
-    // printer.leftRight( "TOTAL ARTICLE",  total_article);
-    if (req.body.ticketData.TOTAL_DISCOUNT !== "") printer.leftRight( "TOTAL REMISE",  Number(req.body.ticketData.TOTAL_DISCOUNT).toFixed(2) +"$ ");
-    printer.setTextQuadArea();
-    printer.println("TOTAL TTC \t\t"+Number(req.body.ticketData.TTC).toFixed(2) +"$");
-    printer.setTextNormal();
-    printer.leftRight( "MODE DE PAIEMENT",  req.body.ticketData.PAYMENT_METHOD);
-    // if ( req.body.data.PAYMENT_METHOD === "ESPECES") {
-    //   printer.leftRight( "RECU",  Number(req.body.data.RECU).toFixed(2) +"$ ");
-    //   printer.leftRight( "RENDUE",  Number(req.body.data.RENDU).toFixed(2) +"$ ");
-    // }
-    
-    printer.newLine(); 
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"Taux TVA", align:"LEFT", width:0.33, bold:true },
-      { text:"TVA", align:"CENTER", width:0.33, bold:true },
-      { text:"HT ", align:"RIGHT", width:0.33, bold:true },
-    ]);
-    printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
-      { text:"5.5%", align:"LEFT", width:0.33 },
-      { text: req.body.ticketData.TVA +"$", align:"CENTER", width:0.33},
-      { text: req.body.ticketData.HT+"$ ", align:"RIGHT", width:0.33},
-    ]);
-
-
-    printer.drawLine();
-    printer.alignCenter();
-    printer.println("MERCI DE VOTRE VISITE" );
-    printer.println("A BIENTOT !" );
-    printer.cut();
-
-    try {
-    let execute = printer.execute()
-      console.log("Print done!");
-    } catch (error) {
-      console.log("Print failed:", error);
-      console.warn(" Impossible de se connecter à l'imprimante !")
-      res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
-    }
-    
-  } 
-   
-  res.status(200).send({response :"Try to print !"})
-    
+  res.status(200).send({status : "OK"})
 });
 
 

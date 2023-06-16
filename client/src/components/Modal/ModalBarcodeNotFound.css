@@ -1,12 +1,16 @@
-.modalBackground, .modalBarcodeNotFound {
+.modalBackgroundBarcodeNotFound, .modalBarcodeNotFound {
     width: 100vw;
     height: 100vh;
     background-color: rgba(49, 49, 49, 0.259);
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 0px; left: 0px;
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
   }
 
 
@@ -18,8 +22,6 @@
   }
 
   .modalContainerBarcodeNotFound {
-    /* width: 1000px; */
-    /* height: 300px; */
     border-radius: 12px;
     background-color: rgb(255, 255, 255);
     position: absolute;
@@ -30,6 +32,11 @@
     overflow-y: auto;
     width: 40vw;
     /* height: 50vh; */
+    z-index: 2;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    overflow-x: hidden;
   }
   
   .modalContainerBarcodeNotFound .title {
