@@ -34,3 +34,6 @@ https://github.com/theallmightyjohnmanning/electron-express/blob/master/main.js
 
 React-pdf/renderer fontWeight : 
 https://github.com/diegomura/react-pdf/issues/402
+
+kill servers :
+https://levelup.gitconnected.com/how-to-kill-server-when-seeing-eaddrinuse-address-already-in-use-16c4c4d7fe5d
