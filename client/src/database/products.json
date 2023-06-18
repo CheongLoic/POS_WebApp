@@ -345,7 +345,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Aile_de_poulet_seche_Salami_6921799888362_-_2.5.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 13,
@@ -371,7 +371,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/XiangSuRou_6925551000061.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 14,
@@ -787,7 +787,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Pied_de_canard_6922737201250_-_3.5.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 30,
@@ -917,7 +917,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Gateau_de_poisson_6921205588589_-_6.50.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 35,
@@ -1385,7 +1385,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Canard_laque_6927115264728_-_18.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 53,
@@ -1594,7 +1594,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Courbine_jaune_6925599701586_-12.5.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 61,
@@ -2322,7 +2322,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Rouleau_d_ormeau_6.50_-__6959572800010.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 89,
@@ -3102,7 +3102,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Filet_d_anguille_sucre_sale_5.00_-_6945309350033.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 119,
@@ -3128,7 +3128,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Filet_de_morue_instantanne_5.00_-_6931008486548.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 120,
@@ -3466,7 +3466,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Jaune_d_oeuf_de_canard_sale_4.50-_6913084224429.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 133,
@@ -3518,7 +3518,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Langues_de_canard_20.00_-_6941053400154.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 135,
@@ -3700,7 +3700,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Bambou_seche_10.00_unit.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 142,
@@ -3830,7 +3830,7 @@
     "typeOfSale": "weight",
     "default_sold_weight_kg": "",
     "image": "./img/Ailes_de_poulet_6970783290063_30.00_le_kg.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 147,
@@ -3856,7 +3856,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Cotes_de_porc_surgelees_500g_15.00_unit.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 148,
@@ -3908,7 +3908,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Courbine_jaune_congele_400g_18.00_unit.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 150,
@@ -4064,7 +4064,7 @@
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
     "image": "./img/Crevettes_30.00_unit.jpg",
-    "display_on_ticket": true
+    "display_on_ticket": false
   },
   {
     "product_id": 156,
