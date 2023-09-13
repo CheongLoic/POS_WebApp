@@ -46,16 +46,16 @@ function ModalProductWithoutBarcode({ setOpenModal, setProductList, setTTC } ) {
       product_id: product_with_no_barcode_filtered[index].product_id,
       product_full_name: product_with_no_barcode_filtered[index].product_full_name,
       product_name_on_ticket: product_with_no_barcode_filtered[index].product_name_on_ticket,
-      quantity: product_with_no_barcode_filtered[index].typeOfSale === "unit" ? "1" : "",
+      quantity: product_with_no_barcode_filtered[index].typeOfSale === "weight" ? "" : "1",
       product_price: Number(product_with_no_barcode_filtered[index].current_price).toFixed(2),
-      product_total_price_before_discount: product_with_no_barcode_filtered[index].typeOfSale === "unit" ? Number(product_with_no_barcode_filtered[index].current_price).toFixed(2) : "",
+      product_total_price_before_discount: product_with_no_barcode_filtered[index].typeOfSale === "weight" ? "" :  Number(product_with_no_barcode_filtered[index].current_price).toFixed(2) ,
       total_discount : "",
       type_of_sale : product_with_no_barcode_filtered[index].typeOfSale,
       image : product_with_no_barcode_filtered[index].image,
       display_on_ticket  : product_with_no_barcode_filtered[index].display_on_ticket
     })
 
-    if (product_with_no_barcode_filtered[index].typeOfSale === "unit") {
+    if (product_with_no_barcode_filtered[index].typeOfSale !== "weight") {
       let TTC_LS = getDataFromLS("TTC_LS")
       TTC_LS += Number(product_with_no_barcode[index].current_price)
       setDataInLS("TTC_LS", TTC_LS)

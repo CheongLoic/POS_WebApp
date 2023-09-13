@@ -27,14 +27,14 @@ const [form_data, setFormData] = useState({
     product_full_name: product_data_to_change.product_full_name, 
     product_price : product_data_to_change.current_price,
     product_name_on_ticket : product_data_to_change.product_name_on_ticket ,
-    type_of_sale : product_data_to_change.typeOfSale === "unit" ? "Par unité 每件" : "Au poids 体重",
+    type_of_sale : product_data_to_change.typeOfSale === "unit" ? "Par unité 每件" : ( product_data_to_change.typeOfSale === "weight" ? "Au poids 体重" : "Carton 每箱"),
     barCode_available : product_data_to_change.barCode_available ? "Oui 有" : "Non 没有",
     date_of_purchase: "", //received data format YYYY-MM-DD
     expiration_date : "",//received data format YYYY-MM-DD
     buying_price : "",
     quantity : "",
     default_sold_weight_kg : "",
-    display_product_name :product_data_to_change.display_on_ticket ? "Oui 要" : "Non 不"
+    display_product_name :product_data_to_change.display_on_ticket ? "Oui 有" : "Non 没有"
 });
 const changeHandler = (e) => {
     // console.log(e.target.value)  
@@ -184,10 +184,10 @@ const submit = async () => {
           }],
         price_history : newPriceHisto,
         current_price : form_data.product_price,
-        typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": "weight",
+        typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": ( form_data.type_of_sale !== "Carton 每箱" ? "weight" : "box" ),
         default_sold_weight_kg : form_data.default_sold_weight_kg,
         image : (imageDeleted ||clickOnPenButton  ) ? (image_data.file.name === undefined ? "" : "./img/"+image_data.file.name) : product_data_to_change.image ,
-        display_on_ticket: form_data.display_product_name === "Oui 要" ? true : false
+        display_on_ticket: form_data.display_product_name === "Oui 有" ? true : false
       }
 
 
@@ -373,6 +373,7 @@ const addBarcode = () => {
                   <Input type="select" name="type_of_sale" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.type_of_sale}  >
                     <option>Par unité 每件</option>
                     <option>Au poids 体重</option>
+                    <option>Carton 每箱</option>
                   </Input>
                   </Col>
                 </FormGroup>
@@ -390,11 +391,11 @@ const addBarcode = () => {
                 : "" } */}
 
                 <FormGroup row>
-                  <Label sm={3} style={{fontSize: "60%"}}>Afficher nom du produit sur ticket 显示在收据上食品名称 </Label>
+                  <Label sm={3} style={{fontSize: "60%"}}>Facture disponible 有发票吗 ? </Label>
                   <Col sm={8}>
                   <Input type="select" name="display_product_name" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.display_product_name}  >
-                    <option>Oui 要</option>
-                    <option>Non 不</option>
+                  <option>Oui 有</option>
+                    <option>Non 没有</option>
                   </Input>
                   </Col>
                 </FormGroup>

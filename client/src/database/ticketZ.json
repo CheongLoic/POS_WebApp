@@ -1,0 +1,14 @@
+[
+    {
+        "id" : 0,
+        "period_type" : "day",
+        "period" : "01/01/2022 10:10:10 au 02/01/2022 10:10:10",
+        "total_ticket" : 0,
+        "total_TTC": "",
+        "total_HT": "",
+        "total_TVA": "",
+        "total_CB": "",
+        "total_Espece": "",
+        "total_Cheque": ""
+    }
+]

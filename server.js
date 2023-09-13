@@ -189,6 +189,7 @@ app.post('/tickets',  (req, res) => {
         printer.newLine(); 
         // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
         printer.leftRight('Date : ' + new Date(req.body.data.date_of_purchase).toLocaleString() , 'N. ticket : '+ req.body.data.ticket_id.toString()+" ");
+        printer.leftRight('Caisse N.2', 'Vendeur : V1 ');
         printer.drawLine();
 
         printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
@@ -199,7 +200,7 @@ app.post('/tickets',  (req, res) => {
 
         let total_article = 0;
         for (let i in req.body.data.product_list) {
-          if (req.body.data.product_list[i].type_of_sale === "unit") {
+          if (req.body.data.product_list[i].type_of_sale === "unit" || req.body.data.product_list[i].type_of_sale === "box" ) {
             printer.tableCustom([      // Prints table with custom settings (text, align, width, cols, bold)
             { text: req.body.data.product_list[i].product_name_on_ticket, align:"LEFT", width:0.58 },
             { text: req.body.data.product_list[i].quantity +"x"+ Number(req.body.data.product_list[i].product_price).toFixed(2) +"$", align:"CENTER", width:0.20},

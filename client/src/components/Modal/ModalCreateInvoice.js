@@ -207,11 +207,11 @@ const submit =() => {
                   <Col sm={8}>
                     {!error || DATE_OF_PURCHASE !== "" ? 
                     <div>
-                      <Input type="date" name="date_of_purchase" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  onChange={(e) => {setDateOFPaurchase(e.target.value)}} value={DATE_OF_PURCHASE}  />
+                      <Input type="date" name="date_of_purchase" max={new Date().toISOString().substring(0)} onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}  onChange={(e) => {setDateOFPaurchase(e.target.value)}} value={DATE_OF_PURCHASE}  />
                     </div>
                     :
                     <div>
-                        <Input type="date" name="date_of_purchase" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} 
+                        <Input type="date" name="date_of_purchase" max={new Date().toISOString().substring(0)} onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} 
                         onChange={(e) => {setDateOFPaurchase(e.target.value)}} value={DATE_OF_PURCHASE}  invalid/>
                         <FormFeedback style={{fontSize: "50%"}}>Veuillez entrer la date d'achat 请输入购买日期</FormFeedback>
                     </div>

@@ -1,13 +1,10 @@
 [
   {
     "id": 0,
-    "first_name": "Loic",
-    "last_name": "DUPOND",
-    "gender": "M.",
     "company": "TEST",
-    "email": "amy.santiago@brkln.com",
-    "phone": "0652176993",
-    "address": "20 Boulevard de la Villette",
+    "email": "test@test.com",
+    "phone": "0123456789",
+    "address": "20 Rue du blablabla",
     "zip_code": "75019",
     "city": "Paris"
   }

@@ -24,7 +24,7 @@ const AddNewProduct = () => {
         buying_price : "",
         quantity : "",
         default_sold_weight_kg : "",
-        display_product_name : "Oui 要"
+        display_product_name : "Oui 有"
     });
     const [image_data, setImage] = useState({file : []})
     const handleInputImageChange = (event) => {
@@ -244,10 +244,10 @@ const AddNewProduct = () => {
               product_price: form_data.product_price
             }],
             current_price : form_data.product_price,
-            typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": "weight",
+            typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": ( form_data.type_of_sale !== "Carton 每箱" ? "weight" : "box" ),
             default_sold_weight_kg : form_data.default_sold_weight_kg,
             image : image_data.file.name === undefined ? "" : newImageName,
-            display_on_ticket: form_data.display_product_name === "Oui 要" ? true : false
+            display_on_ticket: form_data.display_product_name === "Oui 有" ? true : false
           }
 
 
@@ -340,6 +340,7 @@ const AddNewProduct = () => {
                   <Input type="select" name="type_of_sale" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.type_of_sale}  >
                     <option>Par unité 每件</option>
                     <option>Au poids 体重</option>
+                    <option>Carton 每箱</option>
                   </Input>
                   </Col>
                 </FormGroup>
@@ -416,8 +417,8 @@ const AddNewProduct = () => {
                   <Label sm={3} style={{fontSize: "60%"}}>Facture disponible 有发票吗 ?</Label>
                   <Col sm={8}>
                   <Input type="select" name="display_product_name" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.display_product_name}  >
-                    <option>Oui 要</option>
-                    <option>Non 不</option>
+                  <option>Oui 有</option>
+                    <option>Non 没有</option>
                   </Input>
                   </Col>
                 </FormGroup>

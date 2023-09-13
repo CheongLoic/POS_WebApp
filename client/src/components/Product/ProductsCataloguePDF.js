@@ -245,7 +245,7 @@ const ProductsCataloguePDF = ({productsDB}) => (
 
             {productsDB.map((product, index) => {
                 return (
-                    <View key={index} style={styles.tableRow}> 
+                    <View key={index} style={styles.tableRow} wrap={false}>  
                         
                         <View style={styles.tableColBorderBottomImage}> 
                             <View style={styles.tableCell}> 

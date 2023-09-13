@@ -79,7 +79,7 @@ const receiptHeight = (ticket) => {
   let initialHeight = 241.64-7*1
   let heightToAdd = 0
   for( let i in ticket.product_list){
-    if (ticket.product_list[i].type_of_sale === "unit" && ticket.product_list[i].total_discount =="" ) {
+    if (ticket.product_list[i].type_of_sale !== "weight"  && ticket.product_list[i].total_discount =="" ) {
       heightToAdd += 7
     } else {
       heightToAdd += 14
@@ -108,6 +108,7 @@ const ReceiptPDF = ({ticket}) => (
       
       <Text style={{fontSize: 7}}> </Text>
       {leftRight("Date : 21/02/2023 23:30:02", "N°ticket : "+ticket.ticket_id, 7)}
+      {leftRight("Caisse n°2", "Vendeur : V1", 7)}
       
       <Text style={{fontSize : 7, fontFamily : 'Courier'}}>------------------------------------------------</Text> 
       {/* {leftRight("TEST1", "TEST2", 7)} */}
@@ -125,10 +126,10 @@ const ReceiptPDF = ({ticket}) => (
                       <Text style={{fontSize: 7}}>{product.product_name_on_ticket}</Text> 
                     </View> 
                     <View style={{width : "20%" , textAlign : "center"}}> 
-                      <Text style={{fontSize: 7}}>{product.quantity} x {product.product_price}€</Text> 
+                      <Text style={{fontSize: 7}}>{product.quantity} x {Number(product.product_price).toFixed(2)}€</Text> 
                     </View> 
                     <View style={{width : "20%", textAlign : "right"}}> 
-                      <Text style={{fontSize: 7}}>{product.product_total_price_before_discount}€</Text> 
+                      <Text style={{fontSize: 7}}>{Number(product.product_total_price_before_discount).toFixed(2)}€</Text> 
                     </View> 
                   </View>
                 </View>
@@ -156,17 +157,17 @@ const ReceiptPDF = ({ticket}) => (
                   <View style={{width : "60%", textAlign : "left" }}> 
                     <Text style={{fontSize: 7}}>{product.product_name_on_ticket}</Text> 
                   </View> 
-                  {product.type_of_sale ==="unit" ? 
+                  {product.type_of_sale !=="weight" ? 
                     <View style={{width : "20%" , textAlign : "center"}}> 
-                      <Text style={{fontSize: 7}}>{product.quantity} x {product.product_price}€</Text> 
+                      <Text style={{fontSize: 7}}>{product.quantity} x {Number(product.product_price).toFixed(2)}€</Text> 
                     </View> 
                   : 
                   <View style={{width : "20%" , textAlign : "center"}}> 
-                    <Text style={{fontSize: 7}}>{Number(product.quantity).toFixed(3)}kg x {product.product_price}€</Text> 
+                    <Text style={{fontSize: 7}}>{Number(product.quantity).toFixed(3)}kg x {Number(product.product_price).toFixed(2)}€</Text> 
                   </View> 
                   }
                   <View style={{width : "20%", textAlign : "right"}}> 
-                    <Text style={{fontSize: 7}}>{product.product_total_price_before_discount}€</Text> 
+                    <Text style={{fontSize: 7}}>{Number(product.product_total_price_before_discount).toFixed(2)}€</Text> 
                   </View> 
                 </View>
               </View>
@@ -181,10 +182,11 @@ const ReceiptPDF = ({ticket}) => (
       {/* <Text style={{fontSize : 7, fontFamily : 'Courier'}}>------------------------------------------------</Text>  */}
       {/* <Text style={{fontSize: 7}}>TOTAL ARTICLE 2</Text> */}
       {leftRight("TOTAL REMISE", ticket.TOTAL_DISCOUNT +"€", 7)}
+      {leftRight("MODE DE PAIEMENT", ticket.PAYMENT_METHOD,7)}
       {leftRight("TOTAL TTC", ticket.TTC +"€",12)}
       {/* <Text style={{fontSize: 7}}> </Text> */}
       {/* <Text style={{fontSize: 7}}> </Text> */}
-      {leftRight("MODE DE PAIEMENT", ticket.PAYMENT_METHOD,7)}
+      
 
       <Text style={{fontSize: 7}}> </Text>
       {table_3Col("Taux TVA", "TVA", "HT",  ["33.33%","33.33%","33.33%"] )}

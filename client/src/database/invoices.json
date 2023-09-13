@@ -4,5 +4,29 @@
     "ticket_id": 0,
     "customer_id": 0,
     "date": "2023-02-21T22:30:02.413Z"
+  },
+  {
+    "invoice_id": 1,
+    "ticket_id": 1,
+    "customer_id": 0,
+    "date": "2023-06-24T11:07:36.035Z"
+  },
+  {
+    "invoice_id": 2,
+    "ticket_id": 2,
+    "customer_id": 0,
+    "date": "2023-06-24T11:13:12.106Z"
+  },
+  {
+    "invoice_id": 3,
+    "ticket_id": 3,
+    "customer_id": 0,
+    "date": "2023-06-24T11:18:03.211Z"
+  },
+  {
+    "invoice_id": 4,
+    "ticket_id": 4,
+    "customer_id": 0,
+    "date": "2023-08-01T11:01:40.832Z"
   }
 ]

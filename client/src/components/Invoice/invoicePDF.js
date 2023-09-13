@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     borderRightWidth: 0, 
     borderBottomWidth: 0 ,
-    borderBottom : 1,
-    borderBottomStyle :1,
+    borderBottom : 0,
+    borderBottomStyle :0,
     marginLeft : 20,
     marginRight : 20
     
@@ -194,7 +194,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // backgroundColor : "tomato",
     maxHeight  : 100,
-    marginBottom : 20
+    marginBottom : 30,
+    marginTop :20
   },
   leftColumn: {
     flexDirection: 'column',
@@ -228,6 +229,12 @@ const styles = StyleSheet.create({
     // alignContent : "center",
     alignItems : "center",
   },
+  tableRowTotal : {
+    width :'20%',
+    borderStyle: "solid", 
+    borderRightWidth: 1, 
+    borderBottomWidth: 1,
+  }
 });
 
 // const number = 123456.789;
@@ -239,24 +246,26 @@ const styles = StyleSheet.create({
 const InvoicePDF = ({invoiceDB, customer, ticket}) => (
   <Document title={"XH_Facture_n°".concat(invoiceDB.invoice_id,".pdf")} >
     <Page size="A4" style={styles.body} wrap>
-      <View style={{ color: 'black',fontSize: 28, textAlign: 'center', marginBottom: 30 }}>
+      <View style={{ color: 'black',fontSize: 28, textAlign: 'center', marginBottom: 30 }} fixed>
         <Text>FACTURE n°{invoiceDB.invoice_id}</Text>
       </View>
       
-      <View style={styles.container}>
+      <View style={styles.container} fixed>
         <View style={styles.leftColumn}>
           <Text >X.H.</Text>
           <Text style={{fontSize: 12}}>19 Rue Civiale</Text>
           <Text style={{fontSize: 12}}>75010 PARIS</Text>
-          <Text style={{fontSize: 12}}>TEL : 07.86.31.63.88</Text>
+          <Text style={{fontSize: 12}}>TEL. : 07.86.31.63.88</Text>
           <Text style={{fontSize: 12}}>SIRET : 887752137 PARIS</Text>
       	</View>
+
         
         <View style={styles.rightColumn}>
-          <Text >{customer.company}</Text>
+        <Text style={{top: -20, position: "absolute", fontSize: 14}}>FACTURÉ À :</Text>s
+          <Text style={{fontSize: 14}}>{customer.company}</Text>
           <Text style={{fontSize: 12}}>{customer.address}</Text>
           <Text style={{fontSize: 12}}>{customer.zip_code} {customer.city}</Text>
-          <Text style={{fontSize: 12}}>TEL : {customer.phone.replace(/(.{2})/g,"$1 ")}</Text>
+          <Text style={{fontSize: 12}}>TEL. : {customer.phone.replace(/(.{2})/g,"$1 ")}</Text>
           <Text style={{fontSize: 12}}>{customer.email}</Text>
         </View>
       </View>
@@ -266,8 +275,8 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 20}}>Mode de paiement : {ticket.PAYMENT_METHOD}</Text>
       
       <View style={styles.table}> 
-        <View style={styles.tableRow}> 
-        <View style={styles.tableColIDHead}> 
+        <View style={styles.tableRow} fixed> 
+          <View style={styles.tableColIDHead}> 
             <Text style={styles.tableCell}>ID</Text> 
           </View> 
           <View style={styles.tableColProductNameHead}> 
@@ -287,7 +296,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
 
         {ticket.product_list.map((product, index) => { return (
           product.total_discount !== "" ? (
-            <View key={index}> 
+            <View key={index} wrap={false}> 
               <View  style={styles.tableRow}> 
                 <View style={styles.tableColNoBorderBottomID}> 
                   <Text style={styles.tableCell}>{product.product_id}</Text> 
@@ -296,13 +305,13 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
                   <Text style={styles.tableCell}>{product.product_full_name}</Text> 
                 </View> 
                 <View style={styles.tableColNoBorderBottomQty}> 
-                  <Text style={styles.tableCell}>{product.quantity} {product.type_of_sale === "weight" ? "kg" : "pc(s)" }</Text> 
+                  <Text style={styles.tableCell}>{product.quantity} {product.type_of_sale === "weight" ? "kg" : ( product.type_of_sale === "unit" ? "pc(s)" : "CRT" )}</Text> 
                 </View> 
                 <View style={styles.tableColNoBorderBottomPrice}>
-                  <Text style={styles.tableCell}> {product.type_of_sale === "weight" ? product.product_price+"€/kg" : product.product_price+"€" }</Text> 
+                  <Text style={styles.tableCell}> {product.type_of_sale === "weight" ? Number(product.product_price).toFixed(2)+"€/kg" : Number(product.product_price).toFixed(2)+"€" }</Text> 
                 </View>
                 <View style={styles.tableColNoBorderBottomPrice}> 
-                  <Text style={styles.tableCell}>{product.product_total_price_before_discount}€</Text> 
+                  <Text style={styles.tableCell}>{Number(product.product_total_price_before_discount).toFixed(2)}€</Text> 
                 </View> 
               </View> 
 
@@ -327,7 +336,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
           )
           :
           (
-          <View key={index} style={styles.tableRow}> 
+          <View key={index} style={styles.tableRow} wrap={false}> 
             <View style={styles.tableColBorderBottomID}> 
               <Text style={styles.tableCell}>{product.product_id}</Text> 
             </View> 
@@ -335,13 +344,13 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
               <Text style={styles.tableCell}>{product.product_full_name}</Text> 
             </View> 
             <View style={styles.tableColBorderBottomQty}> 
-              <Text style={styles.tableCell}>{product.quantity} {product.type_of_sale === "weight" ? "kg" : "pc(s)" }</Text> 
+              <Text style={styles.tableCell}>{product.quantity} {product.type_of_sale === "weight" ? "kg" : ( product.type_of_sale === "unit" ? "pc(s)" : "CRT" )}</Text> 
             </View> 
             <View style={styles.tableColBorderBottomPrice}>
-              <Text style={styles.tableCell}> {product.type_of_sale === "weight" ? product.product_price+"€/kg" : product.product_price+"€" }</Text> 
+              <Text style={styles.tableCell}> {product.type_of_sale === "weight" ? Number(product.product_price).toFixed(2)+"€/kg" : Number(product.product_price).toFixed(2)+"€" }</Text> 
             </View>
             <View style={styles.tableColBorderBottomPrice}> 
-              <Text style={styles.tableCell}>{product.product_total_price_before_discount}€</Text> 
+              <Text style={styles.tableCell}>{Number(product.product_total_price_before_discount).toFixed(2)}€</Text> 
             </View> 
           </View> 
           )
@@ -350,7 +359,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
       </View>
 
       
-      <View style={{left : 359, marginRight : 30}}>
+      {/* <View style={{left : 359, marginRight : 30}}>
         <View style={styles.miniTable}> 
           <View style={styles.tableRow}> 
             <View style={styles.tableColTotal}> 
@@ -380,13 +389,58 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
           	</View> 
           </View>
       	</View>
+      </View> */}
+
+        <View style={{margin : "30 0"}} wrap={false}>
+      <View style={styles.table}> 
+        <View style={styles.tableRow}> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>TOTAL HT</Text> 
+          </View> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>TOTAL REMISE</Text> 
+          </View> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>Taux TVA</Text> 
+          </View> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>TOTAL TVA</Text> 
+          </View> 
+          
+            <View style={styles.tableRowTotal}> 
+            <View style={{backgroundColor : "#C0C0C0" }}>
+              <Text style={styles.tableCell}>TOTAL TTC À PAYER</Text> 
+            </View> 
+          </View>
+        </View>
+        <View style={styles.tableRow}> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>{ticket.HT}€</Text> 
+          </View> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>{ticket.TOTAL_DISCOUNT === ""?  "0.00€": "-"+ticket.TOTAL_DISCOUNT+"€"}</Text> 
+          </View> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>5.5%</Text> 
+          </View> 
+          <View style={styles.tableRowTotal}> 
+          	<Text style={styles.tableCell}>{ticket.TVA}€</Text> 
+          </View> 
+         
+            <View style={styles.tableRowTotal}> 
+            <View style={{backgroundColor : "#C0C0C0" }}>
+              <Text style={styles.tableCell}>{ticket.TTC}€</Text> 
+            </View> 
+          </View>
+        </View>
+      </View>
       </View>
       
       
       
       <View style={{ color: 'black' ,  position: 'absolute', bottom :40,left: 0,
-    right: 0, fontSize: 10, textAlign: 'center', marginRight : 30,marginLeft : 30  }}>
-        <Text>En cas de retard de paiement, il sera appliqué des pénalités égales à trois fois la taux de l'intérêt légal ainsi qu'une indemnité forfaitaire pour frais de recouvrement de 40€ (Code de commerce Article L441-6 / Décret n°2012-1115 du 2 octobre 2012).</Text>
+    right: 0, fontSize: 8, textAlign: 'center', marginRight : 30,marginLeft : 30  }} fixed>
+        <Text>En cas de retard de paiement, il sera appliqué des pénalités égales à trois fois le taux de l'intérêt légal ainsi qu'une indemnité forfaitaire pour frais de recouvrement de 40€ (Code de commerce Article L441-6 / Décret n°2012-1115 du 2 octobre 2012).</Text>
       </View>
       
       <Text

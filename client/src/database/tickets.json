@@ -27,12 +27,458 @@
         "image": "./img/white_rabbit.jpg"
       }
     ],
-    "PAYMENT_METHOD": "ESPECES",
+    "PAYMENT_METHOD": "Espèces",
     "TOTAL_DISCOUNT": "9.00",
     "RECU": "30.00",
     "RENDU": "1.03",
     "TVA": "1.59",
     "HT": "27.38",
     "TTC": "28.97"
+  },
+  {
+    "ticket_id": 1,
+    "invoice": true,
+    "date_of_purchase": "2023-06-17T00:00:00.000Z",
+    "product_list": [
+      {
+        "product_id": 12,
+        "product_full_name": "Aile de poulet séché Salami",
+        "product_name_on_ticket": "Salami",
+        "quantity": "1",
+        "product_price": "2.5",
+        "product_total_price_before_discount": "2.5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Aile_de_poulet_seche_Salami_6921799888362_-_2.5.jpg",
+        "display_on_ticket": false
+      },
+      {
+        "product_id": 146,
+        "product_full_name": "Ailes de poulet",
+        "product_name_on_ticket": "Ailes de poulet",
+        "quantity": "1",
+        "product_price": "30",
+        "product_total_price_before_discount": "30",
+        "total_discount": "",
+        "type_of_sale": "weight",
+        "image": "./img/Ailes_de_poulet_6970783290063_30.00_le_kg.jpg",
+        "display_on_ticket": false
+      },
+      {
+        "product_id": 137,
+        "product_full_name": "Poisson Trident (L) - 三牙鱼(大)",
+        "product_name_on_ticket": "Poisson Trident (L)",
+        "quantity": "1",
+        "product_price": "10.50",
+        "product_total_price_before_discount": "10.50",
+        "total_discount": "",
+        "type_of_sale": "weight",
+        "image": "./img/poisson_trident.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 1,
+        "product_full_name": "White Rabbit",
+        "product_name_on_ticket": "White Rabbit",
+        "quantity": "4",
+        "product_price": "2.99",
+        "product_total_price_before_discount": "11.96",
+        "total_discount": "2.99",
+        "type_of_sale": "unit",
+        "image": "./img/white_rabbit.jpg",
+        "display_on_ticket": true
+      }
+    ],
+    "PAYMENT_METHOD": "CB",
+    "TOTAL_DISCOUNT": "2.99",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "2.86",
+    "HT": "51.97",
+    "TTC": "54.83"
+  },
+  {
+    "ticket_id": 2,
+    "invoice": true,
+    "date_of_purchase": "2023-06-04T00:00:00.000Z",
+    "product_list": [
+      {
+        "product_id": 146,
+        "product_full_name": "Ailes de poulet",
+        "product_name_on_ticket": "Ailes de poulet",
+        "quantity": "100",
+        "product_price": "30",
+        "product_total_price_before_discount": "3000.00",
+        "total_discount": "",
+        "type_of_sale": "weight",
+        "image": "./img/Ailes_de_poulet_6970783290063_30.00_le_kg.jpg",
+        "display_on_ticket": false
+      },
+      {
+        "product_id": 40,
+        "product_full_name": "Alcool de riz noir gluant",
+        "product_name_on_ticket": "Alcool de riz noir gluant",
+        "quantity": "100",
+        "product_price": "3",
+        "product_total_price_before_discount": "300.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Alcool_de_riz_noir_gluant_6907951199002-_3.0.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 48,
+        "product_full_name": "Algues préparées en filaments",
+        "product_name_on_ticket": "Algue en filament",
+        "quantity": "100",
+        "product_price": "3.20",
+        "product_total_price_before_discount": "320.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Algue_prepare_en_filaments_6908161971167_-_3.20.jpg",
+        "display_on_ticket": true
+      }
+    ],
+    "PAYMENT_METHOD": "CB",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "199.10",
+    "HT": "3620.00",
+    "TTC": "3819.10"
+  },
+  {
+    "ticket_id": 3,
+    "invoice": true,
+    "date_of_purchase": "2023-06-10T00:00:00.000Z",
+    "product_list": [
+      {
+        "product_id": 12,
+        "product_full_name": "Aile de poulet séché Salami",
+        "product_name_on_ticket": "Salami",
+        "quantity": "1",
+        "product_price": "2.5",
+        "product_total_price_before_discount": "2.5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Aile_de_poulet_seche_Salami_6921799888362_-_2.5.jpg",
+        "display_on_ticket": false
+      },
+      {
+        "product_id": 146,
+        "product_full_name": "Ailes de poulet",
+        "product_name_on_ticket": "Ailes de poulet",
+        "quantity": "1",
+        "product_price": "30",
+        "product_total_price_before_discount": "30",
+        "total_discount": "",
+        "type_of_sale": "weight",
+        "image": "./img/Ailes_de_poulet_6970783290063_30.00_le_kg.jpg",
+        "display_on_ticket": false
+      },
+      {
+        "product_id": 40,
+        "product_full_name": "Alcool de riz noir gluant",
+        "product_name_on_ticket": "Alcool de riz noir gluant",
+        "quantity": "2",
+        "product_price": "3",
+        "product_total_price_before_discount": "6.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Alcool_de_riz_noir_gluant_6907951199002-_3.0.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 37,
+        "product_full_name": "Algues grillées épicées (3x4.5g)",
+        "product_name_on_ticket": "Algues grillées épicées x3",
+        "quantity": "1",
+        "product_price": "2.5",
+        "product_total_price_before_discount": "2.5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Algues_grilles_epicees_8809059293157-_2.5.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 48,
+        "product_full_name": "Algues préparées en filaments",
+        "product_name_on_ticket": "Algue en filament",
+        "quantity": "1",
+        "product_price": "3.20",
+        "product_total_price_before_discount": "3.20",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Algue_prepare_en_filaments_6908161971167_-_3.20.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 39,
+        "product_full_name": "Algues séchées 113g",
+        "product_name_on_ticket": "Algues séchées 113g",
+        "quantity": "1",
+        "product_price": "4",
+        "product_total_price_before_discount": "4",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Algues_sechees_3379140141094_-_4..jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 44,
+        "product_full_name": "Algues séchées 40g",
+        "product_name_on_ticket": "Algues séchées 40g",
+        "quantity": "1",
+        "product_price": "3.2",
+        "product_total_price_before_discount": "3.2",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Algues_sechees_(2)_3379140112131_-_3.2.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 101,
+        "product_full_name": "Anguille d'Amérique marinée",
+        "product_name_on_ticket": "Anguille d'Amérique mariné",
+        "quantity": "1",
+        "product_price": "8.50",
+        "product_total_price_before_discount": "8.50",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Anguille_d_Amerique_marinee_-_8718969323437_-_-_10.00_-_19x8.5=161.5_carton.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 189,
+        "product_full_name": "Anguille séchée",
+        "product_name_on_ticket": "Anguille séchée",
+        "quantity": "1",
+        "product_price": "16.90",
+        "product_total_price_before_discount": "16.90",
+        "total_discount": "",
+        "type_of_sale": "weight",
+        "image": "./img/true_Anguille_sechee_6920239300600_-_16.9_a_peser.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 42,
+        "product_full_name": "Biscuit au jaune d'oeuf salé",
+        "product_name_on_ticket": "Biscuit au jaune d'oeuf",
+        "quantity": "1",
+        "product_price": "3.2",
+        "product_total_price_before_discount": "3.2",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Biscuit_au_jaune_d_oeuf_sale_4710174117263_-_3.2.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 22,
+        "product_full_name": "Biscuit sashima sésame",
+        "product_name_on_ticket": "Biscuit sashima sésame",
+        "quantity": "1",
+        "product_price": "2.7",
+        "product_total_price_before_discount": "2.7",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Biscuit_sashima_sesame_653884010179_-_2.7.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 151,
+        "product_full_name": "Bouchées au porc congelées",
+        "product_name_on_ticket": "Bouchées au porc congelées",
+        "quantity": "1",
+        "product_price": "16",
+        "product_total_price_before_discount": "16",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Bouchees_au_porc_congelees_16.00.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 66,
+        "product_full_name": "Boulettes de boeuf",
+        "product_name_on_ticket": "Boulettes de boeuf",
+        "quantity": "1",
+        "product_price": "5",
+        "product_total_price_before_discount": "5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Boulettes_de_boeuf_8436032780672_-_5.0.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 190,
+        "product_full_name": "Boulettes de poisson Fuzhou",
+        "product_name_on_ticket": "Boulettes de poisson",
+        "quantity": "1",
+        "product_price": "5",
+        "product_total_price_before_discount": "5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/true_Boulettes_de_poisson_Fuzhou___-_5.0.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 202,
+        "product_full_name": "Boulettes de poisson 鱼丸",
+        "product_name_on_ticket": "Boulettes de poisson",
+        "quantity": "1",
+        "product_price": "15",
+        "product_total_price_before_discount": "15",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Boulettes_de_poisson_15.00.jpg",
+        "display_on_ticket": false
+      },
+      {
+        "product_id": 64,
+        "product_full_name": "Boulettes de porc",
+        "product_name_on_ticket": "Boulettes de porc",
+        "quantity": "1",
+        "product_price": "5",
+        "product_total_price_before_discount": "5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Boulettes_de_porc_8436032780672_-_5.00.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 53,
+        "product_full_name": "Boulettes de porc farcies",
+        "product_name_on_ticket": "Boulettes de porc farcies ",
+        "quantity": "1",
+        "product_price": "5",
+        "product_total_price_before_discount": "5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Boulettes_de_porc_farcies_8436032780184_-_5.0.jpg",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 65,
+        "product_full_name": "Boulettes de riz gluant au sésame",
+        "product_name_on_ticket": "Boulettes de riz gluant",
+        "quantity": "1",
+        "product_price": "4.5",
+        "product_total_price_before_discount": "4.5",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Boulettes_de_riz_gluant_au_sesame_8836042788352_-_4.5.jpg",
+        "display_on_ticket": true
+      }
+    ],
+    "PAYMENT_METHOD": "CB",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "7.60",
+    "HT": "138.20",
+    "TTC": "145.80"
+  },
+  {
+    "ticket_id": 4,
+    "invoice": true,
+    "date_of_purchase": "2023-08-09T00:00:00.000Z",
+    "product_list": [
+      {
+        "product_id": 204,
+        "product_full_name": "Zzzz",
+        "product_name_on_ticket": "zziuzheui",
+        "quantity": "2",
+        "product_price": "9999",
+        "product_total_price_before_discount": "19998.00",
+        "total_discount": "",
+        "type_of_sale": "box",
+        "image": "",
+        "display_on_ticket": false
+      }
+    ],
+    "PAYMENT_METHOD": "CB",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "1099.89",
+    "HT": "19998.00",
+    "TTC": "21097.89"
+  },
+  {
+    "ticket_id": 5,
+    "invoice": false,
+    "date_of_purchase": "2023-08-05T16:45:03.056Z",
+    "product_list": [
+      {
+        "product_id": 148,
+        "product_full_name": "Canard à la sauce soja 麻油鸭",
+        "product_name_on_ticket": "Canard à la sauce soja",
+        "quantity": "1",
+        "product_price": "18.00",
+        "product_total_price_before_discount": "18.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/canard_a_la_sauce_soja_18_unit.jpg",
+        "display_on_ticket": false
+      }
+    ],
+    "PAYMENT_METHOD": "CB",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "0.94",
+    "HT": "17.06",
+    "TTC": "18.00"
+  },
+  {
+    "ticket_id": 6,
+    "invoice": false,
+    "date_of_purchase": "2023-08-05T16:45:15.800Z",
+    "product_list": [
+      {
+        "product_id": 150,
+        "product_full_name": "Champignon noir 150g",
+        "product_name_on_ticket": "Champignon noir 150g",
+        "quantity": "1",
+        "product_price": "7.50",
+        "product_total_price_before_discount": "7.50",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Champgnon_noir_150g_7.50_unit.jpg",
+        "display_on_ticket": true
+      }
+    ],
+    "PAYMENT_METHOD": "Espèces",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "0.39",
+    "HT": "7.11",
+    "TTC": "7.50"
+  },
+  {
+    "ticket_id": 7,
+    "invoice": false,
+    "date_of_purchase": "2023-08-05T16:47:42.820Z",
+    "product_list": [
+      {
+        "product_id": 151,
+        "product_full_name": "Bouchées au porc congelées",
+        "product_name_on_ticket": "Bouchées au porc congelées",
+        "quantity": "1",
+        "product_price": "16.00",
+        "product_total_price_before_discount": "16.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/Bouchees_au_porc_congelees_16.00.jpg",
+        "display_on_ticket": true
+      }
+    ],
+    "PAYMENT_METHOD": "Espèces",
+    "TOTAL_DISCOUNT": "0.00",
+    "RECU": "",
+    "RENDU": "",
+    "TVA": "0.83",
+    "HT": "15.17",
+    "TTC": "16.00"
   }
 ]
