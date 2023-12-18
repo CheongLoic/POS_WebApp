@@ -21,6 +21,8 @@ const [error, setError] = useState(false) // Error for the form
 // const [chinese_caracter_recognized, setChineseRecognized] = useState(false) // Error for the form
 let ERROR = false // error in backend 
 
+const before_change_barCode_available = product_data_to_change.barCode_available
+const before_change_barcodeList = product_data_to_change.barCode_list
 const [barcodeList, setBarcodeList] = useState(product_data_to_change.barCode_list)
 const [barcodeInput, setBarcode] = useState("")
 const [form_data, setFormData] = useState({
@@ -116,6 +118,7 @@ const checkField = ()=>{
   // ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
   // || form_data.date_of_purchase === "" || form_data.expiration_date === "" 
   ||   (showBarcodeField && barcodeInput.length < 10  && form_data.barCode_available === "Oui 有")  
+  || (barcodeList.length === 1 && barcodeList[0].barCode === "" && form_data.barCode_available === "Oui 有")
   || chinese_caracter_product_name_on_ticket.length > 0
   || chinese_caracter_image.length > 0
   // || image_data.file.name.includes(" ")  || image_data.file.name.includes("_") 
@@ -144,7 +147,7 @@ const submit = async () => {
 
     if (ERROR === false) {
       const current_date = new Date();
-      let productDB = getDataFromLS("productDB")
+      // let productDB = getDataFromLS("productDB")
       // let productDB_sorted = productDB.sort((a, b) => {//tricroissant par product_id
       // if (a.product_id < b.product_id) {
       //     return -1;
@@ -190,25 +193,50 @@ const submit = async () => {
         display_on_ticket: form_data.display_product_name === "Oui 有" ? true : false
       }
 
+      console.log("before_change_barCode_available",before_change_barCode_available)
+      console.log("before_change_barcodeList",before_change_barcodeList)
 
-      // if (form_data.barCode_available === "Oui 有" ) {
-      //   let product_with_barcode = getDataFromLS("product_with_barcode")
-      //   product_with_barcode.push(dataToSend)
-      //   setDataInLS("product_with_barcode", product_with_barcode)
+      if ( !(before_change_barCode_available === dataToSend.barCode_available 
+        && JSON.stringify(before_change_barcodeList) ===  JSON.stringify(dataToSend.barCode_list))) {
+          // T => F 2
+          // F => T 2
+          // T => T product_with_barcode
 
-      //   let barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID")
-      //   const db = {
-      //     barCode: newBarcode,
-      //     productID : dataToSend.product_id
-      //   }
-      //   barCodeAvailable_productID.push(db)
-      //   setDataInLS("barCodeAvailable_productID", barCodeAvailable_productID)
+          let barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID"); // [{barCode: '4903001014761', productID: 2}, ...]
+          let product_with_barcode = getDataFromLS("product_with_barcode")
+          let product_with_no_barcode = getDataFromLS("product_with_no_barcode")
+          if (dataToSend.barCode_available === true ) {
+            if (before_change_barCode_available === false) { //before_change_barCode_available === false,  F => T 2
+              product_with_no_barcode = product_with_no_barcode.filter( (product) => product.product_id !== dataToSend.product_id)
+              setDataInLS("product_with_no_barcode", product_with_no_barcode)
+            }
+            // T => T product_with_barcode
+            product_with_barcode = product_with_barcode.filter( (product) => product.product_id !== dataToSend.product_id)
+            product_with_barcode.push(dataToSend)
+            setDataInLS("product_with_barcode", product_with_barcode)
+            
+            barCodeAvailable_productID = barCodeAvailable_productID.filter( (product) => product.productID !== dataToSend.product_id)
+            for( let i in dataToSend.barCode_list){
+              const db = {
+                barCode: dataToSend.barCode_list[i].barCode,
+                productID : dataToSend.product_id
+              }
+              barCodeAvailable_productID.push(db)
+            }
+            setDataInLS("barCodeAvailable_productID", barCodeAvailable_productID)
+          } else { //dataToSend.barCode_available === false) , // T => F 2
+            product_with_no_barcode.push(dataToSend)
+            setDataInLS("product_with_no_barcode", product_with_no_barcode)
+            
+            product_with_barcode = product_with_barcode.filter( (product) => product.product_id !== dataToSend.product_id)
+            setDataInLS("product_with_barcode", product_with_barcode)
 
-      // } else {
-      //   let product_with_no_barcode = getDataFromLS("product_with_no_barcode")
-      //   product_with_no_barcode.push(dataToSend)
-      //   setDataInLS("product_with_no_barcode", product_with_no_barcode)
-      // }
+            barCodeAvailable_productID = barCodeAvailable_productID.filter( (product) => product.productID !== dataToSend.product_id)
+            setDataInLS("barCodeAvailable_productID", barCodeAvailable_productID)
+        }
+      }
+
+      
 
 
       axios.post("http://localhost:5000/products/addNewProduct", formdata,{

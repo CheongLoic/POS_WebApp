@@ -13,7 +13,7 @@ import Discounts from './components/Discount/Discounts';
 import AddNewProduct from "./components/Product/AddNewProduct"
 import SendNewProductData from "./components/Product/sendNewProductData"
 import AddNewCustomer from "./components/Customer/AddNewCustomer"
-import Performances from "./components/Performances"
+import Reports from "./components/Report/Reports"
 import AddNewTicket from './components/Ticket/addNewTicket';
 import DownloadProductCataloguePage from './components/Product/DownloadCataloguePage';
 import ModifyProductPage from "./components/Product/ModifyProductPage"
@@ -21,6 +21,7 @@ import CreateInvoice from "./components/Invoice/CreateInvoice"
 import PageNotFound from "./PageNotFound"
 import ShowInvoicePage from './components/Invoice/ShowInvoicePage';
 import ShowReceiptPage from './components/Ticket/ShowReceiptPage';
+import ShowReportPage from './components/Report/ShowReportPage';
 import SendNewTicketData from "./components/Ticket/sendNewTicketData"
 // import server from "./server";
 
@@ -239,7 +240,8 @@ class App extends Component {
         <Route exact path="/customers" element={<Customers/>}></Route>
         <Route exact path="/customers/addNewCustomer" element={<AddNewCustomer/>}></Route>
         <Route exact path="/discounts" element={<Discounts/>}></Route>
-        <Route exact path="/performances" element={<Performances/>}></Route>
+        <Route exact path="/reports" element={<Reports/>}></Route>
+        <Route exact path="/reports/PDF/:pdfName" element={<ShowReportPage/>}></Route>
         <Route path="*" element={<PageNotFound/>}/>
       </Routes>
       {/* </Switch> */}

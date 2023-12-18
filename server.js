@@ -398,8 +398,8 @@ app.post('/tickets/addNewTicket',  (req, res) => {
       
       //remove duplicate item
       let newCustomerData = conca.filter((thing, index, self) =>
-      index === self.findIndex((t) => t.id === thing.id)
-  );
+        index === self.findIndex((t) => t.id === thing.id)
+      );
       fs.writeFileSync(customerFilename, JSON.stringify(newCustomerData, null, 2)) 
     }
     
@@ -513,6 +513,242 @@ app.post('/customers/addNewCustomer', async (req, res) => {
     fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
     res.status(200).send({status : "OK"})
 });
+
+
+app.post('/reports', async (req, res) => {
+  const today_date = req.body.today_date
+  console.log("today_date", today_date)
+  // console.log("today_date sub", today_date.substring(0,10))
+
+
+  const ticketZFilename = "client/src/database/ticketZ.json"
+  const loadJSON_ticketZ = JSON.parse(fs.existsSync(ticketZFilename)) ? fs.readFileSync(ticketZFilename).toString()  : '""' 
+  const ticketZ_data = JSON.parse(loadJSON_ticketZ); //string to JSON object 
+  // let conca = ticketZ_data.concat([req.body.customerData.customer]); //put json in an array
+
+  const loadJSON_ticketDB = JSON.parse(fs.existsSync(ticketZFilename)) ? fs.readFileSync("client/src/database/tickets.json").toString()  : '""' 
+  const ticketsDB = JSON.parse(loadJSON_ticketDB); //string to JSON object 
+  const distinct = (value, index, self) => {
+    return self.indexOf(value) === index
+  }
+
+  // console.log("ticketZ_data", ticketZ_data)
+  console.log("type of ", typeof(ticketZ_data))
+  console.log("ticketZ_data === '' ", ticketZ_data === '')
+
+  let newTicketZData = []
+  if (ticketZ_data === "") { // si fichier vide
+      console.log("condition 1")
+      console.log("nothing happen")
+  } else { // si fichier non vide
+    newTicketZData = newTicketZData.concat(ticketZ_data) //concatène 2 arrays
+    console.log("condition 2")
+    // console.log('ticketZ_data', ticketZ_data) // before changes
+    console.log('newTicketZData.length :', newTicketZData.length)
+
+  // const rapportJour =() => {
+      let prev_registered_date = '2023-02-21T20:30:02.413Z'
+      // const prev_registered_date_local = new Date(prev_registered_date).toLocaleString()
+      let newTicketZDay = newTicketZData.filter(ticketZ => ticketZ.period_type === "day")
+      if (newTicketZDay.length > 0 && newTicketZDay[newTicketZDay.length-1].periodtStart > prev_registered_date ) {
+        prev_registered_date = newTicketZDay[newTicketZDay.length-1].periodtStart
+      }
+
+      if (ticketsDB.length > 0) {
+        let ticketDB_filtered = ticketsDB.filter((ticket) => ticket.date_of_purchase >  prev_registered_date  && ticket.date_of_purchase.substring(0,10) !== today_date.substring(0,10) )
+        // let ticketLocalDate = new Date(ticketDB_filtered[0].date_of_purchase).toLocaleString()
+
+        if (ticketDB_filtered.length > 0) {
+          let listDate = ticketDB_filtered.map((ticket) => ticket.date_of_purchase.substring(0,10)).filter(distinct) // Liste des dates des tickets
+          console.log("listDate :", listDate)
+
+          const startDate = new Date(listDate[0].substring(0,10)) //Thu May 18 2023 02:00:00 GMT+0200 (heure d’été d’Europe centrale)
+          // const endDate = new Date(listDate[listDate.length-1].substring(0,10))//Thu May 18 2023 02:00:00 GMT+0200 (heure d’été d’Europe centrale)
+          const endDateTmp = new Date(today_date.substring(0,10)).getTime() - 60*60*24*1000 
+          const endDate = new Date(endDateTmp) // today_date -1 day
+          const currentDate = new Date(startDate.getTime()) //Thu May 18 2023 02:00:00 GMT+0200 (heure d’été d’Europe centrale)
+          let allDates = []; //liste complète de dates jour YYYY-MM-DD
+          while (currentDate <= endDate ) {
+            allDates.push(new Date(currentDate).toISOString().substring(0,10));
+            currentDate.setDate(currentDate.getDate() + 1);
+          }
+
+
+          for (let i in  allDates ) {
+            let  tickets = ticketDB_filtered.filter((ticket) => ticket.date_of_purchase.substring(0,10) === allDates[i] )
+            let newTicketZDay = {}
+            let periodEnd = ''
+            // console.log('allDates.length', allDates.length)
+            // console.log(i + ' ' + allDates[i] )
+            if ( tickets.length > 0 ) {
+              if (i !== allDates.length-1 ) {
+                // console.log('date analyzed ',allDates[Number(i)])
+                periodEnd = new Date(allDates[Number(i)+1] + " 6:59:59").toISOString()
+              } else {
+                console.log('date analyzed ',allDates[Number(i)])
+                let dateEnd = new Date(allDates[i] + " 6:59:59")
+                dateEnd.setDate(dateEnd.getDate() + 1)
+                periodEnd = dateEnd.toISOString()
+              }
+                newTicketZDay = {
+                id : newTicketZData.length === 0 ? 0 : newTicketZData[newTicketZData.length - 1].id + 1,
+                period_type : "day",
+                periodtStart : new Date(allDates[i] + " 7:00:00").toISOString(),
+                periodEnd : periodEnd,
+                total_ticket : tickets.length,
+                total_TTC : tickets.map((ticket) => Number(ticket.TTC) ).reduce((tot, amount) => tot + amount).toFixed(2),
+                total_HT : tickets.map((ticket) => Number(ticket.HT) ).reduce((tot, amount) => tot + amount).toFixed(2),
+                total_TVA : tickets.map((ticket) => Number(ticket.TVA) ).reduce((tot, amount) => tot + amount).toFixed(2),
+                total_CB : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "CB").length === 0 ? 0 : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "CB").map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2),
+                total_Espece : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Espèces").length === 0 ? 0 : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Espèces").map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2),
+                total_Cheque : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Chèque").length === 0 ? 0 : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Chèque").map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2),
+                total_cumul : newTicketZData.length === 0 ? 0 : ticketsDB.filter((ticket) => ticket.date_of_purchase >  prev_registered_date  && ticket.date_of_purchase.substring(0,10) <= allDates[i].substring(0,10) ).map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2)
+              } 
+              // console.log("XH")
+              // console.log("--------------------")
+              // console.log("Ticket Z")
+              // console.log("Rapport journalier")
+              // console.log("Rapport numéro : X")
+              // console.log("Pérode imprimée : ", allDates[i] )
+              // console.log("--------------------")
+              // console.log("Nombre de tickets : ", tickets.length)
+              // console.log("Total TTC : ", tickets.map((ticket) => Number(ticket.TTC) ).reduce((tot, amount) => tot + amount).toFixed(2), "€" )
+              // console.log("Total HT : ", tickets.map((ticket) => Number(ticket.HT) ).reduce((tot, amount) => tot + amount).toFixed(2), "€" )
+              // console.log("Total TVA 5.5% : ", tickets.map((ticket) => Number(ticket.TVA) ).reduce((tot, amount) => tot + amount).toFixed(2), "€" )
+              // console.log("")
+              // console.log("Espèces : ", tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Espèces").length === 0 ? 0 : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Espèces").map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2), "€"  )
+              // console.log("Cartes bancaires : ", tickets.filter((ticket) => ticket.PAYMENT_METHOD === "CB").length === 0 ? 0 : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "CB").map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2), "€"  )
+              // console.log("Chèques : " , tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Chèque").length === 0 ? 0 : tickets.filter((ticket) => ticket.PAYMENT_METHOD === "Chèque").map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2), "€"  )
+              // console.log("")
+            } 
+          //   else {
+          //     newTicketZDay = {
+          //       id : newTicketZData.length === 0 ? 0 : newTicketZData[newTicketZData.length - 1].id + 1,
+          //       period_type : "day",
+          //       periodtStart : "",
+          //       periodEnd : "",
+          //       total_ticket : tickets.length,
+          //       total_TTC : 0,
+          //       total_HT : 0,
+          //       total_TVA : 0,
+          //       total_CB : 0,
+          //       total_Espece : 0,
+          //       total_Cheque : 0,
+          //       total_cumul : newTicketZData.length === 0 ? 0 : ticketsDB.filter((ticket) => ticket.date_of_purchase >  prev_registered_date  && ticket.date_of_purchase.substring(0,10) <= allDates[i].substring(0,10) ).map((ticket) => Number(ticket.TTC)  ).reduce((tot, amount) => tot + amount).toFixed(2)
+          //   }
+          // }//end else
+          if (Object.keys(newTicketZDay).length !=0) {
+            newTicketZData.push(newTicketZDay)
+          }
+          }//end loop for
+        } else {
+          console.log("Too soon !")
+        }
+      }
+    // }
+
+    // console.log('newTicketZData', newTicketZData)
+ // CA TROUNE DEUX FOIS COMME D'HAB ... ou pas 
+  }
+  // console.log("newTicketZData",newTicketZData)
+  fs.writeFileSync(ticketZFilename, JSON.stringify(newTicketZData, null, 2)) 
+
+  // res.end()
+  res.status(200).send({status : "OK"})
+    // newTicketZData.push(
+    //     {
+    //         id : 0,
+    //         period_type : "day",
+    //         period : "01/01/2022 10:10:10 au 02/01/2022 10:10:10",
+    //         total_ticket : 0,
+    //         total_TTC: "",
+    //         total_HT: "",
+    //         total_TVA: "",
+    //         total_CB: "",
+    //         total_Espece: "",
+    //         total_Cheque: "",
+    //         total_cumul : ""
+    //     })
+    
+    // }
+});
+
+
+
+app.post('/reportToPrint',  (req, res) => {
+  // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
+  // console.log(req.body.data)
+  console.log("########################################################################################################################")
+
+
+  console.log("Connecting to printer ...");
+  let printer = new ThermalPrinter({
+  type: PrinterTypes.EPSON,
+  interface: 'tcp://192.168.0.29'
+  });
+
+  let isConnected =  printer.isPrinterConnected();
+  // console.log('Printer connection status', isConnected) // return Promise { <pending> }
+  
+  isConnected
+  .then(connected => { 
+    console.log("connection status :", connected )
+    if (connected) {
+      console.log("Printer connected !");
+      printer.alignCenter();
+      printer.setTextQuadArea();
+      printer.println("X.H" );
+      printer.setTextNormal();
+      printer.println("19 RUE CIVIALE" );
+      printer.println("75010 PARIS" );
+      printer.println("TEL : 07.86.31.63.88" );
+      printer.println("SIRET : 887752137 PARIS" );
+      // printer.newLine(); 
+      printer.drawLine();
+      printer.println("Ticket Z");
+      printer.println("Rapport journalier");
+      printer.println("Rapport N." + req.body.data.id);
+      printer.println("Pérode imprimée :");
+      printer.println(new Date(req.body.data.periodtStart).toLocaleString() +" au "+ new Date(req.body.data.periodEnd).toLocaleString());
+      printer.drawLine();
+      printer.newLine(); 
+      printer.println("Nombre de tickets : "+req.body.data.total_ticket);
+      printer.println("Total TTC : "+req.body.data.total_TTC+"€");
+      printer.println("Total HT : "+req.body.data.total_HT+"€");
+      printer.println("Total TVA 5.5% : "+req.body.data.total_TVA+"€");
+      printer.println("Total cumul TTC : "+req.body.data.total_cumul+"€");
+      printer.println("Espèces : "+req.body.data.total_Espece+"€");
+      printer.println("Cartes bancaires : "+req.body.data.total_CB+"€");
+      printer.println("Chèques : "+req.body.data.total_Cheque+"€");
+
+      printer.cut();
+  
+      try {
+      let execute = printer.execute()
+        console.log("Print done!");
+      } catch (error) {
+        console.log("Print failed:", error);
+        // console.warn("Impossible de se connecter à l'imprimante !")
+        // res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
+      }
+      res.json({"printerConnected" : true})
+
+    } else {
+      console.log("printer not connected ! ", new Date().toLocaleString())
+      // res.render('error.ejs', {})
+      // res.redirect('http://localhost:3000')
+      // res.send("Impossible de se connecter à l'imprimante ! 无法连接到打印机 !")
+      // res.status(404).send({"status" : "not OK"})
+
+      res.json({"printerConnected" : false})
+      // res.sendFile(path.join(__dirname, "/client/public", "test.html"));
+      // res.status(404).render('trfygvbhj',{})
+      // console.log("blabla")
+    }
+  })    
+});
+
+
 
 
 

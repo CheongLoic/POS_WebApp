@@ -72,6 +72,14 @@
       {
         "date": "2023-04-11",
         "product_price": "2.50"
+      },
+      {
+        "date": "2023-09-16",
+        "product_price": "2.60"
+      },
+      {
+        "date": "2023-09-16",
+        "product_price": "2.50"
       }
     ],
     "current_price": "2.50",
@@ -4767,12 +4775,16 @@
       {
         "date": "2023-06-10",
         "product_price": "52"
+      },
+      {
+        "date": "2023-10-10",
+        "product_price": "55"
       }
     ],
-    "current_price": "52",
+    "current_price": "55",
     "typeOfSale": "unit",
     "default_sold_weight_kg": "",
-    "image": "./img/true__52.00_Noix_de_Saint-Jacques_de_l_Atlantique_Nord_(2)_8720634620505.jpg",
+    "image": "./img/true__55.00_Noix_de_Saint-Jacques_de_l_Atlantique_Nord_(2)_8720634620505.jpg",
     "display_on_ticket": true
   },
   {

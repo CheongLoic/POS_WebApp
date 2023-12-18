@@ -5,6 +5,7 @@ import {Link } from "react-router-dom";
 import {Button, Form, FormGroup, Input, Label} from 'reactstrap';
 import { getDataFromLS, setDataInLS } from '../../backend/localStorageManager';
 import discountDB from "../../database/discounts.json"
+import productDB_01 from "../../database/products.json"
 // import Modal from "../Modal/Modal2"
 import ModalPayment from "../Modal/ModalPayment"
 import ModalProductWithoutBarcode from "../Modal/ModalProductWithoutBarcode"
@@ -24,7 +25,7 @@ const AddNewTicket = () => {
   // let TOTAL_DISCOUNT_IN_THE_BASKET = 0;
   // let TTC = 0;
   const barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID"); // [{barCode: '4903001014761', productID: 2}, ...]
-  const productDB_from_LS = getDataFromLS("productDB");
+  // const productDB_from_LS = getDataFromLS("productDB");
   // const ticketDB = getDataFromLS("ticketDB");
   const [TTC, setTTC] = useState(0); // To display on the screen 
   const [modalOpenPayment, setModalPaymentOpen] = useState(false);
@@ -192,8 +193,8 @@ const AddNewTicket = () => {
               console.log("barcode_productID : ", barcode_productID)
               if ( barcode_productID.length !== 0  ) {//Is the barcode stored in the database ? If Yes, do the following code below
               
-                const productDB = productDB_from_LS.filter((item) => item.product_id === barcode_productID[0].productID)
-                console.log("productDB_from_LS : ", productDB_from_LS) 
+                const productDB = productDB_01.filter((item) => item.product_id === barcode_productID[0].productID)
+                console.log("productDB_01 : ", productDB_01) 
                 console.log("productDB : ", productDB)
                 const product_discountDB = discountDB.filter((discount) => discount.product_id === barcode_productID[0].productID)
                 let tot_discount = 0 //total discount for the product

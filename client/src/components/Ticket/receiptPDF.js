@@ -79,7 +79,7 @@ const receiptHeight = (ticket) => {
   let initialHeight = 241.64-7*1
   let heightToAdd = 0
   for( let i in ticket.product_list){
-    if (ticket.product_list[i].type_of_sale !== "weight"  && ticket.product_list[i].total_discount =="" ) {
+    if (ticket.product_list[i].type_of_sale !== "weight"  && ticket.product_list[i].total_discount === "" ) {
       heightToAdd += 7
     } else {
       heightToAdd += 14

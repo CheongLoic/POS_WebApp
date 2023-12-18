@@ -5,7 +5,7 @@ import './Menu.css';
 import loading from "../img/loading-gif.gif"
 import { setDataInLS } from '../backend/localStorageManager';
 import productDB from '../database/products.json'
-import ticketDB from "../database/tickets.json"
+// import ticketDB from "../database/tickets.json"
 // import customerDB from "../database/customers.json"
 // import invoiceDB from "../database/invoices.json"
 import { sortDataByFullName } from '../backend/localStorageManager';
@@ -18,6 +18,7 @@ class Menu extends Component {
         this.state = ({
             dataLoaded : false
         });
+        this.updateTicketZData = this.updateTicketZData.bind(this)
     }
 
     componentDidMount() {
@@ -61,6 +62,15 @@ class Menu extends Component {
     // importAll(r) {
     //     return r.keys().map(r);
     //   }
+
+    updateTicketZData = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({today_date : new Date().toISOString()})
+          };
+        fetch('http://localhost:5000/reports', requestOptions)
+    }
       
     render() {
         // const images = importAll(require.context('../img', false, /\.(png|jpg|jpe?g|svg)$/));
@@ -75,7 +85,7 @@ class Menu extends Component {
                         <Link to="/invoices"><Button type="button" color="primary"  className="menuBtn" block>Factures 发票</Button></Link>
                         <Link to="/customers"><Button type="button" color="primary"  className="menuBtn" block>Clients 客户</Button></Link>
                         <Link to="/discounts"><Button type="button" color="primary"  className="menuBtn" block>Promotions</Button></Link>
-                        <Link to="/performances"><Button type="button" color="primary"  className="menuBtn" block>Performances 数据</Button></Link>
+                        <Link to="/reports"><Button type="button" color="primary"  className="menuBtn" onClick={this.updateTicketZData} block>Rapports 报告</Button></Link>
                     
                     </div>
                 : <img src={loading} alt="loading"></img>
