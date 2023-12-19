@@ -88,6 +88,11 @@ const receiptHeight = (ticket) => {
   return(initialHeight+heightToAdd)
 }
 
+const dateFormat = (ticket) => {
+  const dateHour = new Date(ticket.date_of_purchase).toLocaleString().split(' ')[1]
+  const date = ticket.date_of_purchase.substring(0,10).split("-")
+  return date[2] + "/"+ date[1] + "/"+ date[0] + " "+ dateHour
+}
 
 
 const ReceiptPDF = ({ticket}) => (
@@ -107,7 +112,7 @@ const ReceiptPDF = ({ticket}) => (
       </View> 
       
       <Text style={{fontSize: 7}}> </Text>
-      {leftRight("Date : "+ new Date(ticket.date_of_purchase).toLocaleString(), "N°ticket : "+ticket.ticket_id, 7)}
+      {leftRight("Date : "+ dateFormat(ticket), "N°ticket : "+ticket.ticket_id, 7)}
       {leftRight("Caisse n°2", "Vendeur : V1", 7)}
       
       <Text style={{fontSize : 7, fontFamily : 'Courier'}}>------------------------------------------------</Text> 
