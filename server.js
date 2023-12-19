@@ -547,7 +547,7 @@ app.post('/reports', async (req, res) => {
     console.log('newTicketZData.length :', newTicketZData.length)
 
   // const rapportJour =() => {
-      let prev_registered_date = '2023-02-21T20:30:02.413Z'
+      let prev_registered_date = '2023-12-11T14:40:02.413Z'
       // const prev_registered_date_local = new Date(prev_registered_date).toLocaleString()
       let newTicketZDay = newTicketZData.filter(ticketZ => ticketZ.period_type === "day")
       if (newTicketZDay.length > 0 && newTicketZDay[newTicketZDay.length-1].periodtStart > prev_registered_date ) {
@@ -708,18 +708,18 @@ app.post('/reportToPrint',  (req, res) => {
       printer.println("Ticket Z");
       printer.println("Rapport journalier");
       printer.println("Rapport N." + req.body.data.id);
-      printer.println("Pérode imprimée :");
+      printer.println("Periode imprimee :");
       printer.println(new Date(req.body.data.periodtStart).toLocaleString() +" au "+ new Date(req.body.data.periodEnd).toLocaleString());
       printer.drawLine();
-      printer.newLine(); 
-      printer.println("Nombre de tickets : "+req.body.data.total_ticket);
-      printer.println("Total TTC : "+req.body.data.total_TTC+"€");
-      printer.println("Total HT : "+req.body.data.total_HT+"€");
-      printer.println("Total TVA 5.5% : "+req.body.data.total_TVA+"€");
-      printer.println("Total cumul TTC : "+req.body.data.total_cumul+"€");
-      printer.println("Espèces : "+req.body.data.total_Espece+"€");
-      printer.println("Cartes bancaires : "+req.body.data.total_CB+"€");
-      printer.println("Chèques : "+req.body.data.total_Cheque+"€");
+      // printer.newLine(); 
+      printer.leftRight("Nombre de tickets : ",req.body.data.total_ticket);
+      printer.leftRight("Total TTC : ",req.body.data.total_TTC+"$");
+      printer.leftRight("Total HT : ",req.body.data.total_HT+"$");
+      printer.leftRight("Total TVA 5.5% : ",req.body.data.total_TVA+"$");
+      printer.leftRight("Total cumul TTC : ",req.body.data.total_cumul+"$");
+      printer.leftRight("Espèces : ",req.body.data.total_Espece+"$");
+      printer.leftRight("Cartes bancaires : ",req.body.data.total_CB+"$");
+      printer.leftRight("Chèques : ",req.body.data.total_Cheque+"$");
 
       printer.cut();
   

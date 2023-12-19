@@ -107,7 +107,7 @@ const ReceiptPDF = ({ticket}) => (
       </View> 
       
       <Text style={{fontSize: 7}}> </Text>
-      {leftRight("Date : 21/02/2023 23:30:02", "N°ticket : "+ticket.ticket_id, 7)}
+      {leftRight("Date : "+ new Date(ticket.date_of_purchase).toLocaleString(), "N°ticket : "+ticket.ticket_id, 7)}
       {leftRight("Caisse n°2", "Vendeur : V1", 7)}
       
       <Text style={{fontSize : 7, fontFamily : 'Courier'}}>------------------------------------------------</Text> 

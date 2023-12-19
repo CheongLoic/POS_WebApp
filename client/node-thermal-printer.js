@@ -5,7 +5,7 @@
 // try {
   let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
-    characterSet: CharacterSet.PC863_CANADIAN_FRENCH, 
+    // characterSet: CharacterSet.PC863_CANADIAN_FRENCH, 
     interface: 'tcp://192.168.0.29'
   });
 
