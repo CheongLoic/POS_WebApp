@@ -158,3 +158,31 @@ export function sortDataByFullName(data) {
 
    return newData;
 }
+
+
+/**
+ * @param dateFormat (string) : "2023-02-21T06:00:00.000Z"
+ * @return (string) "21/02/2023 05:00:00"
+ */
+export function dateFormat(date_of_purchase) {
+  const dateHour = new Date(date_of_purchase).toLocaleString().split(' ')[1]
+  const date = date_of_purchase.substring(0,10).split("-")
+  return date[2] + "/"+ date[1] + "/"+ date[0] + " "+ dateHour;
+}
+
+
+export function sortPeriodtStartDesc(data) {
+  // Tri décroissant
+  const newData = data.sort((a, b) => {
+      if (a.periodtStart < b.periodtStart) {
+        return 1;
+      }
+      if (a.periodtStart > b.periodtStart) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+    })
+
+   return newData;
+}

@@ -45,7 +45,7 @@ class Products extends Component {
                     <br/>
                     <Link to="/products/download_product_catalogue" style={{ textDecoration: 'none' }}>  <Button  color="primary" style={{width : "50%",marginBottom : 5, marginTop : 10}}  >Télécharger catalogue des produits</Button></Link>
                     <br/>
-                    <Link to="/" style={{ textDecoration: 'none' }}><Button  color="primary"  style={{width : "50%",marginBottom : 20, marginTop : 10}}   >Retour 返回</Button></Link>
+                    <Link to="/" style={{ textDecoration: 'none' }}><Button  color="primary"  style={{width : "50%",marginBottom : 20, marginTop : 10}}   >Retour 后退</Button></Link>
                     <br/>
                     {/* <PDFDownloadLink document={<ProductsCataloguePDF productsDB={this.state.All_products}  />} fileName="catalogue_produits1.pdf">
                     {({loading}) => (loading ? 

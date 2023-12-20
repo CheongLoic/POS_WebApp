@@ -207,7 +207,7 @@ const AddNewCustomer = () => {
 
 
                 <Button  color="success" style={{ alignItems: 'center', margin : "10px"}} onClick={() => submit()}>+ Ajouter un client 加客户</Button>
-                <Link to="/customers"><Button  color="primary">Retour 返回</Button></Link>
+                <Link to="/customers"><Button  color="primary">Retour 后退</Button></Link>
             </Form>
             
         </div>

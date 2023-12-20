@@ -22,7 +22,7 @@ class Customers extends Component {
               <h1>Clients 客户</h1>
               <div>
                 <Link to="/customers/addNewCustomer" style={{ textDecoration: 'none' }}>  <Button  color="danger" style={{marginBottom : 10, marginTop : 30}}  block>+ Ajouter un client 加客户</Button></Link>
-                <Link to="/" style={{ textDecoration: 'none' }}><Button  color="primary"  style={{marginBottom : 10, marginTop : 20}} block >Retour 返回</Button></Link>
+                <Link to="/" style={{ textDecoration: 'none' }}><Button  color="primary"  style={{marginBottom : 10, marginTop : 20}} block >Retour 后退</Button></Link>
                 
                 </div>
               <div id="boxesContainer">

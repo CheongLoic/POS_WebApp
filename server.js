@@ -20,6 +20,13 @@ app.use(bodyParser.json());
 const ThermalPrinter = require("node-thermal-printer").printer;
 const PrinterTypes = require("node-thermal-printer").types;
 
+const dateFormat = (date_of_purchase) => {
+  const dateHour = new Date(date_of_purchase).toLocaleString().split(' ')[1]
+  const date = date_of_purchase.substring(0,10).split("-")
+  return date[2] + "/"+ date[1] + "/"+ date[0] + " "+ dateHour
+}
+
+
 // Video for uploading an image : https://www.youtube.com/watch?v=1KZ-tJRLU5I&list=LL&index=3&t=603s
 
 
@@ -188,7 +195,7 @@ app.post('/tickets',  (req, res) => {
         printer.println("SIRET : 887752137 PARIS" );
         printer.newLine(); 
         // console.log("test time : ", new Date(req.body.data.date_of_purchase).toLocaleString(), ", typeof : ", typeof(new Date(req.body.data.date_of_purchase).toLocaleString()))
-        printer.leftRight('Date : ' + new Date(req.body.data.date_of_purchase).toLocaleString() , 'N. ticket : '+ req.body.data.ticket_id.toString()+" ");
+        printer.leftRight('Date : ' + dateFormat(req.body.data.date_of_purchase) , 'N. ticket : '+ req.body.data.ticket_id.toString()+" ");
         printer.leftRight('Caisse N.2', 'Vendeur : V1 ');
         printer.drawLine();
 
@@ -583,10 +590,10 @@ app.post('/reports', async (req, res) => {
             if ( tickets.length > 0 ) {
               if (i !== allDates.length-1 ) {
                 // console.log('date analyzed ',allDates[Number(i)])
-                periodEnd = new Date(allDates[Number(i)+1] + " 6:59:59").toISOString()
+                periodEnd = new Date(allDates[Number(i)+1] + " 06:59:59").toISOString()
               } else {
                 console.log('date analyzed ',allDates[Number(i)])
-                let dateEnd = new Date(allDates[i] + " 6:59:59")
+                let dateEnd = new Date(allDates[i] + " 06:59:59")
                 dateEnd.setDate(dateEnd.getDate() + 1)
                 periodEnd = dateEnd.toISOString()
               }
@@ -709,7 +716,7 @@ app.post('/reportToPrint',  (req, res) => {
       printer.println("Rapport journalier");
       printer.println("Rapport N." + req.body.data.id);
       printer.println("Periode imprimee :");
-      printer.println(new Date(req.body.data.periodtStart).toLocaleString() +" au "+ new Date(req.body.data.periodEnd).toLocaleString());
+      printer.println(dateFormat(req.body.data.periodtStart) +" au "+ dateFormat(req.body.data.periodEnd));
       printer.drawLine();
       // printer.newLine(); 
       printer.leftRight("Nombre de tickets : ",req.body.data.total_ticket);

@@ -13,6 +13,7 @@ import ticketDB from "../../database/tickets.json"
 // import invoicesDB from "../../database/invoices.json"
 // import InvoicePDF from './invoicePDF';
 // import { PDFDownloadLink } from '@react-pdf/renderer';
+import { dateFormat } from '../../backend/localStorageManager';
 
 
 class InvoiceList  extends Component {
@@ -49,7 +50,7 @@ class InvoiceList  extends Component {
     render() {
         return (
                 <div className='invoice_icon'> 
-                    <div>Facture N°{this.state.invoiceDB.invoice_id} du  {new Date(this.state.invoiceDB.date).toLocaleString()}</div>
+                    <div>Facture N°{this.state.invoiceDB.invoice_id} du  {dateFormat(this.state.invoiceDB.date)}</div>
                     <div>de {this.state.customer[0].company } | Montant : {this.state.ticket[0].TTC}€</div>
                     
                     {/* <PDFDownloadLink document={<InvoicePDF invoiceDB={this.state.invoiceDB} customer={this.state.customer[0]} ticket={this.state.ticket[0]} />} fileName={"XH_Facture_n°".concat(this.state.invoiceDB.invoice_id,".pdf")}>

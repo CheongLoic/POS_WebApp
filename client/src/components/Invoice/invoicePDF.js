@@ -1,6 +1,7 @@
 import React from 'react';
 import { Page, Text, View, Font , Document, StyleSheet } from '@react-pdf/renderer';
-import msyh from "./../../msyh.ttf" 
+import msyh from "./../../msyh.ttf" ;
+import { dateFormat } from '../../backend/localStorageManager'; 
 
 //https://react-pdf.org/styling
 
@@ -270,8 +271,8 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
         </View>
       </View>
       
-      <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date d'achat : {new Date(ticket.date_of_purchase).toLocaleString().substring(0,10)}</Text>
-      <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date de facturation : {new Date(invoiceDB.date).toLocaleString().substring(0,10)}</Text>
+      <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date d'achat : {dateFormat(ticket.date_of_purchase).substring(0,10)}</Text>
+      <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date de facturation : {dateFormat(invoiceDB.date).substring(0,10)}</Text>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 20}}>Mode de paiement : {ticket.PAYMENT_METHOD}</Text>
       
       <View style={styles.table}> 

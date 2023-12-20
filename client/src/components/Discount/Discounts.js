@@ -225,7 +225,7 @@ class Discounts extends Component  {
                     <Button  color="success" style={{marginBottom : 5, marginTop : 30, width: "35%", marginRight : 30}} onClick={this.showForm}  >+ Ajouter un remise 打折</Button>
                 
                 }
-                <Link to="/"><Button color="primary" style={{marginBottom : 5, marginTop : 30, width: "35%"}}  >Retour 返回</Button></Link>
+                <Link to="/"><Button color="primary" style={{marginBottom : 5, marginTop : 30, width: "35%"}}  >Retour 后退</Button></Link>
                 
                 <div style={{marginTop: 40}} >
                 {

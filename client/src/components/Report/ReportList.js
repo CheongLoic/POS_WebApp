@@ -3,8 +3,7 @@ import {Button} from 'reactstrap';
 // import {Link} from "react-router-dom";
 import print_icon from "../../img/print_icon4.png"
 import eye_logo from "../../img/eye_logo.png"
-import { setDataInLS } from '../../backend/localStorageManager';
-
+import { dateFormat } from '../../backend/localStorageManager'; 
 
 function ReportList({ticket_data,setModalWarning, setModalLoading}) {
 
@@ -41,7 +40,7 @@ function ReportList({ticket_data,setModalWarning, setModalLoading}) {
     // render() {
         return (
                 <div className='ticket_icon'>
-                    <div>Ticket n°{ticket_data.id} du  {new Date(ticket_data.periodtStart).toLocaleString()} {ticket_data.total_TTC}€</div>
+                    <div>Ticket n°{ticket_data.id} du  {dateFormat(ticket_data.periodtStart)} {ticket_data.total_TTC}€</div>
                     <Button className='print_icon' style={{marginRight : 50}} onClick={() => toPrint()} ><img src={print_icon} height="30px" width="30px" border-radius ="11%" alt="print_icon"></img></Button>
                     <a href={"/reports/PDF/XH_Rapport_de_caisse_n°".concat(ticket_data.id,".pdf")}  target="_blank" rel="noopener noreferrer">
                         <Button className='print_icon' style={{backgroundColor : "white"}} ><img src={eye_logo} height="30px" width="30px" border-radius ="11%" alt="eye_logo"></img></Button>

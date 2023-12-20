@@ -1,5 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { dateFormat } from '../../backend/localStorageManager'; 
 
 //https://react-pdf.org/styling
 
@@ -50,8 +51,8 @@ const ReportPDF = ({report}) => (
           <Text style={{fontSize: 10}}>Ticket Z</Text>
           <Text style={{fontSize: 9}}>Rapport journalier</Text>
           <Text style={{fontSize: 7}}>Rapport n°{report.id}</Text>
-          <Text style={{fontSize: 7}}>Pérode imprimée : </Text>
-          <Text style={{fontSize: 7}}>{new Date(report.periodtStart).toLocaleString()} au {new Date(report.periodEnd).toLocaleString()}</Text>
+          <Text style={{fontSize: 7}}>Période imprimée : </Text>
+          <Text style={{fontSize: 7}}>{dateFormat(report.periodtStart)} au {dateFormat(report.periodEnd)}</Text>
           <Text style={{fontSize: 7, fontFamily : 'Courier'}}>--------------------</Text>
       </View> 
 {/* 
