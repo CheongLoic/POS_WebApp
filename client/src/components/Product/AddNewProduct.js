@@ -3,6 +3,7 @@ import {Link, Navigate } from "react-router-dom";
 // import {Link, useNavigate } from "react-router-dom";
 import {Button, Form, FormGroup, Input, Label, Col} from 'reactstrap';
 import axios from "axios";
+import productDB from "../../database/products.json"
 import { getDataFromLS, setDataInLS } from '../../backend/localStorageManager';
 // import { sortProductByIDAsc } from '../../backend/localStorageManager';
 
@@ -112,7 +113,7 @@ const AddNewProduct = () => {
       const chinese_caracter_product_name_on_ticket = form_data.product_name_on_ticket.split("").filter(char => /\p{Script=Han}/u.test(char)) //return an array of chineese caracterss
       let chinese_caracter_image = []
       if (image_data.file instanceof File ) chinese_caracter_image = image_data.file.name.split("").filter(char => /\p{Script=Han}/u.test(char))      //return an array of chineese caracterss 
-
+      let barCodeAvailable_productID = getDataFromLS("barCodeAvailable_productID")
 
       if (form_data.product_full_name === "" || form_data.product_price === ""  || form_data.product_name_on_ticket === ""
       // ||   ( form_data.type_of_sale === "Au poids 体重"  && form_data.default_sold_weight_kg === "")
@@ -120,6 +121,7 @@ const AddNewProduct = () => {
       ||   ( form_data.barCode === ""  && form_data.barCode_available === "Oui 有")  
       || chinese_caracter_product_name_on_ticket.length > 0
       || chinese_caracter_image.length > 0
+      || (barCodeAvailable_productID.filter((BC) => BC.barCode === form_data.barCode).length >=1)
       // || image_data.file.name.includes(" ")  || image_data.file.name.includes("_") 
       ) {
           // console.log("before set error true from checkfield",error)
@@ -168,7 +170,7 @@ const AddNewProduct = () => {
 
         if (!ERROR ) {
           const current_date = new Date();
-          let productDB = getDataFromLS("productDB")
+          // let productDB = getDataFromLS("productDB")
           let productDB_sorted = productDB.sort((a, b) => {//tricroissant par product_id
           if (a.product_id < b.product_id) {
               return -1;
@@ -220,8 +222,8 @@ const AddNewProduct = () => {
 
           const dataToSend = {
             product_id : productID+1,
-            product_full_name: form_data.product_full_name, 
-            product_name_on_ticket : form_data.product_name_on_ticket ,
+            product_full_name: form_data.product_full_name[0].toLocaleUpperCase() + form_data.product_full_name.substring(1) , 
+            product_name_on_ticket : form_data.product_name_on_ticket[0].toLocaleUpperCase() +form_data.product_name_on_ticket.substring(1) ,
             barCode_available : form_data.barCode_available === "Oui 有" ? true : false,
             barCode_list : form_data.barCode_available === "Oui 有" ? 
               [{
@@ -241,9 +243,9 @@ const AddNewProduct = () => {
               }],
             price_history : [{
               date : current_date.toISOString().substring(0, 10),
-              product_price: form_data.product_price
+              product_price: Number(form_data.product_price).toFixed(2)
             }],
-            current_price : form_data.product_price,
+            current_price : Number(form_data.product_price).toFixed(2),
             typeOfSale : form_data.type_of_sale === "Par unité 每件" ? "unit": ( form_data.type_of_sale !== "Carton 每箱" ? "weight" : "box" ),
             default_sold_weight_kg : form_data.default_sold_weight_kg,
             image : image_data.file.name === undefined ? "" : newImageName,
@@ -409,6 +411,7 @@ const AddNewProduct = () => {
                       </Col>
                     </FormGroup>
                     <p style={{fontSize: 15, color: "orange"}}>{error && form_data.barCode.length<13 ? "Veuillez entrer un code-barre correcte. 请输入条形码" : ""}</p>
+                    <p style={{fontSize: 15, color: "orange"}}>{error && (getDataFromLS("barCodeAvailable_productID").filter((BC) => BC.barCode === form_data.barCode).length >=1) ? "Ce code-barre existe déjà. 这条形码已存在" : ""}</p>
                   </div>
                 : "" }
 

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {Button, Form, FormGroup, Input, Label, Col} from 'reactstrap';
 import productDB from "../../database/products.json"
 import discountDB from "../../database/discounts.json"
-import { removeDiscountedProducts } from '../../backend/localStorageManager';
+import { removeDiscountedProducts, sortDataByFullName } from '../../backend/localStorageManager';
 import './Discounts.css'
 
 class Discounts extends Component  {
@@ -18,8 +18,8 @@ class Discounts extends Component  {
             total_discount_when_condition_met_once :"",
             ERROR : false,
             errors: {
-                quantity_for_discount2 : "",
-                total_discount_when_condition_met_once2 : "",
+                quantity_for_discount_error : "",
+                total_discount_when_condition_met_once_error : "",
         },
 
             // ticketSelected : "N°" +ticketDB[0].ticket_id + " "+ new Date(ticketDB[0].date_of_purchase).toLocaleString() + " "+ticketDB[0].TTC + "€",
@@ -45,27 +45,27 @@ class Discounts extends Component  {
         //Otherwise, it will display a msg error
         let NbErrors = 0
         this.setState({errors: {
-            quantity_for_discount2 : "",
-            total_discount_when_condition_met_once2: "",
+            quantity_for_discount_error : "",
+            total_discount_when_condition_met_once_error: "",
         }}); //reinitiate the array errors
         this.setState({ ERROR : false})
 
         // check if there are empty fiels
         if (this.state.quantity_for_discount === "") {
             // this.MsgErr("email", "You have not to fill in this field !");
-            this.setState((lastState) => ({errors: {...lastState.errors, ["quantity_for_discount2"] : "Champ vide !" }}));
+            this.setState((lastState) => ({errors: {...lastState.errors, ["quantity_for_discount_error"] : "Champ vide !" }}));
             this.setState({ ERROR : true});
             // console.log("ERROR :", this.state.ERROR)
             NbErrors++
         }
         if (this.state.total_discount_when_condition_met_once === "") {
             // this.MsgErr("password", "You have not to fill in this field !");
-            this.setState((lastState) => ({errors: {...lastState.errors, ["total_discount_when_condition_met_once2"] : "Champ vide !" }}));
+            this.setState((lastState) => ({errors: {...lastState.errors, ["total_discount_when_condition_met_once_error"] : "Champ vide !" }}));
             this.setState({ ERROR : true});
             NbErrors++
         }
         if (Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€","")) * Number(this.state.quantity_for_discount ) -  Number(this.state.total_discount_when_condition_met_once) <=0) {
-            this.setState((lastState) => ({errors: {...lastState.errors, ["total_discount_when_condition_met_once2"] : "Réduction trop avantageuse !" }}));
+            this.setState((lastState) => ({errors: {...lastState.errors, ["total_discount_when_condition_met_once_error"] : "Réduction trop avantageuse ! 不可以打折!" }}));
             this.setState({ ERROR : true});
             NbErrors++
         }
@@ -148,7 +148,7 @@ class Discounts extends Component  {
     render() {
         // console.log("this.state.productToGiveDiscountSelected: ", this.state.productToGiveDiscountSelected)
         // console.log("this.state.errors: ", this.state.errors)
-        // console.log("this.state.errors.quantity_for_discount2: ", this.state.errors.quantity_for_discount2)
+        // console.log("this.state.errors.quantity_for_discount_error: ", this.state.errors.quantity_for_discount_error)
         return (
             <div style={{ width: "80%"}}> 
                 <h1>Promotions</h1>
@@ -177,7 +177,7 @@ class Discounts extends Component  {
                                 </Input>
                                 </Col>
                             </FormGroup>
-                            <p style={{fontSize: 15, color: "orange"}}>{this.state.ERROR && this.state.errors.quantity_for_discount2 !=="" ? "Ce champ est vide. 这个字段是空的" : ""}</p>
+                            <p style={{fontSize: 15, color: "orange"}}>{this.state.ERROR && this.state.errors.quantity_for_discount_error !=="" ? "Ce champ est vide. 这个字段是空的" : ""}</p>
 
                             <FormGroup row>
                                 <Label sm={3} style={{fontSize: "60%"}}>Montant de la remise 打折多少?</Label>
@@ -187,8 +187,8 @@ class Discounts extends Component  {
                                 </Input>
                                 </Col>
                             </FormGroup>
-                            <p style={{fontSize: 15, color: "orange"}}>{this.state.ERROR &&  this.state.errors.total_discount_when_condition_met_once2 === "Champ vide !" ? "Ce champ est vide. 这个字段是空的" : ""}</p>
-                            <p style={{fontSize: 15, color: "orange"}}>{this.state.ERROR &&  this.state.errors.total_discount_when_condition_met_once2 === "Réduction trop avantageuse !" ? "Réduction trop avantageuse !" : ""}</p>
+                            <p style={{fontSize: 15, color: "orange"}}>{this.state.ERROR &&  this.state.errors.total_discount_when_condition_met_once_error === "Champ vide !" ? "Ce champ est vide. 这个字段是空的" : ""}</p>
+                            <p style={{fontSize: 15, color: "orange"}}>{this.state.ERROR &&  this.state.errors.total_discount_when_condition_met_once_error === "Réduction trop avantageuse !" ? "Réduction trop avantageuse !" : ""}</p>
 
                             <Button  color="success" style={{ marginRight : 5, width: "35%"}} onClick={this.addDiscount} >+ Ajouter un remise 打折</Button>
                             <Button  color="danger" style={{width: "35%"}} onClick={this.cancel} >Annuler 取消</Button>
@@ -200,15 +200,16 @@ class Discounts extends Component  {
                             
                             <div>
                                 {
+                                    // REDUCTION TROP AVANTAGEUSE ?
                                     Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€","")) - Number(this.state.total_discount_when_condition_met_once) <=0 ?
                                 <p style={{color : "red"}}>{this.state.quantity_for_discount} x {Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€",""))} € = 
-                                    <span style={{textDecorationLine :"line-through"}}> ({Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€",""))} €)</span>
-                                    <span> {Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€","")) - Number(this.state.total_discount_when_condition_met_once)}€ </span>
+                                    <span style={{textDecorationLine :"line-through"}}> ({Number(Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€",""))).toFixed(2)} €)</span>
+                                    <span> {Number(Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€","")) - Number(this.state.total_discount_when_condition_met_once)).toFixed(2)}€ </span>
                                 </p> 
                                 :
                                 <p>{this.state.quantity_for_discount} x {Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€",""))} € = 
-                                    <span style={{textDecorationLine :"line-through"}}> ({Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€",""))} €)</span>
-                                    <span> {Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€","")) - Number(this.state.total_discount_when_condition_met_once)}€ </span>
+                                    <span style={{textDecorationLine :"line-through"}}> ({Number(Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€",""))).toFixed(2)} €)</span>
+                                    <span> {Number(Number(this.state.quantity_for_discount)*Number(this.state.productToGiveDiscountSelected.split(" ")[this.state.productToGiveDiscountSelected.split(" ").length -1].replace("€","")) - Number(this.state.total_discount_when_condition_met_once)).toFixed(2)}€ </span>
                                 </p> 
                                 }
                             </div>
@@ -229,7 +230,7 @@ class Discounts extends Component  {
                 
                 <div style={{marginTop: 40}} >
                 {
-                    discountDB.map((discount, index) => ( 
+                    sortDataByFullName(discountDB).map((discount, index) => ( 
                         <div className='product_in_discount' key={index}>
                             
                             <div className='discountContainer'>
@@ -247,8 +248,8 @@ class Discounts extends Component  {
                              </div>
                              <div className='thirdColumn'>
                              <span style={{color : "black"}}>{discount.quantity_for_discount} x {productDB.filter((product)=> product.product_id === discount.product_id )[0].current_price} € = <span style={{textDecorationLine :"line-through"}}>
-                                    ({discount.quantity_for_discount*productDB.filter((product)=> product.product_id === discount.product_id )[0].current_price} €)</span>
-                                    <span> {Number(discount.quantity_for_discount)*Number(productDB.filter((product)=> product.product_id === discount.product_id )[0].current_price) - Number(discount.total_discount_when_condition_met_once)}€ </span>
+                                    ({Number(discount.quantity_for_discount*productDB.filter((product)=> product.product_id === discount.product_id )[0].current_price).toFixed(2)} €)</span>
+                                    <span> {Number(Number(discount.quantity_for_discount)*Number(productDB.filter((product)=> product.product_id === discount.product_id )[0].current_price) - Number(discount.total_discount_when_condition_met_once) ).toFixed(2)}€ </span>
                                 </span> 
                              </div>
                                 

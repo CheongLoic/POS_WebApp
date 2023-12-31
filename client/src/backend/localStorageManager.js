@@ -137,7 +137,8 @@ export function sortDataByFullName(data) {
     filtered_data = filtered_data.filter((product) => product.product_id !== unwanted_data[i].product_id)
   }
 
-  return filtered_data;
+
+  return sortDataByFullName(filtered_data);
 
  }
 

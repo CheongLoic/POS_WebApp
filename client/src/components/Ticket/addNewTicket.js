@@ -15,6 +15,7 @@ import ModalCustomer from '../Modal/ModalCustomer'
 import ModalBarcodeNotFound from '../Modal/ModalBarcodeNotFound'
 import ticketDB from "../../database/tickets.json"
 import { sortDataTicketID_ASC } from '../../backend/localStorageManager';
+import no_img from "../../img/no_image.jpg"
 
 // Video for uploading an image : https://www.youtube.com/watch?v=1KZ-tJRLU5I&list=LL&index=3&t=603s
 const AddNewTicket = () => {
@@ -341,11 +342,11 @@ const AddNewTicket = () => {
         TVA = Math.round((TTC_LS - HT) *100)/100 // TVA 5.5%
       }
 
-      let sortedTickedDB_ID_ASC = sortDataTicketID_ASC(ticketDB)
+      let sortedTickedDB_ID_ASC = sortDataTicketID_ASC(ticketDB) 
       
       const newTicketDB = {
         // ticket_id : ticketDB[ Object.keys(ticketDB).sort().pop() ].ticket_id +1 ,
-        ticket_id : sortedTickedDB_ID_ASC[ sortedTickedDB_ID_ASC.length -1 ].ticket_id + 1 ,
+        ticket_id : ticketDB.length === 0 ? 0 : sortedTickedDB_ID_ASC[ sortedTickedDB_ID_ASC.length -1 ].ticket_id + 1 ,
         invoice : invoiceBool, //boolean, ticket de caisse avec facture ?
         date_of_purchase : new Date().toISOString(),
         product_list : product_list_to_display_on_screen,//vide pour le moment
@@ -596,8 +597,8 @@ const reinitializeData = () => {
                           : ""
                       }
                      
-                      <a href={product.image.includes('http') ? product.image : './.' + product.image} target="_blank" rel="noopener noreferrer">
-                      <img src={ product.image.includes('http') ? product.image : './.' + product.image} style={{marginRight:5, marginLeft:10}} height="55px" width="55px" border-radius ="20%" align="left" alt={product.product_full_name}  />
+                      <a href={product.image === "" ? no_img : (product.image.includes('http') ? product.image : './.' + product.image) } target="_blank" rel="noopener noreferrer">
+                      <img src={ product.image === "" ? no_img : (product.image.includes('http') ? product.image : './.' + product.image)} style={{marginRight:5, marginLeft:10}} height="55px" width="55px" border-radius ="20%" align="left" alt={product.product_full_name}  />
                       </a>
                       <Form >
                         <FormGroup row>

@@ -416,9 +416,10 @@ app.post('/tickets/addNewTicket',  (req, res) => {
     const invoiceFilename = "client/src/database/invoices.json"
     const loadJSON_invoices = JSON.parse(fs.existsSync(invoiceFilename)) ? fs.readFileSync(invoiceFilename).toString()  : '""' 
     const invoices_data = JSON.parse(loadJSON_invoices); //string to JSON object 
+    // console.log(req.body)
     if (invoices_data.filter((invoice) => invoice.ticket_id === req.body.ticketData.ticket_id ).length ===0 ) {
       let conca2 = invoices_data.concat([{
-        invoice_id: invoices_data[invoices_data.length -1 ].invoice_id +1,
+        invoice_id: invoices_data.length === 0 ? 0 : invoices_data[invoices_data.length -1 ].invoice_id +1,
         ticket_id: req.body.ticketData.ticket_id,
         customer_id: req.body.customerData.customer.id,
         date: req.body.ticketData.date_of_purchase
@@ -554,7 +555,7 @@ app.post('/reports', async (req, res) => {
     console.log('newTicketZData.length :', newTicketZData.length)
 
   // const rapportJour =() => {
-      let prev_registered_date = '2023-12-11T14:40:02.413Z'
+      let prev_registered_date = '2023-12-31T11:20:02.413Z'
       // const prev_registered_date_local = new Date(prev_registered_date).toLocaleString()
       let newTicketZDay = newTicketZData.filter(ticketZ => ticketZ.period_type === "day")
       if (newTicketZDay.length > 0 && newTicketZDay[newTicketZDay.length-1].periodtStart > prev_registered_date ) {
