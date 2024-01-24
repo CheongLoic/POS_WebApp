@@ -141,10 +141,14 @@ const handleError = () => {
 const submit =() => {
   handleError()
   if (!ERROR){
-    let sortedTickedDB_ID_ASC = sortDataTicketID_ASC(ticketDB)
+    let sortedTickedDB_ID_ASC = []
     let TOTAL_DISCOUNT_IN_THE_BASKET_LS = getDataFromLS("TOTAL_DISCOUNT_IN_THE_BASKET_LS")
     // console.log(TOTAL_DISCOUNT_IN_THE_BASKET_LS)
-    const ticketID = sortedTickedDB_ID_ASC[ sortedTickedDB_ID_ASC.length -1 ].ticket_id + 1 
+    let ticketID = 1
+    if (ticketDB.length >0) {
+      sortedTickedDB_ID_ASC = sortDataTicketID_ASC(ticketDB)
+      ticketID = sortedTickedDB_ID_ASC[ sortedTickedDB_ID_ASC.length -1 ].ticket_id + 1 
+    }
     const newTicket = {
       ticket_id : ticketID,
       invoice : true, //boolean, ticket de caisse avec facture ?
@@ -160,7 +164,7 @@ const submit =() => {
     }
 
     const newInvoice = {
-      invoice_id: sortDataInvoiceID_desc(invoiceDB)[0].invoice_id + 1,
+      invoice_id: invoiceDB.length > 0 ? sortDataInvoiceID_desc(invoiceDB)[0].invoice_id + 1 : 1,
       ticket_id: ticketID ,
       customer_id: Number(CUSTOMER.split(" ")[0].substring(2)),
       date: new Date().toISOString()
