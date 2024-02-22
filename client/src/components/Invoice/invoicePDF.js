@@ -281,7 +281,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
           <Text style={{fontSize: 20}}>{customer.company}</Text>
           <Text style={{fontSize: 12}}>{customer.address}</Text>
           <Text style={{fontSize: 12}}>{customer.zip_code} {customer.city}</Text>
-          <Text style={{fontSize: 12}}>TEL. : {customer.phone.replace(/(.{2})/g,"$1 ")}</Text>
+          <Text style={{fontSize: 12}}>TEL. : {customer.phone === '' ? 'Unknown' : customer.phone.replace(/(.{2})/g,"$1 ")}</Text>
           <Text style={{fontSize: 12}}>{customer.email}</Text>
         </View>
       </View>
