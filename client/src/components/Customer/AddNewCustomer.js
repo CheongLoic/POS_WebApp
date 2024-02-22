@@ -45,9 +45,10 @@ const AddNewCustomer = () => {
         //this function checks if there is what it is expected in the fields
         //Otherwise, it will display a msg error
         
-        if (form_data.address === "" || form_data.email === "" 
+        if (form_data.address === "" 
+        //|| form_data.email === "" 
         // ||  form_data.first_name === "" || form_data.last_name === "" 
-        ||  phone.length < 10 ||  !(( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
+        ||  (phone.length > 0 && phone.length < 10) ||  !(( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
         || phone.substring(0, 2) === "03" || phone.substring(0, 2) === "04" 
         || phone.substring(0, 2) === "05" || phone.substring(0, 2) === "06" 
         || phone.substring(0, 2) === "07" || phone.substring(0, 2) === "09"  ) && phone.length === 10 )
@@ -184,26 +185,30 @@ const AddNewCustomer = () => {
 
 
                 <FormGroup row>
-                    <Label sm={3} style={{fontSize: "60%"}}>Téléphone 电话号码*</Label>
+                    <Label sm={3} style={{fontSize: "60%"}}>Téléphone 电话号码</Label>
                     <Col sm={8}>
                     <Input type="number" name="phone" min="1" max="9999999999"   onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Téléphone 电话号码" onChange={ (e) => {if (e.target.value.length > 10) {
                         setPhone(e.target.value.slice(0, 10));
                     } else setPhone(e.target.value) }} value={phone}  />
                     </Col>
                 </FormGroup>
-                <p style={{fontSize: 12, color: "orange"}}>{error && phone.length===0 ? "Veuillez rentrer votre numéro de téléphone. 请输入您的地址"  : 
-                ( error && !(( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
+                <p style={{fontSize: 12, color: "orange"}}>{
+                // error && phone.length===0 ? "Veuillez rentrer votre numéro de téléphone. 请输入您的地址"  : 
+                // ( 
+                    error && !(( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
                 || phone.substring(0, 2) === "03" || phone.substring(0, 2) === "04" 
                 || phone.substring(0, 2) === "05" || phone.substring(0, 2) === "06" 
-                || phone.substring(0, 2) === "07" || phone.substring(0, 2) === "09"  ) && phone.length === 10)    ? "Mauvais numéro de téléphone. 电话号码错误" : "")}</p>
+                || phone.substring(0, 2) === "07" || phone.substring(0, 2) === "09"  ) && phone.length === 10)    ? "Mauvais numéro de téléphone. 电话号码错误" : ""
+                // )
+                }</p>
 
                 <FormGroup row>
-                    <Label sm={3} style={{fontSize: "60%"}}>Email 电子邮件*</Label>
+                    <Label sm={3} style={{fontSize: "60%"}}>Email 电子邮件</Label>
                     <Col sm={8}>
                     <Input type="email" name="email" placeholder="Email 电子邮件"  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} onChange={changeHandler} value={form_data.email}  />
                     </Col>
                 </FormGroup>
-                <p style={{fontSize: 12, color: "orange"}}>{error && (form_data.email.length===0 || !form_data.email.includes("@") || !form_data.email.includes(".") )? "Veuillez rentrer votre email. 请输入您的电子邮件" : ""}</p>
+                {/* <p style={{fontSize: 12, color: "orange"}}>{error && (form_data.email.length===0 || !form_data.email.includes("@") || !form_data.email.includes(".") )? "Veuillez rentrer votre email. 请输入您的电子邮件" : ""}</p> */}
 
 
                 <Button  color="success" style={{ alignItems: 'center', margin : "10px"}} onClick={() => submit()}>+ Ajouter un client 加客户</Button>
