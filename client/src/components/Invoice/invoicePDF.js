@@ -195,10 +195,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // backgroundColor : "tomato",
     maxHeight  : 100,
-    marginBottom : 30,
-    marginTop :20
+    // marginBottom : 30,
+    marginTop :20,
+    fontFamily : "Times-Roman"
   },
   leftColumn: {
+    // position : "absolute",
+    top : -75,
+    left: -40,
+    // right: 0,
     flexDirection: 'column',
     width: 300,
     // paddingTop: 30,
@@ -207,7 +212,7 @@ const styles = StyleSheet.create({
     // backgroundColor : "yellow",
     display : "flex",
     justifyContent : "center",
-    alignItems : "left",
+    alignItems : "center",
   },
   rightColumn: {
     flexDirection: 'column',
@@ -218,12 +223,12 @@ const styles = StyleSheet.create({
     marginRight : 25,
     // marginBottom : 20,
     // backgroundColor : "green",
-    border : 2,
-    borderStyle : "solid",
-    borderTopLeftRadius : 20,
-    borderTopRightRadius : 20,
-    borderBottomRightRadius : 20, 
-    borderBottomLeftRadius : 20,
+    // border : 2,
+    // borderStyle : "solid",
+    // borderTopLeftRadius : 20,
+    // borderTopRightRadius : 20,
+    // borderBottomRightRadius : 20, 
+    // borderBottomLeftRadius : 20,
     // textAlign: 'center',
     display : "flex",
     justifyContent : "center",
@@ -247,13 +252,13 @@ const styles = StyleSheet.create({
 const InvoicePDF = ({invoiceDB, customer, ticket}) => (
   <Document title={"XH_Facture_n°".concat(invoiceDB.invoice_id,".pdf")} >
     <Page size="A4" style={styles.body} wrap>
-      <View style={{ color: 'black',fontSize: 28, textAlign: 'center', marginBottom: 30 }} fixed>
-        <Text>FACTURE n°{invoiceDB.invoice_id}</Text>
+      <View style={{ color: 'black',fontSize: 24, textAlign: 'right', marginBottom: 30 , fontFamily : "Times-Roman"}} fixed>
+        <Text>FACTURE n° FA2024000{invoiceDB.invoice_id}</Text>
       </View>
       
       <View style={styles.container} fixed>
         <View style={styles.leftColumn}>
-          <Text >X.H.</Text>
+          <Text style={{ fontSize: 22}} >X.H.</Text>
           <Text style={{fontSize: 12}}>19 Rue Civiale</Text>
           <Text style={{fontSize: 12}}>75010 PARIS</Text>
           <Text style={{fontSize: 12}}>TEL. : 07.86.31.63.88</Text>
@@ -262,8 +267,8 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
 
         
         <View style={styles.rightColumn}>
-        <Text style={{top: -20, position: "absolute", fontSize: 14}}>FACTURÉ À :</Text>s
-          <Text style={{fontSize: 14}}>{customer.company}</Text>
+        {/* <Text style={{top: -20, position: "absolute", fontSize: 14}}>FACTURÉ À :</Text>s */}
+          <Text style={{fontSize: 20}}>{customer.company}</Text>
           <Text style={{fontSize: 12}}>{customer.address}</Text>
           <Text style={{fontSize: 12}}>{customer.zip_code} {customer.city}</Text>
           <Text style={{fontSize: 12}}>TEL. : {customer.phone.replace(/(.{2})/g,"$1 ")}</Text>
@@ -271,14 +276,16 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
         </View>
       </View>
       
+      <View fixed>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date d'achat : {dateFormat(ticket.date_of_purchase).substring(0,10)}</Text>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date de facturation : {dateFormat(invoiceDB.date).substring(0,10)}</Text>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 20}}>Mode de paiement : {ticket.PAYMENT_METHOD}</Text>
-      
+      </View>
+
       <View style={styles.table}> 
         <View style={styles.tableRow} fixed> 
           <View style={styles.tableColIDHead}> 
-            <Text style={styles.tableCell}>ID</Text> 
+            <Text style={styles.tableCell}>Réf.</Text> 
           </View> 
           <View style={styles.tableColProductNameHead}> 
             <Text style={styles.tableCell}>Désignation des produits</Text> 
