@@ -243,6 +243,16 @@ const styles = StyleSheet.create({
   }
 });
 
+const invoiceNumberID = (invoice_id,invoice_date) => {
+  let invoiceID_start = "FA" + invoice_date.substring(0,4)
+  let invoice_id_str = invoice_id.toString()
+  if (invoice_id_str.length <4 ) {
+    invoice_id_str = "0".repeat(4-invoice_id_str.length) + invoice_id_str
+  }
+  return(invoiceID_start + invoice_id_str)
+}
+
+
 // const number = 123456.789;
 // console.log(new Intl.NumberFormat("de-DE").format(number));
 // 123.456,789
@@ -253,7 +263,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
   <Document title={"XH_Facture_n°".concat(invoiceDB.invoice_id,".pdf")} >
     <Page size="A4" style={styles.body} wrap>
       <View style={{ color: 'black',fontSize: 24, textAlign: 'right', marginBottom: 30 , fontFamily : "Times-Roman"}} fixed>
-        <Text>FACTURE n° FA2024000{invoiceDB.invoice_id}</Text>
+        <Text>FACTURE n° {invoiceNumberID(invoiceDB.invoice_id,invoiceDB.date)}</Text>
       </View>
       
       <View style={styles.container} fixed>
@@ -276,7 +286,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
         </View>
       </View>
       
-      <View fixed>
+      <View style={{fontFamily : "Times-Roman"}}fixed>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date d'achat : {dateFormat(ticket.date_of_purchase).substring(0,10)}</Text>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 10}}>Date de facturation : {dateFormat(invoiceDB.date).substring(0,10)}</Text>
       <Text style={{fontSize: 12, marginLeft : 20, marginBottom : 20}}>Mode de paiement : {ticket.PAYMENT_METHOD}</Text>
