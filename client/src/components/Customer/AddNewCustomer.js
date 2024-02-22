@@ -48,10 +48,10 @@ const AddNewCustomer = () => {
         if (form_data.address === "" 
         //|| form_data.email === "" 
         // ||  form_data.first_name === "" || form_data.last_name === "" 
-        ||  (phone.length > 0 && phone.length < 10) ||  !(( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
+        ||  (phone.length > 0 && phone.length < 10) ||  (!( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
         || phone.substring(0, 2) === "03" || phone.substring(0, 2) === "04" 
         || phone.substring(0, 2) === "05" || phone.substring(0, 2) === "06" 
-        || phone.substring(0, 2) === "07" || phone.substring(0, 2) === "09"  ) && phone.length === 10 )
+        || phone.substring(0, 2) === "07" || phone.substring(0, 2) === "09"  ) &&  (phone.length > 0 && phone.length <= 10 ))
         || zipCode.length < 5 || form_data.city === "" || form_data.company === "" ) {
             // console.log("before set error true from checkfield",error)
             setError(true) ;
@@ -195,10 +195,10 @@ const AddNewCustomer = () => {
                 <p style={{fontSize: 12, color: "orange"}}>{
                 // error && phone.length===0 ? "Veuillez rentrer votre numéro de téléphone. 请输入您的地址"  : 
                 // ( 
-                    error && !(( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
-                || phone.substring(0, 2) === "03" || phone.substring(0, 2) === "04" 
-                || phone.substring(0, 2) === "05" || phone.substring(0, 2) === "06" 
-                || phone.substring(0, 2) === "07" || phone.substring(0, 2) === "09"  ) && phone.length === 10)    ? "Mauvais numéro de téléphone. 电话号码错误" : ""
+                    error && (!( phone.substring(0, 2) === "01" || phone.substring(0, 2) === "02"
+                    || phone.substring(0, 2) === "03" || phone.substring(0, 2) === "04" 
+                    || phone.substring(0, 2) === "05" || phone.substring(0, 2) === "06" 
+                    || phone.substring(0, 2) === "07" || phone.substring(0, 2) === "09"  ) &&  (phone.length > 0 && phone.length <= 10 ))    ? "Mauvais numéro de téléphone. 电话号码错误" : ""
                 // )
                 }</p>
 
