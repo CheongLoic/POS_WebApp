@@ -116,8 +116,8 @@ class Invoices extends Component {
                     } */}
                 
                 </div>
-                <Link to="/invoices/createInvoice"><Button  color="success" style={{marginBottom : 40,  marginRight : 25 ,width: "35%"}} >Créer nouvelles factures 开新发票</Button></Link>
-                <Link to="/"><Button  color="primary" style={{marginBottom : 40, width: "35%"}} >Retour 后退</Button></Link>
+                <Link to="/invoices/createInvoice"><Button  color="success" style={{marginBottom : 40,  marginRight : 25 ,width: "35%"}} >Créer nouvelles factures<br></br>开新发票</Button></Link>
+                <Link to="/"><Button  color="primary" style={{marginBottom : 40, width: "35%"}} >Retour<br></br>后退</Button></Link>
 
                 
                 <div className='invoice_list'>
