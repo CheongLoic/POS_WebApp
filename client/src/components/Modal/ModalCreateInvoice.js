@@ -163,11 +163,22 @@ const submit =() => {
       TTC: (getHT()* 1.055 ).toFixed(2) //string
     }
 
+    let  count_invoice = invoiceDB.filter((inv) => inv.purchase_date.substring(0,7)  === newTicket.date_of_purchase.substring(0,7)  ).length + 1
+    console.log("count_invoice : ", count_invoice)
+    if (count_invoice <3 ) {
+      count_invoice = "0".repeat(3-count_invoice) + count_invoice
+      console.log("count_invoice : ", count_invoice)
+    }
+    let  invoice_number = "FA" + newTicket.date_of_purchase.substring(0,7) + "-" + count_invoice
+
+
     const newInvoice = {
       invoice_id: invoiceDB.length > 0 ? sortDataInvoiceID_desc(invoiceDB)[0].invoice_id + 1 : 1,
+      invoice_number : invoice_number,
       ticket_id: ticketID ,
       customer_id: Number(CUSTOMER.split(" ")[0].substring(2)),
-      date: new Date().toISOString()
+      // invoice_date: new Date().toISOString()
+      purchase_date : newTicket.date_of_purchase
     }
     // console.log(newTicket)
     // console.log(newInvoice)

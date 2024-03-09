@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
     borderStyle: "solid", 
     borderWidth: 1, 
     borderRightWidth: 0, 
-    borderBottomWidth: 0 ,
-    borderBottom : 0,
-    borderBottomStyle :0,
+    borderBottomWidth: 1 ,
+    borderBottom : 1,
+    borderBottomStyle : 1,
     marginLeft : 20,
     marginRight : 20
     
@@ -243,14 +243,14 @@ const styles = StyleSheet.create({
   }
 });
 
-const invoiceNumberID = (invoice_id,date_of_purchase) => {
-  let invoiceID_start = "FA" + date_of_purchase.substring(0,4)
-  let invoice_id_str = invoice_id.toString()
-  if (invoice_id_str.length <4 ) {
-    invoice_id_str = "0".repeat(4-invoice_id_str.length) + invoice_id_str
-  }
-  return(invoiceID_start + invoice_id_str)
-}
+// const invoiceNumberID = (invoice_id,date_of_purchase) => {
+//   let invoiceID_start = "FA" + date_of_purchase.substring(0,4)
+//   let invoice_id_str = invoice_id.toString()
+//   if (invoice_id_str.length <4 ) {
+//     invoice_id_str = "0".repeat(4-invoice_id_str.length) + invoice_id_str
+//   }
+//   return(invoiceID_start + invoice_id_str)
+// }
 
 
 // const number = 123456.789;
@@ -263,7 +263,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
   <Document title={"XH_Facture_n°".concat(invoiceDB.invoice_id,".pdf")} >
     <Page size="A4" style={styles.body} wrap>
       <View style={{ color: 'black',fontSize: 24, textAlign: 'right', marginBottom: 30 , fontFamily : "Times-Roman"}} fixed>
-        <Text>FACTURE n° {invoiceNumberID(invoiceDB.invoice_id,ticket.date_of_purchase)}</Text>
+        <Text>FACTURE n° {invoiceDB.invoice_number}</Text>
       </View>
       
       <View style={styles.container} fixed>
