@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, Text, View, Font, Image, Document, StyleSheet } from '@react-pdf/renderer';
 import no_img from "../../img/no_image.jpg"
-import JsBarcode from "jsbarcode";
+// import JsBarcode from "jsbarcode";
 import msyh from "./../../msyh.ttf" 
 // import SourceSansHanSC from "./../../SourceHanSansSC-VF.ttf"
 
@@ -264,7 +264,9 @@ const ProductsCataloguePDF = ({productsDB}) => (
                         </View>
                         
                         <View style={styles.tableColBorderBottomBarcode}> 
-                            {product.barCode_list.map((barcode, indexB) => {
+                            {/* Le code suivant ne marche pas lorsque pour certains code barres même avec 13 digits */}
+
+                            {/* {product.barCode_list.map((barcode, indexB) => {
                                 if ( barcode.barCode !== "") {
                                     let canvas;
                                 canvas = document.createElement('canvas');
@@ -276,7 +278,7 @@ const ProductsCataloguePDF = ({productsDB}) => (
                                     return <View key={indexB}></View>
                                 }
                                 
-                           })}
+                           })} */}
                         </View> 
                     </View>
             )})}

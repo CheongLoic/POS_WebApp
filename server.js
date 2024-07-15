@@ -418,11 +418,20 @@ app.post('/tickets/addNewTicket',  (req, res) => {
     const invoices_data = JSON.parse(loadJSON_invoices); //string to JSON object 
     // console.log(req.body)
     if (invoices_data.filter((invoice) => invoice.ticket_id === req.body.ticketData.ticket_id ).length ===0 ) {
+      let  count_invoice = invoices_data.filter((inv) => inv.purchase_date.substring(0,7)  ===  req.body.ticketData.date_of_purchase.substring(0,7)  ).length + 1
+      // console.log("count_invoice : ", count_invoice)
+      if (count_invoice.toString().length <3 ) { // if the number of the invoice has only 3 digits
+        count_invoice = "0".repeat(3-count_invoice.toString().length) + count_invoice
+        // console.log("count_invoice_digit : ", count_invoice)
+      }
+      let  invoice_number = "FA" + req.body.ticketData.date_of_purchase.substring(0,7) + "-" + count_invoice
+
       let conca2 = invoices_data.concat([{
         invoice_id: invoices_data.length === 0 ? 0 : invoices_data[invoices_data.length -1 ].invoice_id +1,
+        invoice_number : invoice_number,
         ticket_id: req.body.ticketData.ticket_id,
         customer_id: req.body.customerData.customer.id,
-        date: req.body.ticketData.date_of_purchase
+        purchase_date: req.body.ticketData.date_of_purchase
       }]); //put json in an array
       
       //remove duplicate item

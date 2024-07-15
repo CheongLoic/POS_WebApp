@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     width: "29.6%", 
     borderStyle: "solid", 
     borderLeftWidth: 1, 
+    borderTopWidth : 1,
     marginRight : 20
   }, 
   tableRow: { 
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
 const InvoicePDF = ({invoiceDB, customer, ticket}) => (
   <Document title={"XH_Facture_n°".concat(invoiceDB.invoice_id,".pdf")} >
     <Page size="A4" style={styles.body} wrap>
-      <View style={{ color: 'black',fontSize: 24, textAlign: 'right', marginBottom: 30 , fontFamily : "Times-Roman"}} fixed>
+      <View style={{ color: 'black',fontSize: 22, textAlign: 'right', marginBottom: 30 , fontFamily : "Times-Roman"}} fixed>
         <Text>FACTURE n° {invoiceDB.invoice_number}</Text>
       </View>
       
@@ -359,7 +360,8 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
               <Text style={styles.tableCell}>{product.product_id}</Text> 
             </View> 
             <View style={styles.tableColBorderBottomProductName}> 
-              <Text style={styles.tableCell}>{product.product_full_name}</Text> 
+              <Text style={{fontSize : 10, marginLeft : 5 , marginTop : 5}}>{product.product_full_name}</Text> 
+              {/* <Text style={styles.tableCell}>{product.product_full_name}</Text>  */}
             </View> 
             <View style={styles.tableColBorderBottomQty}> 
               <Text style={styles.tableCell}>{product.quantity} {product.type_of_sale === "weight" ? "kg" : ( product.type_of_sale === "unit" ? "pc(s)" : "CRT" )}</Text> 
@@ -427,7 +429,7 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
           
             <View style={styles.tableRowTotal}> 
             <View style={{backgroundColor : "#C0C0C0" }}>
-              <Text style={styles.tableCell}>TOTAL TTC À PAYER</Text> 
+              <Text style={styles.tableCell}>TOTAL TTC</Text> 
             </View> 
           </View>
         </View>
@@ -452,6 +454,22 @@ const InvoicePDF = ({invoiceDB, customer, ticket}) => (
           </View>
         </View>
       </View>
+      </View>
+
+      <View style={{left : 359, marginRight : 30}}>
+        <View style={styles.miniTable}> 
+          <View style={{backgroundColor : "#C0C0C0" }}>
+            <View style={styles.tableRow}> 
+              <View style={styles.tableColTotal}> 
+                {/* <Text style={styles.tableCell}>TOTAL TTC</Text>  */}
+                <Text style={styles.tableCell}> NET A PAYER</Text>
+              </View> 
+              <View style={styles.tableColTotal}> 
+                  <Text style={styles.tableCell}>{ticket.TTC}€</Text> 
+              </View> 
+          	</View> 
+          </View>
+      	</View>
       </View>
       
       
