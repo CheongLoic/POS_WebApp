@@ -280,7 +280,7 @@ const AddNewProduct = () => {
           .then( res => {
               console.log(res);
           })
-            .then(response => response.json())
+            // .then(response => response.json()) # return an error in front
           // console.log("old product DB :",productDB)
           productDB.push(dataToSend)
           setDataInLS("productDB", productDB)
