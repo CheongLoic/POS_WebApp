@@ -1,0 +1,11 @@
+[
+  {
+    "id": 0,
+    "company": "TEST",
+    "email": "test@test.com",
+    "phone": "0123456789",
+    "address": "20 Rue du blablabla",
+    "zip_code": "75019",
+    "city": "Paris"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "product_id": 248,
+    "product_full_name": "Courbine jaune 360g",
+    "quantity_for_discount": 3,
+    "total_discount_when_condition_met_once": 2
+  },
+  {
+    "product_id": 240,
+    "product_full_name": "Korean mud snail 泥螺",
+    "quantity_for_discount": 3,
+    "total_discount_when_condition_met_once": 2
+  },
+  {
+    "product_id": 161,
+    "product_full_name": "Poulet fumé",
+    "quantity_for_discount": 3,
+    "total_discount_when_condition_met_once": 4
+  },
+  {
+    "product_id": 241,
+    "product_full_name": "Solenidae 蛏子",
+    "quantity_for_discount": 3,
+    "total_discount_when_condition_met_once": 2
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 0,
+    "period_type": "day",
+    "periodtStart": "2024-02-14T06:00:00.000Z",
+    "periodEnd": "2024-02-15T05:59:59.000Z",
+    "total_ticket": 1,
+    "total_TTC": "31.65",
+    "total_HT": "30.00",
+    "total_TVA": "1.65",
+    "total_CB": "31.65",
+    "total_Espece": 0,
+    "total_Cheque": 0,
+    "total_cumul": 0
+  },
+  {
+    "id": 1,
+    "period_type": "day",
+    "periodtStart": "2024-03-06T06:00:00.000Z",
+    "periodEnd": "2024-03-07T05:59:59.000Z",
+    "total_ticket": 1,
+    "total_TTC": "31.65",
+    "total_HT": "30.00",
+    "total_TVA": "1.65",
+    "total_CB": "31.65",
+    "total_Espece": 0,
+    "total_Cheque": 0,
+    "total_cumul": "732.70"
+  },
+  {
+    "id": 2,
+    "period_type": "day",
+    "periodtStart": "2024-03-15T06:00:00.000Z",
+    "periodEnd": "2024-03-16T05:59:59.000Z",
+    "total_ticket": 1,
+    "total_TTC": "50.64",
+    "total_HT": "48.00",
+    "total_TVA": "2.64",
+    "total_CB": "50.64",
+    "total_Espece": 0,
+    "total_Cheque": 0,
+    "total_cumul": "783.34"
+  }
+]

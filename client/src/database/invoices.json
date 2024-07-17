@@ -1,0 +1,16 @@
+[
+  {
+    "invoice_id": 1,
+    "invoice_number": "FA2024-02-001",
+    "ticket_id": 1,
+    "customer_id": 0,
+    "purchase_date": "2024-02-14T00:00:00.000Z"
+  },
+  {
+    "invoice_id": 2,
+    "invoice_number": "FA2024-02-002",
+    "ticket_id": 2,
+    "customer_id": 0,
+    "purchase_date": "2024-02-06T00:00:00.000Z"
+  }
+]

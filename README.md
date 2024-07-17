@@ -6,8 +6,10 @@ UX/UI design development is not the priority.
 
 ## How to run the code ? 
 - Install Visual Studio Code : https://code.visualstudio.com/download
+- Install Git : https://git-scm.com/downloads
+- Install NodeJS : https://nodejs.org/en/download/prebuilt-installe
 - Open VS Code and a terminal. Go to a directory to download the repository
-- Clone the project  :  `git clone https://github.com/CheongLoic/POS_WebApp.git`
+- Clone the project by running the command in the terminal  :  `git clone https://github.com/CheongLoic/POS_WebApp.git`
 - Go to the folder "POS_WebApp" (server side), intall modules :  `npm install`
 - Go to the folder "client" (client side), intall modules :  `npm install`
 - Go to the folder "POS_WebApp" (server side), run :  `npm run dev`
