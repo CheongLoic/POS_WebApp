@@ -1,7 +1,7 @@
 # POS_WebApp
 
 ## About the project
-This project is a Point of Sale (POS) web application. 
+This project is a Point of Sale (POS) web application. It is a personal project. It runs locally, it is not available online.
 It aims to generate sales invoices and receipts after a customer has made a food purchase.
 
 The code is written in ReactJS and NodeJS.
@@ -25,14 +25,20 @@ The database is stored in JSON files in the folder `client/src/database`
 On the [Menu page](http://localhost:3000/), there are 6 buttons that redirect to different web pages : 
 1. [Tickets de caisse](http://localhost:3000/tickets) (receipt) : 
     - List of all the receipts after a client made a purchase. A receipt can be printed, downloaded or deleted.
-    - On http://localhost:3000/tickets/addNewTicket, you can create a receipt by choosing the customers' selected products. 
+    - On http://localhost:3000/tickets/addNewTicket, you can create a new receipt by choosing the customers' selected products. 
+
 Some products have barcodes, others do not. If a customer choose a product without barcode (like fruits and vegetables), click on the button `Choisir un produit sans code-barres` and choose a product to add it to the cart.
 
-For products with barcodes, you can use a barcode scanner linked to your computer. Scan a barcode of a product already stored in the database (only EAN13 accepted)
+For products with barcodes, you can use a barcode scanner linked to your computer. Scan a barcode of a product already stored in the database (only EAN13 barcode accepted)
+
 2. [Produits alimentaires](http://localhost:3000/products) (food): List of all the products in the store. You can modify and add a new product. You can also download the catalogue of products
+
 3. [Factures](http://localhost:3000/invoices) (invoices): List of all the invoices and you can create a new invoice
+
 4. [Clients](http://localhost:3000/customers) : List of clients
+
 5. [Promotions](http://localhost:3000/discounts) (discounts) : List of all discounted products. 
+
 6. [Rapports](http://localhost:3000/reports) (reports) : to get 'Ticket Z' reports about sales data
 
 
@@ -45,12 +51,17 @@ For products with barcodes, you can use a barcode scanner linked to your compute
     - https://github.com/seokju-na/react-thermal-printer
 
 The receipt printer used is a [MUNBYN thermal printer](https://www.amazon.fr/MUNBYN-Imprimante-imprimante-Compatible-Chromebook/dp/B0BRZ4VZD1/ref=asc_df_B0BRZ4VZD1/?tag=googshopfr-21&linkCode=df0&hvadid=701511052694&hvpos=&hvnetw=g&hvrand=8971795484163040522&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9197924&hvtargid=pla-2010043139937&psc=1&mcid=9d0d9ef375ec3bf5b55d4de354faf80d&gad_source=1) 
+
 2. Tutorial to create a modal : https://www.youtube.com/watch?v=ZCvemsUfwPQ&list=LL&index=5
+
 3. Tutorial to detect barcode scan : https://www.youtube.com/watch?v=eF659dHmsAY&list=LL&index=11&t=13s
+
 4. Generate barcode :  https://www.npmjs.com/package/react-barcode
+
 5. React PDF : 
     - documentation : https://react-pdf.org/
     - React-pdf/renderer fontWeight : https://github.com/diegomura/react-pdf/issues/402
+    
 6. Reading and Writing to a JSON file with NodeJS :  https://www.youtube.com/watch?v=EXx-t9CRKeo
 
 
