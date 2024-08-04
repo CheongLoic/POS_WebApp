@@ -2,10 +2,21 @@ import React from "react";
 import "./ModalBarcodeNotFound.css";
 import warning from "../../img/warning-sign-icon.png"
 
+
+/**
+ * 
+ * @param {function} setOpenModal : 
+ * @returns : A modal with an error message that indicates that the receipt printer is not connected.
+ */
 function ModalPrinterNotConnected({ setOpenModal} ) {
 
   const toggleModal=()=>{
-    setOpenModal(false);
+    const currentUrl = window.location.href;
+    if (currentUrl.includes("addNewTicket2")) {//Only for http://localhost:3000/tickets/addNewTicket2 
+      window.location.replace("http://localhost:3000/tickets/addNewTicket") // replace and change the current URL
+    } else {
+      setOpenModal(false); //close the modal
+    }
   }
 
 

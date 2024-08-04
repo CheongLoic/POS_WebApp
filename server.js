@@ -33,6 +33,8 @@ const dateFormat = (date_of_purchase) => {
 // app.get("/", (_, res) => {
     
 //   console.log("Hello from server express consolo.log from '/' !");
+// res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  // res.json({"blabala" : "this is a test"})
 // });
 
 // app.get("/api", (_, res) => {
@@ -42,10 +44,7 @@ const dateFormat = (date_of_purchase) => {
 // });
 // app.use("/",express.static(path.resolve(__dirname, '../client/build')));
 
-// app.get('/', (req, res) => {
-  // res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-  // res.json({"blabala" : "aouhjnkef"})
-// });
+
 
 const storage = multer.diskStorage({
   
@@ -82,6 +81,7 @@ const storage = multer.diskStorage({
   }
 })
 
+// download the image of a new product
 app.post('/products/addNewProduct', async (req,res) => {
   // Add product photo in the folder
   // console.log("display form " + req.form)
@@ -107,10 +107,12 @@ app.post('/products/addNewProduct', async (req,res) => {
       } else if (err) {
         return res.send(err);
       }
-
     });
   } catch (err) { console.log(err)}
 })
+
+
+
 
 app.post('/products/addNewProduct-send-data', async (req,res) => {
   try {
@@ -154,8 +156,6 @@ app.post('/discounts', async (req,res) => {
   const filename = "client/src/database/discounts.json"
   fs.writeFileSync(filename, JSON.stringify(newData, null, 2))
   res.status(200).send({status : "OK"})
-   
-
 })
 
 
@@ -323,7 +323,7 @@ app.post('/tickets',  (req, res) => {
         //   { text:"Left TEXT", align:"LEFT", width:0.5 },
         //   { text:"Center TEXT", align:"CENTER", width:0.25, bold:true },
         //   { text:"Right TEXT", align:"RIGHT", cols:8 }
-        // ]);    
+        // ]);
     
         try {
         let execute = printer.execute()

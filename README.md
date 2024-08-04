@@ -1,14 +1,20 @@
 # POS_WebApp
 
-## A propos
-This project aims to generate sales invoices and receipts written in ReactJS and NodeJS.
-UX/UI design development is not the priority.
+## About the project
+This project is a Point of Sale (POS) web application. 
+It aims to generate sales invoices and receipts after a customer has made a food purchase.
+
+The code is written in ReactJS and NodeJS.
+
+The UX/UI design development is basic.
+
+The database is stored in JSON files in the folder `client/src/database` 
 
 ## How to run the code ? 
 - Install Visual Studio Code : https://code.visualstudio.com/download
 - Install Git : https://git-scm.com/downloads
 - Install NodeJS : https://nodejs.org/en/download/prebuilt-installe
-- Open VS Code and a terminal. Go to a directory to download the repository
+- Open VS Code and a terminal. Choose a directory where you want to clone the repository
 - Clone the project by running the command in the terminal  :  `git clone https://github.com/CheongLoic/POS_WebApp.git`
 - Go to the folder "POS_WebApp" (server side), intall modules :  `npm install`
 - Go to the folder "client" (client side), intall modules :  `npm install`
@@ -16,28 +22,36 @@ UX/UI design development is not the priority.
 
 
 ## Functionalities
-In the Home page, there are 6 buttons : 
-- Tickets de caisses : create receipts
-- Produits alimentaires : all the products in the store. Add and modify a product 
-- Factures : create an invoice
-- Clients : Customer data
-- Promotions : All discounted produtcs
-- Rapports : to get reports about data (in development)
+On the [Menu page](http://localhost:3000/), there are 6 buttons that redirect to different web pages : 
+1. [Tickets de caisse](http://localhost:3000/tickets) (receipt) : 
+    - List of all the receipts after a client made a purchase. A receipt can be printed, downloaded or deleted.
+    - On http://localhost:3000/tickets/addNewTicket, you can create a receipt by choosing the customers' selected products. 
+Some products have barcodes, others do not. If a customer choose a product without barcode (like fruits and vegetables), click on the button `Choisir un produit sans code-barres` and choose a product to add it to the cart.
+
+For products with barcodes, you can use a barcode scanner linked to your computer. Scan a barcode of a product already stored in the database (only EAN13 accepted)
+2. [Produits alimentaires](http://localhost:3000/products) (food): List of all the products in the store. You can modify and add a new product. You can also download the catalogue of products
+3. [Factures](http://localhost:3000/invoices) (invoices): List of all the invoices and you can create a new invoice
+4. [Clients](http://localhost:3000/customers) : List of clients
+5. [Promotions](http://localhost:3000/discounts) (discounts) : List of all discounted products. 
+6. [Rapports](http://localhost:3000/reports) (reports) : to get 'Ticket Z' reports about sales data
 
 
 
 ## Bibliographies :
 1. Repositories for connecting a receipt printer: 
-- https://github.com/Klemen1337/node-thermal-printer
-- https://github.com/possi/node-thermal-printer
-- https://github.com/drffej/webusb.printer/blob/master/printer.html
-- https://github.com/seokju-na/react-thermal-printer
-2. Create a modal : https://www.youtube.com/watch?v=ZCvemsUfwPQ&list=LL&index=5
-3. Detect barcode scan : https://www.youtube.com/watch?v=eF659dHmsAY&list=LL&index=11&t=13s
+    - https://github.com/Klemen1337/node-thermal-printer
+    - https://github.com/possi/node-thermal-printer
+    - https://github.com/drffej/webusb.printer/blob/master/printer.html
+    - https://github.com/seokju-na/react-thermal-printer
+
+The receipt printer used is a [MUNBYN thermal printer](https://www.amazon.fr/MUNBYN-Imprimante-imprimante-Compatible-Chromebook/dp/B0BRZ4VZD1/ref=asc_df_B0BRZ4VZD1/?tag=googshopfr-21&linkCode=df0&hvadid=701511052694&hvpos=&hvnetw=g&hvrand=8971795484163040522&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9197924&hvtargid=pla-2010043139937&psc=1&mcid=9d0d9ef375ec3bf5b55d4de354faf80d&gad_source=1) 
+2. Tutorial to create a modal : https://www.youtube.com/watch?v=ZCvemsUfwPQ&list=LL&index=5
+3. Tutorial to detect barcode scan : https://www.youtube.com/watch?v=eF659dHmsAY&list=LL&index=11&t=13s
 4. Generate barcode :  https://www.npmjs.com/package/react-barcode
 5. React PDF : 
-- https://react-pdf.org/
-- React-pdf/renderer fontWeight : https://github.com/diegomura/react-pdf/issues/402
+    - documentation : https://react-pdf.org/
+    - React-pdf/renderer fontWeight : https://github.com/diegomura/react-pdf/issues/402
+6. Reading and Writing to a JSON file with NodeJS :  https://www.youtube.com/watch?v=EXx-t9CRKeo
 
 
 <!----

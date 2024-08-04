@@ -8,7 +8,7 @@ import { dateFormat } from '../../backend/localStorageManager';
 function ReportList({ticket_data,setModalWarning, setModalLoading}) {
 
     const toPrint =() =>{
-        console.log("ticket to print : ", ticket_data)
+        // console.log("ticket to print : ", ticket_data)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -4150,7 +4150,7 @@
   },
   {
     "product_id": 158,
-    "product_full_name": "Filet de requin congelé (prionace glauca) 400g",
+    "product_full_name": "Prionace glauca 400g",
     "product_name_on_ticket": "Filet de requin congelé",
     "barCode_available": true,
     "barCode_list": [
@@ -6899,8 +6899,8 @@
   },
   {
     "product_id": 263,
-    "product_full_name": "Sole | Turbo (XL) 大龙利鱼",
-    "product_name_on_ticket": "Sole XL",
+    "product_full_name": "Turbo (XL) 大龙利鱼",
+    "product_name_on_ticket": "Turbo XL",
     "barCode_available": false,
     "barCode_list": [
       {
@@ -6925,8 +6925,8 @@
   },
   {
     "product_id": 264,
-    "product_full_name": "Sole | Turbo (S) 小龙利鱼",
-    "product_name_on_ticket": "Sole (S)",
+    "product_full_name": "Turbo (S) 小龙利鱼",
+    "product_name_on_ticket": "Turbo (S)",
     "barCode_available": false,
     "barCode_list": [
       {
@@ -7211,8 +7211,8 @@
   },
   {
     "product_id": 275,
-    "product_full_name": "Aileron de requin 鱼翅",
-    "product_name_on_ticket": "Aileron de requin",
+    "product_full_name": "Aileron congelé 鱼翅",
+    "product_name_on_ticket": "Aileron",
     "barCode_available": false,
     "barCode_list": [
       {

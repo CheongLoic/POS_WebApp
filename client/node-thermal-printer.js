@@ -33,12 +33,11 @@
   printer.cut();
   try {
     let execute = printer.execute(function(err){ 
-      console.log(err , " fuzrygfhbj")
+      console.log(err , "Printing something ...")
       // return (err + "fuzrygfhbj")
     })
     console.log("Print done!");
   } catch (error) {
-    console.log("FUCK YOU !!!!!")
     console.log("Print failed:", error);
   }
 

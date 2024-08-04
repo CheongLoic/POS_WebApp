@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import productDB from "../../database/products.json"
 import discountDB from "../../database/discounts.json"
 import no_img from "../../img/no_image.jpg"
-import {Button, Input, FormGroup, Col} from 'reactstrap';
+// import {Button, Input, FormGroup, Col} from 'reactstrap';
+import {Button, Input, FormGroup} from 'reactstrap';
 import { sortDataByFullName } from '../../backend/localStorageManager';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import basket from "../../img/Cart-Logo.png"
-import white_cart from "../../img/Cart-Logo-white.png"
+// import white_cart from "../../img/Cart-Logo-white.png"
 import white_basket from "../../img/white_basket.png"
 import { setDataInLS } from '../../backend/localStorageManager';
 import "./CreateInvoice.css"
@@ -236,6 +237,7 @@ const CreateInvoice = () => {
             <div className='below_searchbar'>
                 <div>
                     <h1>Produits alimentaires 食品</h1>
+                    <h4>Les prix sont en HT. Le montant total affiché dans le panier est en TTC</h4>
                 </div>
                 
                 <div className='product_catalogue'>

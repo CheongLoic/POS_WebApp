@@ -245,7 +245,7 @@ const submit = async () => {
       .then( res => {
           console.log(res.data);
       })
-        .then(response => response.json())
+        // .then(response => response.json())
       // console.log("old product DB :",productDB)
       // productDB.push(dataToSend)
       // setDataInLS("productDB", productDB)
