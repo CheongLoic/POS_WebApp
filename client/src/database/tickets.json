@@ -812,27 +812,39 @@
   {
     "ticket_id": 4,
     "invoice": true,
-    "date_of_purchase": "2024-03-15T00:00:00.000Z",
+    "date_of_purchase": "2024-11-12T21:41:41.517Z",
     "product_list": [
       {
-        "product_id": 275,
-        "product_full_name": "Aileron de requin 鱼翅",
-        "product_name_on_ticket": "Aileron de requin",
-        "quantity": "1",
-        "product_price": "48.00",
-        "product_total_price_before_discount": "48.00",
+        "product_id": 208,
+        "product_full_name": "Bloc de calamar congelé",
+        "product_name_on_ticket": "Bloc de calamar congelé",
+        "quantity": "2",
+        "product_price": "25.00",
+        "product_total_price_before_discount": "50.00",
         "total_discount": "",
         "type_of_sale": "unit",
-        "image": "./img/Aileron_de_requin_48.00.JPG",
-        "display_on_ticket": false
+        "image": "./img/Bloc_de_calamar_congele_25.00.JPG",
+        "display_on_ticket": true
+      },
+      {
+        "product_id": 284,
+        "product_full_name": "Chair de palourde 500g",
+        "product_name_on_ticket": "Chair de palourde 500g",
+        "quantity": "1",
+        "product_price": "20.00",
+        "product_total_price_before_discount": "20.00",
+        "total_discount": "",
+        "type_of_sale": "unit",
+        "image": "./img/chair_de_palourde_500g_20.00_la_piece.jpg",
+        "display_on_ticket": true
       }
     ],
     "PAYMENT_METHOD": "CB",
     "TOTAL_DISCOUNT": "0.00",
     "RECU": "",
     "RENDU": "",
-    "TVA": "2.64",
-    "HT": "48.00",
-    "TTC": "50.64"
+    "TVA": "3.85",
+    "HT": "70.00",
+    "TTC": "73.85"
   }
 ]

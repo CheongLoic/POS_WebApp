@@ -163,14 +163,22 @@ const submit =() => {
       TTC: (getHT()* 1.055 ).toFixed(2) //string
     }
 
-    let  count_invoice = invoiceDB.filter((inv) => inv.purchase_date.substring(0,7)  === newTicket.date_of_purchase.substring(0,7)  ).length + 1
-    console.log("count_invoice : ", count_invoice)
-    if (count_invoice.toString().length <3 ) { // if the number of the invoice has only 3 digits
-      count_invoice = "0".repeat(3-count_invoice.toString().length) + count_invoice
-      console.log("count_invoice_digit : ", count_invoice)
+    let list_invoice_filtered = invoiceDB.filter((inv) => inv.purchase_date.substring(0,4)  === newTicket.date_of_purchase.substring(0,4)  ) //list of invoice filtered by date
+    let list_invoice = list_invoice_filtered.map(inv => inv.invoice_number ) //list of invoice_number
+    let list_invoice_sorted_desc = list_invoice.sort((a, b) => b.localeCompare(a)); //  desc list of invoice_number
+    let  invoice_number = ""
+    if (list_invoice_filtered.length > 0) {
+      let count_invoice = Number(list_invoice_sorted_desc[0].slice(-3)) + 1
+      // console.log("count_invoice : ", count_invoice)
+      if (count_invoice.toString().length <3 ) { // if the number of the invoice has less than 3 digits
+        count_invoice = "0".repeat(3-count_invoice.toString().length) + count_invoice
+        // console.log("count_invoice_digit : ", count_invoice)
+      }
+      invoice_number = newTicket.date_of_purchase.substring(0,4) + "-" + count_invoice
+    } else { //first ticket of te year
+      invoice_number = newTicket.date_of_purchase.substring(0,4) + "-001" 
     }
-    let  invoice_number = "FA" + newTicket.date_of_purchase.substring(0,7) + "-" + count_invoice
-
+    
 
     const newInvoice = {
       invoice_id: invoiceDB.length > 0 ? sortDataInvoiceID_desc(invoiceDB)[0].invoice_id + 1 : 1,
